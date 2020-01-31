@@ -1,17 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-label {
-  display: block;
-  width: 3em;
-  margin: .5em 0;
-  color: #607D8B;
-  font-weight: bold;
-}
-input {
-  height: 2em;
-  font-size: 1em;
-  padding-left: .4em;
-}
 button {
+  display: block;
   margin-top: 20px;
   font-family: Arial;
   background-color: #eee;
@@ -29,3 +17,26 @@ button:disabled {
   color: #ccc;
   cursor: auto;
 }
+
+label {
+  width: 220px;
+  margin: .5em 0;
+  color: #607D8B;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+input {
+  display: block;
+  height: 2em;
+  font-size: 1em;
+  padding-left: .4em;
+  margin-top: 10px;
+}
+
+.message {
+  color: red;
+}
+
+
+

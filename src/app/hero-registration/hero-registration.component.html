@@ -1,0 +1,36 @@
+<h2>Регистрация</h2>
+
+<form #myForm='ngForm'>
+
+  <div class="registration-form">
+    <p class="message" *ngIf="addFlag">Пользователь успешно добавлен!</p>
+    <label>Введите логин
+      <input placeholder="Введите логин" type="text" name="login" ngModel >
+    </label>
+    <label>Введите имя
+      <input placeholder="Введите имя" type="text" name="name" ngModel >
+    </label>
+    <label>Введите фамилию
+      <input placeholder="Введите фамилию" type="text" name="surname" ngModel >
+    </label>
+
+    <label>Введите пароль
+      <input placeholder="Введите пароль" type="password" name="password" ngModel >
+    </label>
+    <label>Подтвердите пароль
+      <input placeholder="Введите пароль еще раз" type="password" name="repeat_password" ngModel >
+    </label>
+    <label>Введите ваш номер телефона
+      <input placeholder="Введите ваш номер телефона" type="text" name="phone" ngModel >
+    </label>
+    <label>Введите год вашего рождения
+      <input placeholder="Введите ваш год рождения" type="number" name="birth_year" ngModel >
+    </label>
+    <label>Введите email
+      <input placeholder="Введите ваш email" type="email" name="email" ngModel >
+    </label>
+
+    <button (click)="addHero(myForm)">Добавить</button>
+
+  </div>
+</form>

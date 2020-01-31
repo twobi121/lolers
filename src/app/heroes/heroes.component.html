@@ -1,0 +1,36 @@
+<h2>My Ugandian Heroes</h2>
+
+<!--<ul class="heroes">-->
+<!--  <li *ngFor="let hero of (heroes | async)">-->
+<!--    <a routerLink="/hero/{{hero._id }}">-->
+<!--      <span class="badge">{{hero._id | slice:0:4}}</span> {{hero.name}}-->
+<!--    </a>-->
+
+<!--    <button class = 'remove_btn' (click)="removeHero(hero)">Delete Hero</button>-->
+<!--  </li>-->
+<!--</ul>-->
+
+<table class = "heroes">
+  <tr>
+    <th>Id</th>
+    <th>Login</th>
+    <th>Name</th>
+    <th>Surname</th>
+  </tr>
+
+  <tr *ngFor="let hero of (heroes | async)">
+    <td class="badge">
+      <a routerLink="/hero/{{hero._id }}">
+        {{hero._id | slice:0:4}}
+      </a>
+    </td>
+    <td> {{hero.login}}</td>
+    <td> {{hero.name}}</td>
+    <td> {{hero.surname}}</td>
+  </tr>
+
+</table>
+
+
+
+

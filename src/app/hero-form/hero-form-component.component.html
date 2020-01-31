@@ -1,0 +1,29 @@
+<div *ngIf="hero ">
+  <h2>{{hero.name}} Details </h2>
+  <div>
+    <span>id: </span>{{hero._id}}
+  </div>
+  <div>
+    <label>Логин:
+      <input [(ngModel)]="hero.login" placeholder="login">
+    </label>
+    <label>Имя:
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </label>
+    <label>Фамилия:
+      <input [(ngModel)]="hero.surname" placeholder="surname">
+    </label>
+    <label>Email:
+      <input [(ngModel)]="hero.email" placeholder="email">
+    </label>
+    <label>Телефон:
+      <input [(ngModel)]="hero.phone" placeholder="phone">
+    </label>
+    <label>Год рождения:
+      <input [(ngModel)]="hero.birth_year" placeholder="birth_year">
+    </label>
+  </div>
+
+  <button (click)="goBack()">go back</button>
+</div>
+
