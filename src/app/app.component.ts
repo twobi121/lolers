@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HeroService} from './services/hero.service';
+import {DataService} from './services/data-service';
+
 
 
 @Component({
@@ -8,8 +9,13 @@ import {HeroService} from './services/hero.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-  constructor() {
+export class AppComponent implements OnInit{
+  constructor(private dataService: DataService) {
   }
 
+  ngOnInit(): void {
+    if (localStorage.getItem('heroToken')) {
+      this.dataService.changeAuthState(true);
+    } else this.dataService.changeAuthState(false);
+  }
 }

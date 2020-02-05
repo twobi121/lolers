@@ -2,9 +2,11 @@ import {Injectable} from '@angular/core';
 import {Hero} from '../hero';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Data} from '@angular/router';
-import {map} from 'rxjs/operators';
+import {ActivatedRoute, Data} from '@angular/router';
+import {map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {error} from 'util';
+import {DataService} from './data-service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,42 +19,82 @@ export class HeroService {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {
+    private dataService: DataService,
+    private route: ActivatedRoute) {
   }
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.url);
   }
 
-  getHero(id: string): Observable<Hero> {
-    return this.http.get<Hero>(this.url + id);
+  getHero(login: string): Observable<Hero> {
+    return this.http.get<Hero>(this.url + login);
   }
 
-  addHero(hero: {}) {
-    this.http.post(this.url + 'add', hero)
-      .subscribe();
+  addHero(hero: {}): Observable<boolean> {
+    return this.http.post(this.url + 'add', hero, {observe: 'response'})
+      .pipe(
+        map(response => {
+            if (response.status === 201) {
+              this.router.navigateByUrl(`login`);
+              return true;
+            } else {
+              return false;
+            }
+          }
+        ));
   }
 
   login(loginData: Data) {
-    return this.http.post(this.url + 'login', loginData)
+    this.http.post(this.url + 'login', loginData)
       .pipe(
         map((data: Data) => {
           if (data.token) {
+            this.dataService.changeAuthState(true);
             localStorage.setItem('heroToken', data.token);
-            this.router.navigateByUrl(`hero/${data.user._id}`);
+            localStorage.setItem('login', data.user.login);
+            this.dataService.setLogin(data.user.login);
+            this.router.navigateByUrl(`hero/${data.user.login}`);
           }
-      }, error => console.log(error.error.message) ) )
+        }))
+      .subscribe(null, e => {
+        this.dataService.setAuthError(e.error.error);
+      });
+  }
+
+  getUserLogin() {
+    return this.http.get(this.url + 'user')
+      .pipe(
+        map((data: Data) => {
+          this.router.navigateByUrl(`hero/${data}`);
+        })
+      )
+      .subscribe(null, () => {
+        this.dataService.changeAuthState(false);
+        this.router.navigateByUrl(`login`);
+      });
+
+  }
+
+
+  logout() {
+    this.http.post(this.url + 'logout', null)
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('heroToken');
+          localStorage.removeItem('login');
+          this.dataService.setLogin('');
+          this.dataService.changeAuthState(false);
+          console.log(this.router.url)
+          this.router.navigate([this.router.url + '?auth=false']);
+        })
+      )
       .subscribe();
   }
 
-  checkLogin(token: '') {
-    this.http.get(this.url + '/check_login')
+  getLogo() {
+    return this.http.get(this.url + 'logo');
   }
-
-  // removeHeroes(hero: Hero) {
-  //   const idx = HEROES.indexOf(hero);
-  //   HEROES.splice(idx, 1);
-  // }
-  //
-
 }
+
+

@@ -1,0 +1,29 @@
+<div class="menu">
+  <div class="logo"><a routerLink=""><img [src] = 'logo'></a></div>
+
+  <div class="menu_item" *ngIf="!isAuth">
+    <a routerLink="login">Войти</a>
+  </div>
+
+  <div class="menu_item" *ngIf="!isAuth">
+    <a routerLink="registration">Регистрация</a>
+  </div>
+
+  <div class="menu_item" *ngIf="isAuth">
+    <a routerLink="hero/{{login}}">Моя страница</a>
+  </div>
+
+  <div class="menu_item" *ngIf="isAuth">
+    <a routerLink="heroes">Герои</a>
+  </div>
+
+  <div class="menu_item">
+    <a routerLink="dashboard">Рейтинг</a>
+  </div>
+
+  <div class="menu_item logout" *ngIf="isAuth" (click)="logout()">
+     Выйти
+  </div>
+
+
+</div>

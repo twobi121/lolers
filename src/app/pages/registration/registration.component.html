@@ -3,7 +3,6 @@
 <form #myForm='ngForm'>
 
   <div class="registration-form">
-    <p class="message" *ngIf="addFlag">Пользователь успешно добавлен!</p>
     <label>Введите логин
       <input placeholder="Введите логин" type="text" name="login" ngModel >
     </label>
@@ -30,7 +29,7 @@
       <input placeholder="Введите ваш email" type="email" name="email" ngModel >
     </label>
 
-    <button (click)="addHero(myForm)">Добавить</button>
-
+    <button (click)="addHero(myForm)">Зарегистрироваться</button>
+    <button ><a routerLink="/login">Войти</a></button>
   </div>
 </form>

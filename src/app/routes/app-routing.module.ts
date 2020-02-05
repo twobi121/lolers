@@ -1,25 +1,33 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HeroesComponent } from '../heroes/heroes.component';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
-import {HeroRegistrationComponent} from '../hero-registration/hero-registration.component';
-import {HeroDetailContainerComponent} from '../hero-detail/hero-detail.container.component';
-import {LoginComponent} from '../login/login.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HeroesComponent} from '../pages/heroes/heroes.component';
+import {DashboardComponent} from '../pages/dashboard/dashboard.component';
+import {UserEditContainer} from '../pages/user-edit/user-edit.container';
+import {LoginComponent} from '../pages/login/login.component';
+import {RegistrationComponent} from '../pages/registration/registration.component';
+import {CheckAuthComponent} from '../check-auth/check-auth.component';
+import {AuthGuard} from '../guards/auth.guard';
+import {LoginGuard} from '../guards/login.guard';
+import {UserPageContainer} from '../pages/user-page/user-page.container';
+import {MainPageGuard} from '../guards/main-page.guard';
+
 
 const routes: Routes = [
-  { path: '', redirectTo: '/heroes', pathMatch: 'full' },
-  { path: 'hero/:id', component: HeroDetailContainerComponent },
-  { path: 'heroes', component: HeroesComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'add', component: HeroRegistrationComponent },
-  { path: 'login', component: LoginComponent},
+  { path: '', component: LoginComponent, canActivate: [MainPageGuard]},
+  { path: 'hero/:login', component: UserPageContainer, canActivate: [AuthGuard] },
+  { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },
+  { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard]},
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
 
 

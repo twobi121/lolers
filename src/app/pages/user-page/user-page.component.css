@@ -1,0 +1,65 @@
+.user_page_container {
+  padding: 20px;
+  display: flex;
+}
+
+.avatar {
+  border: 1px solid #edeef0;
+  overflow: hidden;
+  padding: 10px 10px 0 10px;
+}
+
+.avatar img{
+  max-width: 200px;
+  vertical-align: bottom;
+}
+.upload_btn {
+  padding: 10px;
+}
+
+button {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+
+.user_info {
+  flex-grow: 1;
+  margin-left: 10px;
+  padding: 20px;
+}
+
+.user_info_name {
+  font-size: 20px;
+}
+
+.user_info_name:after {
+  content: '';
+  margin-top: 5px;
+  display: block;
+  height: 1px;
+  background-color: #d7d8db;
+}
+
+.user_info_personal {
+  color: #626d7a;
+  padding: 10px 0;
+  width: 50%;
+}
+
+.user_info_personal p {
+  display: flex;
+  padding: 5px 0;
+}
+
+.user_info_personal span {
+  display: inline-block;
+  width: 50%;
+}
+

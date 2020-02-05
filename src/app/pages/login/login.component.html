@@ -1,0 +1,45 @@
+<div class="login_form">
+  <div>
+    <h1>Вход</h1>
+    <div *ngIf="regState | async">Регистрация завершена! Войдите в учетную запись</div>
+    <div *ngIf="!(regState | async) && !error">Пожалуйста, залогиньтесь</div>
+    <div *ngIf="error">{{error}}</div>
+
+    <form [formGroup] = 'loginForm' (ngSubmit)="submit()">
+        <div [ngClass]="{invalid: loginForm.get('login').touched && loginForm.get('login').invalid}">
+          <label for="login">Введите логин</label>
+            <input placeholder="Введите логин" type="text" name="login" formControlName="login" id="login">
+
+
+          <div *ngIf="loginForm.get('login').touched && loginForm.get('login').invalid">
+            <small *ngIf="loginForm.get('login').errors.required">
+              Поле логин не должно быть пустым
+            </small>
+          </div>
+        </div>
+
+        <div [ngClass]="{invalid: loginForm.get('password').touched && loginForm.get('password').invalid}">
+          <label for="password">Введите пароль</label>
+            <input placeholder="Введите пароль" type="password" name="password" formControlName="password" id="password" >
+
+
+          <div *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid">
+            <small *ngIf="loginForm.get('password').errors.minlength">
+              Недопустимый пароль
+            </small>
+          </div>
+
+          <div *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid">
+            <small *ngIf="loginForm.get('password').errors.required">
+              Поле пароль не должно быть пустым
+            </small>
+          </div>
+
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Войти</button>
+        <button ><a routerLink="/registration">Регистрация</a></button>
+    </form>
+  </div>
+</div>
+

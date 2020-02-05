@@ -1,31 +1,50 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-
+import {NgModule, Provider} from '@angular/core';
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './heroes/heroes.component';
+import { HeroesComponent } from './pages/heroes/heroes.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { UserEditComponent } from './pages/user-edit/user-edit.component';
+import {UserEditContainer} from './pages/user-edit/user-edit.container';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './routes/app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroRegistrationComponent } from './hero-registration/hero-registration.component';
-import {HttpClientModule} from '@angular/common/http';
-import {HeroDetailContainerComponent} from './hero-detail/hero-detail.container.component';
-import { HeroFormComponentComponent } from './hero-form/hero-form-component.component';
-import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {RegistrationComponent} from './pages/registration/registration.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HeroFormComponentComponent } from './pages/hero-form/hero-form-component.component';
+import { LoginComponent } from './pages/login/login.component';
+import {DataService} from './services/data-service';
+import {AuthGuard} from './guards/auth.guard';
+import { CheckAuthComponent } from './check-auth/check-auth.component';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
+import {LoginGuard} from './guards/login.guard';
+import { MenuComponent } from './pages/menu/menu.component';
+import {MenuContainer} from './pages/menu/menu.container';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import {UserPageContainer} from './pages/user-page/user-page.container';
+import {MainPageGuard} from './guards/main-page.guard';
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptor,
+  multi: true
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     HeroesComponent,
-    HeroDetailComponent,
+    UserEditComponent,
+    UserEditContainer,
     MessagesComponent,
     DashboardComponent,
-    HeroRegistrationComponent,
-    HeroDetailContainerComponent,
     HeroFormComponentComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent,
+    CheckAuthComponent,
+    MenuComponent,
+    MenuContainer,
+    UserPageComponent,
+    UserPageContainer
   ],
   imports: [
     BrowserModule,
@@ -34,7 +53,7 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DataService, AuthGuard, LoginGuard, MainPageGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

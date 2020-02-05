@@ -1,0 +1,25 @@
+<h2>My Ugandian Heroes</h2>
+
+<table class = "heroes">
+  <tr>
+    <th>Id</th>
+    <th>Login</th>
+    <th>Name</th>
+    <th>Surname</th>
+  </tr>
+
+  <tr *ngFor="let hero of (heroes | async)">
+    <td class="badge">
+      <a routerLink="/hero/{{hero.login }}">
+        {{hero.login}}
+      </a>
+    </td>
+    <td> {{hero.name}}</td>
+    <td> {{hero.surname}}</td>
+  </tr>
+
+</table>
+
+
+
+
