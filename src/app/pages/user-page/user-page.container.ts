@@ -6,12 +6,13 @@ import {Hero} from '../../hero';
 
 @Component({
   selector: 'app-user-page-container',
-  template: '<app-user-page [hero]="hero$ | async"></app-user-page>',
+  template: '<app-user-page [hero]="hero$ | async" ></app-user-page>',
   styleUrls: ['./user-page.component.css']
 })
 export class UserPageContainer implements OnInit {
 
   hero$: Observable<Hero>;
+  url: string = 'http://localhost:8000/';
 
   constructor(private route: ActivatedRoute,
               private heroService: HeroService) { }
@@ -19,8 +20,6 @@ export class UserPageContainer implements OnInit {
   ngOnInit(): void {
     this.getHero();
   }
-
-
 
   getHero(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {

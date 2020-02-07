@@ -26,13 +26,13 @@ button {
   font-family: Arial;
   background-color: #eee;
   border: none;
-  padding: 5px 10px;
+  padding: 10px;
   border-radius: 4px;
   cursor: pointer;
   cursor: hand;
 }
 button:hover {
-  background-color: #cfd8dc;
+  background-color: rgba(57, 117, 255, 0.81);
 }
 button:disabled {
   background-color: #eee;

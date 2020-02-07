@@ -9,6 +9,7 @@ import { HeroService } from '../../services/hero.service';
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
+  url = 'http://localhost:8000/';
 
   constructor(private heroService: HeroService) { }
 
@@ -18,6 +19,6 @@ export class DashboardComponent implements OnInit {
 
   getHeroes(): void {
     this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes.slice(0, 4));
+      .subscribe(heroes => this.heroes = heroes);
   }
 }

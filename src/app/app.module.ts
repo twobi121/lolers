@@ -22,6 +22,8 @@ import {MenuContainer} from './pages/menu/menu.container';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import {UserPageContainer} from './pages/user-page/user-page.container';
 import {MainPageGuard} from './guards/main-page.guard';
+import { AvatarComponent } from './components/avatar/avatar.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -44,7 +46,10 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MenuComponent,
     MenuContainer,
     UserPageComponent,
-    UserPageContainer
+    UserPageContainer,
+    AvatarComponent,
+    UserInfoComponent
+
   ],
   imports: [
     BrowserModule,

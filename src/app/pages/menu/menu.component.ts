@@ -10,7 +10,6 @@ export class MenuComponent {
 
   @Input() isAuth: boolean;
   @Input() login: string;
-  logo: string = 'http://localhost:8000/angular1.png';
 
 
   constructor(private heroService: HeroService) { }

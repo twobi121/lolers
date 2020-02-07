@@ -13,7 +13,8 @@ import {DataService} from './data-service';
 })
 
 export class HeroService {
-  url = 'http://localhost:8000/users/';
+  userUrl = 'http://localhost:8000/users/';
+  uploadUrl = 'http://localhost:8000/upload/'
   hero: Hero;
 
   constructor(
@@ -24,15 +25,15 @@ export class HeroService {
   }
 
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.url);
+    return this.http.get<Hero[]>(this.userUrl);
   }
 
   getHero(login: string): Observable<Hero> {
-    return this.http.get<Hero>(this.url + login);
+    return this.http.get<Hero>(this.userUrl + login);
   }
 
   addHero(hero: {}): Observable<boolean> {
-    return this.http.post(this.url + 'add', hero, {observe: 'response'})
+    return this.http.post(this.userUrl + 'add', hero, {observe: 'response'})
       .pipe(
         map(response => {
             if (response.status === 201) {
@@ -46,7 +47,7 @@ export class HeroService {
   }
 
   login(loginData: Data) {
-    this.http.post(this.url + 'login', loginData)
+    this.http.post(this.userUrl + 'login', loginData)
       .pipe(
         map((data: Data) => {
           if (data.token) {
@@ -63,7 +64,7 @@ export class HeroService {
   }
 
   getUserLogin() {
-    return this.http.get(this.url + 'user')
+    return this.http.get(this.userUrl + 'user')
       .pipe(
         map((data: Data) => {
           this.router.navigateByUrl(`hero/${data}`);
@@ -78,22 +79,30 @@ export class HeroService {
 
 
   logout() {
-    this.http.post(this.url + 'logout', null)
+    this.http.post(this.userUrl + 'logout', null)
       .pipe(
         tap(() => {
           localStorage.removeItem('heroToken');
           localStorage.removeItem('login');
           this.dataService.setLogin('');
           this.dataService.changeAuthState(false);
-          console.log(this.router.url)
-          this.router.navigate([this.router.url + '?auth=false']);
+          this.dataService.changeRegState(false);
+          this.router.navigate([this.router.url + '/']);
         })
       )
       .subscribe();
   }
 
-  getLogo() {
-    return this.http.get(this.url + 'logo');
+  uploadAvatar(file: any) {
+    const uploadData = new FormData();
+    uploadData.append('file', file, file.name);
+    return this.http.post(this.uploadUrl, uploadData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+      .pipe (
+        map( event => event)
+      );
   }
 }
 

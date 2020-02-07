@@ -6,5 +6,6 @@ export class Hero {
   birth_year: number;
   email: string;
   phone: string;
+  avatar: object
 }
 

@@ -1,0 +1,30 @@
+<div class="avatar wrapper">
+  <div class="avatar_img">
+    <img [src] = "avatar || (url + hero.avatar.filename)" alt="">
+  </div>
+
+  <div class="upload_btn" *ngIf="hero.login === (login$ | async)">
+    <input
+      style="display: none"
+      type="file" (change)="onFileChanged($event)"
+      #fileInput>
+    <button (click)="fileInput.click() " >Выбрать фото</button>
+
+    <div class="upload_modal_overlay" *ngIf="selectedFile" (click)="unselectFile(fileInput)">
+
+      <div class="upload_modal" *ngIf="selectedFile" >
+        <p>Редактирование изображения</p>
+        <img [src]="preview">
+        <div class="set_avatar_block">
+          <button (click)="upload(fileInput)">Установить аватар</button>
+          <button (click)="unselectFile(fileInput)">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>

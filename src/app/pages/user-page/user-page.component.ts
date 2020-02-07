@@ -1,5 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {Hero} from '../../hero';
+import {HeroService} from '../../services/hero.service';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {HttpHeaderResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-user-page',
@@ -8,9 +11,10 @@ import {Hero} from '../../hero';
 })
 export class UserPageComponent {
 
+
   @Input() hero: Hero;
-  avatar: string = 'http://localhost:8000/avatar.jpg';
 
   constructor() { }
+
 
 }

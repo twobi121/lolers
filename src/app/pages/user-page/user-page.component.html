@@ -1,24 +1,8 @@
 <div class = "user_page_container" *ngIf="hero ">
-  <div class="avatar wrapper">
-    <img [src]="avatar" alt="">
 
-    <div class="upload_btn ">
-      <button>Загрузить изображение</button>
-    </div>
-
-  </div>
-
+  <app-avatar [hero]="hero" ></app-avatar>
   <div class="user_info wrapper">
-      <div class="user_info_name">{{hero.name | titlecase }} {{hero.surname | titlecase }}</div>
-
-      <div class="user_info_personal">
-        <p><span>Год рождения:</span> {{hero.birth_year}}</p>
-        <p><span>Телефон:</span> {{hero.phone}}</p>
-        <p><span>Email:</span> {{hero.email}}</p>
-
-      </div>
-
-
+    <app-user-info [hero]="hero"></app-user-info>
   </div>
 
 
