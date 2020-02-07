@@ -1,0 +1,27 @@
+.user_info_name {
+  font-size: 20px;
+}
+
+.user_info_name:after {
+  content: '';
+  margin-top: 5px;
+  display: block;
+  height: 1px;
+  background-color: #d7d8db;
+}
+
+.user_info_personal {
+  color: #626d7a;
+  padding: 10px 0;
+  width: 50%;
+}
+
+.user_info_personal p {
+  display: flex;
+  padding: 5px 0;
+}
+
+.user_info_personal span {
+  display: inline-block;
+  width: 50%;
+}
