@@ -24,6 +24,7 @@ import {UserPageContainer} from './pages/user-page/user-page.container';
 import {MainPageGuard} from './guards/main-page.guard';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { LastPhotosComponent } from './components/last-photos/last-photos.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -48,7 +49,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     UserPageComponent,
     UserPageContainer,
     AvatarComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    LastPhotosComponent
 
   ],
   imports: [

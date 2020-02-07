@@ -1,0 +1,8 @@
+<div class="wrapper full">
+  <div class="preview_photo">
+    <p *ngFor="let photo of (lastPhotos | async)">
+      <img class="preview_photo_item" [src]="url + photo.filename" alt="">
+    </p>
+  </div>
+
+</div>

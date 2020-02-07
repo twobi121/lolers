@@ -1,18 +1,18 @@
 .user_page_container {
   padding: 20px;
   display: flex;
-}
-
-.wrapper {
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+  flex-wrap: wrap;
 }
 
 .user_info {
   flex-grow: 1;
   margin-left: 10px;
   padding: 20px;
+}
+
+.last-photos {
+  flex-basis: 100%;
+  margin: 10px 0 0 230px;
 }
 
 

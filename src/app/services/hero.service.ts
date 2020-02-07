@@ -104,6 +104,13 @@ export class HeroService {
         map( event => event)
       );
   }
+
+  getLastPhotos(): Observable<[]> {
+    return this.http.get<any>(this.userUrl + 'lastphotos')
+      .pipe(
+        map(photos => photos)
+      );
+  }
 }
 
 
