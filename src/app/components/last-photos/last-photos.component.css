@@ -1,7 +1,10 @@
 .preview_photo {
+  padding: 10px;
+}
+
+.preview_photo_block {
   display: flex;
   flex-direction: row;
-  padding: 10px;
 }
 
 .preview_photo_item {
@@ -9,5 +12,12 @@
   margin-right: 10px;
   max-height: 100px;
 }
+
+.preview_photo a {
+  text-decoration: none;
+  font-size: 12px;
+}
+
+
 
 

@@ -14,7 +14,7 @@ import {DataService} from './data-service';
 
 export class HeroService {
   userUrl = 'http://localhost:8000/users/';
-  uploadUrl = 'http://localhost:8000/upload/'
+  mediaUrl = 'http://localhost:8000/media/';
   hero: Hero;
 
   constructor(
@@ -96,7 +96,7 @@ export class HeroService {
   uploadAvatar(file: any) {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
-    return this.http.post(this.uploadUrl, uploadData, {
+    return this.http.post(this.mediaUrl + 'uploadAvatar', uploadData, {
       reportProgress: true,
       observe: 'events'
     })
@@ -105,8 +105,8 @@ export class HeroService {
       );
   }
 
-  getLastPhotos(): Observable<[]> {
-    return this.http.get<any>(this.userUrl + 'lastphotos')
+  getLastPhotos(id): Observable<[]> {
+    return this.http.get<any>(this.mediaUrl + 'lastphotos/' + id)
       .pipe(
         map(photos => photos)
       );
