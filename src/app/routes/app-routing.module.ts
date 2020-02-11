@@ -5,15 +5,16 @@ import {DashboardComponent} from '../pages/dashboard/dashboard.component';
 import {UserEditContainer} from '../pages/user-edit/user-edit.container';
 import {LoginComponent} from '../pages/login/login.component';
 import {RegistrationComponent} from '../pages/registration/registration.component';
-import {CheckAuthComponent} from '../check-auth/check-auth.component';
 import {AuthGuard} from '../guards/auth.guard';
 import {LoginGuard} from '../guards/login.guard';
 import {UserPageContainer} from '../pages/user-page/user-page.container';
 import {MainPageGuard} from '../guards/main-page.guard';
+import {AlbumComponent} from '../album/album.component';
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [MainPageGuard]},
+  { path: 'hero/:login/album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
   { path: 'hero/:login', component: UserPageContainer, canActivate: [AuthGuard] },
   { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },
   { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },

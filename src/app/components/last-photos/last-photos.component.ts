@@ -2,21 +2,56 @@ import {Component, Input, OnInit} from '@angular/core';
 import {HeroService} from '../../services/hero.service';
 import {Observable} from 'rxjs';
 import {Hero} from '../../hero';
+import {DataService} from '../../services/data-service';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {HttpHeaderResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-last-photos',
   templateUrl: './last-photos.component.html',
   styleUrls: ['./last-photos.component.css']
 })
-export class LastPhotosComponent implements OnInit {
+export class LastPhotosComponent {
   @Input() hero: Hero;
-  lastPhotos: Observable<[]>;
+  @Input() lastPhotos: {};
+  @Input() login: string;
+  selectedFiles: [];
+  blobs: SafeUrl[] = [];
   url = 'http://localhost:8000/';
-  constructor(private heroService: HeroService) { }
 
-  ngOnInit() {
-    console.log(this.hero)
-    this.lastPhotos = this.heroService.getLastPhotos(this.hero._id);
+  constructor(private heroService: HeroService,
+              private dataService: DataService,
+              private sanitizer: DomSanitizer) { }
+
+  onFileChanged($event: Event) {
+    // @ts-ignore
+    this.selectedFiles = $event.target.files;
+    if (this.selectedFiles.length ) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        this.blobs.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])));
+      }
+    }
   }
+
+  unselectFile(fileInput: HTMLInputElement, event: Event) {
+   // @ts-ignore
+    if (event.target.className === 'upload_modal_overlay' || event.target.innerText === 'Отмена' ) {
+     this.selectedFiles = null;
+     this.blobs = [];
+     fileInput.value = '';
+   }
+
+  }
+
+  upload() {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.heroService.uploadPhoto(this.selectedFiles[i]);
+    }
+
+    this.selectedFiles = null;
+  }
+
 
 }

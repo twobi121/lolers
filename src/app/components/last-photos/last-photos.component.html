@@ -1,8 +1,49 @@
-<div class="preview_photo wrapper">
-  <p><a routerLink="login">Фотографии {{hero.name}} {{hero.surname}}</a></p>
-  <div class="preview_photo_block">
-    <img class="preview_photo_item" *ngFor="let photo of (lastPhotos | async)" [src]="url + photo.filename" alt="">
+<div class="preview_photo wrapper" *ngIf="lastPhotos">
+  <p><a routerLink="album/{{lastPhotos.id}}">Фотографии {{hero.name}} {{hero.surname}}</a></p>
+  <div class="preview_photo_block" >
+
+    <div class="preview_photo_item_container" *ngIf="lastPhotos.lastphotos && lastPhotos.lastphotos.length">
+      <img class="preview_photo_item" *ngFor="let photo of lastPhotos.lastphotos"  [src]="url + photo.filename" alt="">
+    </div>
+
+    <div class="preview_photo_item_container" *ngIf="[blobs.length]">
+      <img class="preview_photo_item" *ngFor="let blob of blobs"  [src]="blob" alt="">
+    </div>
+
+    <div *ngIf="hero.login === login">
+      <input
+        style="display: none"
+        type="file" (change)="onFileChanged($event)" multiple
+        #fileInput>
+
+      <i class="fas fa-camera fa-2x link"  (click)="fileInput.click()">
+        <span>Добавить фотографии
+        </span>
+      </i>
+
+      <div class="upload_modal_overlay" *ngIf="selectedFiles" (click)="unselectFile(fileInput, $event)">
+        <div class="upload_modal" *ngIf="blobs" >
+          <img *ngFor = "let photo of blobs" [src]="photo">
+          <div class="set_avatar_block">
+            <button (click)="upload()">Загрузить фотографии</button>
+            <button (click)="unselectFile(fileInput, $event)">Отмена</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <i class="fas fa-camera fa-2x" *ngIf="hero.login !== login && !lastPhotos[1]">
+    </i>
+
+
   </div>
+
+
+
+
+
+
 </div>
 
 

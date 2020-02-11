@@ -25,6 +25,8 @@ import {MainPageGuard} from './guards/main-page.guard';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { LastPhotosComponent } from './components/last-photos/last-photos.component';
+import {LastPhotosContainer} from './components/last-photos/last-photos.container';
+import { AlbumComponent } from './album/album.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -50,8 +52,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     UserPageContainer,
     AvatarComponent,
     UserInfoComponent,
-    LastPhotosComponent
-
+    LastPhotosComponent,
+    LastPhotosContainer,
+    AlbumComponent
   ],
   imports: [
     BrowserModule,

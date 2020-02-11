@@ -111,6 +111,23 @@ export class HeroService {
         map(photos => photos)
       );
   }
+
+  uploadPhoto(file: File) {
+    const uploadData = new FormData();
+    uploadData.append('file', file, file.name);
+    this.http.post(this.mediaUrl + 'uploadPhoto', uploadData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+      .subscribe();
+  }
+
+  getAlbum(id: string) {
+    return this.http.get<any>(this.mediaUrl + 'album/' + id)
+      .pipe(
+        map(album => album)
+      )
+  }
 }
 
 

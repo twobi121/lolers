@@ -1,5 +1,11 @@
 .preview_photo {
-  padding: 10px;
+  padding: 5px 10px 10px;
+  text-align: center;
+}
+
+.preview_photo p {
+  text-align: left;
+  padding-bottom: 5px;
 }
 
 .preview_photo_block {
@@ -8,7 +14,7 @@
 }
 
 .preview_photo_item {
-  max-width: 200px;
+  max-width: 150px;
   margin-right: 10px;
   max-height: 100px;
 }
@@ -16,7 +22,71 @@
 .preview_photo a {
   text-decoration: none;
   font-size: 12px;
+  color: #3975ff;
 }
+
+i {
+  padding: 20px;
+  margin: 0 auto;
+  color: #c1c1c1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+i.link {
+  cursor: pointer;
+}
+
+i span {
+  font-family: Roboto, sans-serif;
+  font-size: 0.7em;
+  padding-left: 5px;
+}
+
+.upload_modal_overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0,0,0,0.84);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.upload_modal {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 40%;
+  min-width: 200px;
+  max-width: 500px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+
+.upload_modal p {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-bottom: solid 1px #d7d8db;
+  background-color: #edeef0;
+}
+
+.set_avatar_block {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.upload_modal img {
+  padding-top: 10px;
+  max-width: 150px;
+}
+
 
 
 
