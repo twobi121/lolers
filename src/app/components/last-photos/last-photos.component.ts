@@ -23,6 +23,8 @@ export class LastPhotosComponent {
               private dataService: DataService,
               private sanitizer: DomSanitizer) { }
 
+
+
   onFileChanged($event: Event) {
     // @ts-ignore
     this.selectedFiles = $event.target.files;

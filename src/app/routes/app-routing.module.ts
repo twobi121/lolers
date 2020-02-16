@@ -9,12 +9,16 @@ import {AuthGuard} from '../guards/auth.guard';
 import {LoginGuard} from '../guards/login.guard';
 import {UserPageContainer} from '../pages/user-page/user-page.container';
 import {MainPageGuard} from '../guards/main-page.guard';
-import {AlbumComponent} from '../album/album.component';
+import {AlbumsContainer} from '../pages/albums/albums.container';
+import {PhotoComponent} from '../components/photo/photo.component';
+
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [MainPageGuard]},
-  { path: 'hero/:login/album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
+  { path: 'hero/:login/albums/:id', component: AlbumsContainer, canActivate: [AuthGuard], children: [
+      { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
+    ]},
   { path: 'hero/:login', component: UserPageContainer, canActivate: [AuthGuard] },
   { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },
   { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },

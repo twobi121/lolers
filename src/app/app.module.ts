@@ -26,7 +26,9 @@ import { AvatarComponent } from './components/avatar/avatar.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { LastPhotosComponent } from './components/last-photos/last-photos.component';
 import {LastPhotosContainer} from './components/last-photos/last-photos.container';
-import { AlbumComponent } from './album/album.component';
+import { AlbumsComponent } from './pages/albums/albums.component';
+import {AlbumsContainer} from './pages/albums/albums.container';
+import { PhotoComponent } from './components/photo/photo.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -54,7 +56,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     UserInfoComponent,
     LastPhotosComponent,
     LastPhotosContainer,
-    AlbumComponent
+    AlbumsComponent,
+    AlbumsContainer,
+    PhotoComponent
   ],
   imports: [
     BrowserModule,
