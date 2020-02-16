@@ -1,0 +1,67 @@
+.upload_modal_overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0,0,0,0.84);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.upload_modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 200px;
+  max-width: 500px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+
+.upload_modal p {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-bottom: solid 1px #d7d8db;
+  background-color: #edeef0;
+}
+
+.photo_block {
+  position: relative;
+  padding: 40px;
+}
+
+img {
+  max-width: 420px;
+}
+
+.move_icon {
+  position: absolute;
+  padding: 40px;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.icon_item {
+  opacity: 0.3;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.icon_item:hover {
+  opacity: 1;
+}
+
+

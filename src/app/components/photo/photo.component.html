@@ -1,0 +1,24 @@
+<div class="upload_modal_overlay" >
+
+  <div class="upload_modal"  >
+    <p>Редактирование изображения</p>
+
+    <div class="photo_block" >
+      <div class="move_icon">
+        <div class="icon_item" (click)="prevPhoto()">
+          <i class="fas fa-chevron-left fa-2x icon"></i>
+        </div>
+
+        <div class="icon_item" (click)="nextPhoto()">
+          <i class="fas fa-chevron-right fa-2x icon"></i>
+        </div>
+
+
+      </div>
+
+        <img [src]="url + selectedPhoto.filename">
+        <div>{{selectedPhoto.albums[0].name}}</div>
+    </div>
+  </div>
+
+</div>
