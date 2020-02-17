@@ -29,16 +29,12 @@ export class AlbumsComponent implements OnChanges {
     }
 
     this.albums = this.albumsPhotos.albums;
-
     this.photosByYear = this.albumsPhotos.photos;
     this.photosByYear.forEach(item => this.photos = this.photos.concat(item.filenames));
     this.dataService.photos = this.photos;
-    console.log(this.photosByYear)
-
   }
 
   selectPhoto(photo: string) {
     this.dataService.photos = this.photos;
-
   }
 }

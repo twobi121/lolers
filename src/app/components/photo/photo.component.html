@@ -1,24 +1,56 @@
-<div class="upload_modal_overlay" >
+<div class="upload_modal_overlay" (click)="closePhoto($event)">
 
-  <div class="upload_modal"  >
-    <p>Редактирование изображения</p>
-
+  <div class="upload_modal"  *ngIf="hero" >
     <div class="photo_block" >
-      <div class="move_icon">
-        <div class="icon_item" (click)="prevPhoto()">
-          <i class="fas fa-chevron-left fa-2x icon"></i>
+      <div class="photo_item">
+        <div class="move_icon">
+          <div class="icon_item" (click)="prevPhoto()">
+            <i class="fas fa-chevron-left fa-2x icon"></i>
+          </div>
+
+          <div class="icon_item" (click)="nextPhoto()">
+            <i class="fas fa-chevron-right fa-2x icon"></i>
+          </div>
+
+        </div>
+        <img [src]="url + selectedPhoto.filename">
+      </div>
+      <div class="photo_data"><a routerLink="/hero/{{hero.login}}/albums/{{selectedPhoto.albums[0].id}}/{{hero._id}}">{{selectedPhoto.albums[0].name}}</a></div>
+    </div>
+
+    <div class="photo_rightfield">
+
+      <div class="hero_data_wrapper">
+        <div class="hero_data">
+          <div class="hero_avatar_thumb">
+            <a routerLink="/hero/{{hero.login}}">
+              <img [src]="url + hero.avatar.filename" alt="">
+            </a>
+          </div>
+
+          <div>
+            <div class="hero_name">
+              <a routerLink="/hero/{{hero.login}}">
+                {{hero.name}} {{hero.surname}}
+              </a>
+            </div>
+            <div class="photo_date">
+              {{selectedPhoto.date | date: 'dd.MM.yyyy'}}
+            </div>
+
+          </div>
         </div>
 
-        <div class="icon_item" (click)="nextPhoto()">
-          <i class="fas fa-chevron-right fa-2x icon"></i>
+        <div>
+          <i class="fas fa-times close_btn" (click)="closePhoto($event)"></i>
         </div>
 
 
       </div>
 
-        <img [src]="url + selectedPhoto.filename">
-        <div>{{selectedPhoto.albums[0].name}}</div>
+      <div class="likes">
+        <i class="far fa-heart"></i>
+        {{selectedPhoto.likes}}
+      </div>
     </div>
   </div>
-
-</div>

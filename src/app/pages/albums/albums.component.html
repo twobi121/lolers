@@ -5,7 +5,7 @@
 
    <div class="albums" >
      <div class="album_item" *ngFor="let album of albums">
-         <a href="#" class="album_preview" [ngStyle]="{background: 'url(' + url + album.preview + ')',
+         <a routerLink="/hero/{{hero.login}}/album/{{album._id}}" class="album_preview" [ngStyle]="{background: 'url(' + url + album.preview + ')',
          'background-size': 'cover',
          'background-position': '50% 50%'} ">
 

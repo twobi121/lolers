@@ -15,7 +15,7 @@ export class DataService {
 
   private login = new BehaviorSubject<string>('' || localStorage.getItem('login'));
   login$ = this.login.asObservable();
-  photos: string[];
+  photos: any[];
   photo: string;
 
   constructor() {

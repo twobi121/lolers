@@ -13,12 +13,9 @@
 .upload_modal {
   position: fixed;
   display: flex;
-  align-items: center;
-  flex-direction: column;
   min-width: 200px;
-  max-width: 500px;
+  max-width: 900px;
   background-color: #ffffff;
-  border-radius: 4px;
   box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
 }
 
@@ -30,18 +27,26 @@
   background-color: #edeef0;
 }
 
+a {
+  color: #333333;
+  text-decoration: none;
+}
+
 .photo_block {
+  max-width: 700px;
+}
+
+.photo_item {
   position: relative;
-  padding: 40px;
 }
 
 img {
-  max-width: 420px;
+  max-width: 100%;
+  vertical-align: bottom;
 }
 
 .move_icon {
   position: absolute;
-  padding: 40px;
   top: 0;
   left: 0;
   display: flex;
@@ -62,6 +67,62 @@ img {
 
 .icon_item:hover {
   opacity: 1;
+  cursor: pointer;
 }
+
+.photo_data {
+  width: 100%;
+  padding: 20px;
+}
+
+.photo_rightfield {
+  width: 300px;
+}
+
+.close_btn {
+  opacity: 0;
+}
+
+.photo_rightfield:hover .close_btn {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.hero_data_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: solid 1px #d7d8db;
+}
+
+.hero_avatar_thumb {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.hero_avatar_thumb img{
+  border-radius: 50%;
+}
+
+.hero_data {
+  display: flex;
+}
+
+.hero_name {
+  font-size: 20px;
+}
+
+.likes {
+  padding: 10px 20px;
+}
+
+.likes i:hover {
+  cursor: pointer;
+  color: rosybrown;
+}
+
+
+
 
 

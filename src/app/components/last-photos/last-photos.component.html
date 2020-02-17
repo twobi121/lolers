@@ -5,9 +5,12 @@
   <div class="preview_photo_block" >
 
     <div class="preview_photo_item_container" *ngIf="lastPhotos && lastPhotos.lastphotos.length">
+
       <div class="preview_photo_item"
            *ngFor="let photo of lastPhotos.lastphotos"
            [ngStyle]="{background: 'url(' + url + photo.filename + ')', 'background-size': 'cover'} ">
+        <a  routerLink="albums/{{hero._id}}/{{photo.filename}}"></a>
+
       </div>
     </div>
 

@@ -29,6 +29,8 @@ import {LastPhotosContainer} from './components/last-photos/last-photos.containe
 import { AlbumsComponent } from './pages/albums/albums.component';
 import {AlbumsContainer} from './pages/albums/albums.container';
 import { PhotoComponent } from './components/photo/photo.component';
+import { AlbumComponent } from './pages/album/album.component';
+import {AlbumContainer} from './pages/album/album.container';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -58,7 +60,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LastPhotosContainer,
     AlbumsComponent,
     AlbumsContainer,
-    PhotoComponent
+    PhotoComponent,
+    AlbumComponent,
+    AlbumContainer
   ],
   imports: [
     BrowserModule,

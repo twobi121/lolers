@@ -12,7 +12,7 @@ import {Hero} from '../../hero';
 export class UserPageContainer implements OnInit {
 
   hero$: Observable<Hero>;
-  url: string = 'http://localhost:8000/';
+  url = 'http://localhost:8000/';
 
   constructor(private route: ActivatedRoute,
               private heroService: HeroService) { }
