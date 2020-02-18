@@ -1,40 +1,27 @@
-<!--<div class="album wrapper" *ngIf="hero && albums">-->
-<!--  <div class="album_header">-->
-<!--    Альбомы <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>-->
-<!--  </div>-->
+<div class="album wrapper" *ngIf="hero && album">
+  <div class="album_header">
+    <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
+    > <a routerLink="/hero/{{hero.login}}/albums/{{hero._id}}"> Альбомы</a>
+    > {{album[0].name}}
+  </div>
 
-<!--  <div class="albums" >-->
-<!--    <div class="album_item" *ngFor="let album of albums">-->
-<!--      <a routerLink="/hero/{{hero.login}}/album/{{album._id}}" class="album_preview" [ngStyle]="{background: 'url(' + url + album.preview + ')',-->
-<!--         'background-size': 'cover',-->
-<!--         'background-position': '50% 50%'} ">-->
+  <div class="photos" >
+    <div class="album_item" *ngFor="let album of album">
+      <p class="album_year"> {{album.description}}</p>
+      <div class="photo_previews">
+        <a class="album_preview"
+           *ngFor="let photo of album.photos"
+           [ngStyle]="{background: 'url(' + url + photo.filename + ')',
+                 'background-size': 'cover',
+                 'background-position': '50% 50%'} "
+           routerLink="{{photo.filename}}"
+        ></a>
+      </div>
+    </div>
+  </div>
 
-<!--      </a>-->
-<!--      <div class="album_title">-->
-<!--        <p>{{album.name}}</p>-->
-<!--        &lt;!&ndash;           <p>{{album.photos.length}}</p>&ndash;&gt;-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div class="photos" >-->
-<!--    <div class="album_item" *ngFor="let photos of photosByYear">-->
-<!--      <p class="album_year"> {{photos._id}} год </p>-->
-<!--      <div class="photo_previews">-->
-<!--        <a class="album_preview"-->
-<!--           *ngFor="let photo of photos.filenames"-->
-<!--           [ngStyle]="{background: 'url(' + url + photo.filename + ')',-->
-<!--                 'background-size': 'cover',-->
-<!--                 'background-position': '50% 50%'} "-->
-<!--           routerLink="{{photo.filename}}"-->
-<!--        ></a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <router-outlet></router-outlet>-->
+  <router-outlet></router-outlet>
 
 
-<!--</div>-->
+</div>
 

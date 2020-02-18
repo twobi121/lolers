@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {SafeUrl} from '@angular/platform-browser';
 
 @Injectable()
 export class DataService {
@@ -16,7 +17,10 @@ export class DataService {
   private login = new BehaviorSubject<string>('' || localStorage.getItem('login'));
   login$ = this.login.asObservable();
   photos: any[];
+  albums: any[];
   photo: string;
+  selectedFiles: [];
+  blobs: SafeUrl[];
 
   constructor() {
 

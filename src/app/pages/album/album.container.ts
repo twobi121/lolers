@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Hero} from '../../hero';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {HeroService} from '../../services/hero.service';
@@ -7,12 +7,12 @@ import {DataService} from '../../services/data-service';
 
 @Component({
   selector: 'app-album-container',
-  template: '<app-album ></app-album>',
+  template: '<app-album [album]="album$ | async"  [hero]="hero$ | async"></app-album>',
   styleUrls: ['./album.component.css']
 })
 export class AlbumContainer implements OnInit {
 
-  album$: Observable<{}>;
+  album$: Observable<object>;
   hero$: Observable<Hero>;
   url = 'http://localhost:8000/';
 

@@ -1,0 +1,35 @@
+.upload {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.upload_header {
+  padding: 20px;
+  border-bottom: 1px solid #d7d8db;
+}
+
+.upload_block {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 95%;
+  margin: auto;
+  padding: 20px;
+}
+
+.upload_preview {
+  display: block;
+  width: 150px;
+  height: 100px;
+  margin: 0 10px 10px 0;
+}
+
+.upload_album {
+  border-top: 1px solid #d7d8db;
+  padding: 20px;
+}
+
+.upload_btn {
+
+}

@@ -21,7 +21,7 @@ export class AlbumsContainer implements OnInit {
 
   ngOnInit(): void {
     this.getHero();
-    this.getAlbums();
+    this.getAlbumsWithPhotos();
   }
 
   getHero(): void {
@@ -30,9 +30,9 @@ export class AlbumsContainer implements OnInit {
     });
   }
 
-  getAlbums(): void {
+  getAlbumsWithPhotos(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.albumsPhotos$ = this.heroService.getAlbums(params.get('id'));
+      this.albumsPhotos$ = this.heroService.getAlbumsWithPhotos(params.get('id'));
     });
   }
 

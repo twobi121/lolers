@@ -1,0 +1,24 @@
+<div class="upload wrapper">
+  <p class="upload_header">Загрузка фотографий</p>
+
+  <div class="upload_block">
+    <p  class="upload_preview"
+      *ngFor="let blob of blobs"
+       [ngStyle]="{background: 'url(' + blob.changingThisBreaksApplicationSecurity + ')', 'background-size': 'cover'} ">
+    </p>
+  </div>
+
+  <div class="upload_album">
+    <select name="" id="">
+      <option *ngFor="let lol of (albums$ | async)">
+
+        {{lol.name}}
+      </option>
+    </select>
+
+    <button class="upload_btn" (click)="upload()">Загрузить</button>
+  </div>
+
+</div>
+
+

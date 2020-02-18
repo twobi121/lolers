@@ -5,6 +5,7 @@ import {Hero} from '../../hero';
 import {DataService} from '../../services/data-service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {HttpHeaderResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-last-photos',
@@ -21,7 +22,9 @@ export class LastPhotosComponent {
 
   constructor(private heroService: HeroService,
               private dataService: DataService,
-              private sanitizer: DomSanitizer) { }
+              private sanitizer: DomSanitizer,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
 
 
@@ -33,6 +36,10 @@ export class LastPhotosComponent {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         this.blobs.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])));
       }
+      this.dataService.blobs = this.blobs;
+      this.dataService.selectedFiles = this.selectedFiles;
+      // @ts-ignore
+      this.router.navigateByUrl(this.route.snapshot._routerState.url + `/albums/${this.hero._id}/upload`);
     }
   }
 

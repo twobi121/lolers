@@ -126,8 +126,16 @@ export class HeroService {
     return this.http.get<any>(this.mediaUrl + 'album/' + id)
       .pipe(
         map(album => album)
-      ).subscribe()
+      );
   }
+
+  getAlbumsWithPhotos(id: string) {
+    return this.http.get<any>(this.mediaUrl + 'albums_photos/' + id)
+      .pipe(
+        map(albums => albums)
+      );
+  }
+
 
   getAlbums(id: string) {
     return this.http.get<any>(this.mediaUrl + 'albums/' + id)
@@ -135,8 +143,6 @@ export class HeroService {
         map(albums => albums)
       );
   }
-
-
 }
 
 

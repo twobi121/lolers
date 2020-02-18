@@ -20,6 +20,7 @@ export class PhotoComponent implements OnInit {
  photos: Photo[];
  selectedPhoto: Photo;
  url = 'http://localhost:8000/';
+ albums: any[];
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +32,7 @@ export class PhotoComponent implements OnInit {
 
   ngOnInit() {
     this.photos = this.dataService.photos;
+    this.albums = this.dataService.albums;
     this.getHero();
     this.selectPhoto();
   }
