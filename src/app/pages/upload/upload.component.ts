@@ -1,21 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SafeUrl} from '@angular/platform-browser';
 import {DataService} from '../../services/data-service';
 import {HeroService} from '../../services/hero.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {HttpResponse} from '@angular/common/http';
+
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
 })
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnInit, OnDestroy {
 
   selectedFiles: [];
   blobs: SafeUrl[];
   albums$: Observable<[]>;
+  albums: [];
+  subs: Subscription[] = [];
+  selectedValue: '';
   url = 'http://localhost:8000/';
+  loading: SafeUrl[] = [];
   constructor(
     private dataService: DataService,
     private heroService: HeroService,
@@ -25,22 +31,45 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.selectedFiles = this.dataService.selectedFiles;
     this.blobs = this.dataService.blobs;
-    this.getAlbums();
+    // @ts-ignore
+    if (this.route.params.value.id) {
+      this.getAlbums();
+      // @ts-ignore
+    } else if (this.route.params.value.album_id) {
+      // @ts-ignore
+      this.selectedValue = this.route.params.value.album_id;
+    }
   }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(item => item.unsubscribe());
+  }
+
 
   getAlbums(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.albums$ = this.heroService.getAlbums(params.get('id'));
     });
+
+    this.subs.push(this.albums$.subscribe(item => {
+      this.albums = item;
+      // @ts-ignore
+      this.selectedValue = this.albums[0]._id;
+    }));
+
   }
 
   upload() {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.heroService.uploadPhoto(this.selectedFiles[i]);
+      const loading = this.heroService.uploadPhoto(this.selectedFiles[i], this.selectedValue);
+      this.subs.push(loading.subscribe(event => {
+        if (event instanceof HttpResponse && event.body === 'Файл загружен') {
+          this.loading.push(this.blobs[i]);
+        }
+      }));
     }
 
-    this.selectedFiles = null;
   }
 
 }

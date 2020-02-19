@@ -2,7 +2,7 @@
 
   <div class="upload_modal"  *ngIf="hero" >
     <div class="photo_block" >
-      <div class="photo_item">
+      <div class="photo_item" *ngIf="!deleteStatus">
         <div class="move_icon">
           <div class="icon_item" (click)="prevPhoto()">
             <i class="fas fa-chevron-left fa-2x icon"></i>
@@ -15,7 +15,15 @@
         </div>
         <img [src]="url + selectedPhoto.filename">
       </div>
-      <div class="photo_data"><a routerLink="/hero/{{hero.login}}/albums/{{albums[0].id}}/{{hero._id}}">{{albums[0].name}}</a></div>
+      <div class="photo_data" *ngIf="!deleteStatus">
+        <a routerLink="/hero/{{hero.login}}/albums/{{albums[0].id}}/{{hero._id}}">{{albums[0].name}}</a>
+        <button (click)="deletePhoto()">
+          Удалить фото
+        </button>
+      </div>
+      <div *ngIf="deleteStatus">
+        Фото успешно удалено
+      </div>
     </div>
 
     <div class="photo_rightfield">

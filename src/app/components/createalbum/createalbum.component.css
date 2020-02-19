@@ -1,0 +1,86 @@
+.upload_modal_overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0,0,0,0.84);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.upload_modal {
+  position: fixed;
+  min-width: 500px;
+  max-width: 900px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+
+.upload_modal_header {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-bottom: solid 1px #d7d8db;
+  background-color: #edeef0;
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  color: #333333;
+  text-decoration: none;
+}
+
+.upload_modal_block {
+  max-width: 700px;
+  padding: 10px 40px;
+}
+
+label {
+  padding: 10px 10px 10px 0;
+}
+
+input, textarea {
+  width: 100%;
+}
+textarea {
+  height: 100px;
+  padding: 5px;
+}
+
+.close_btn {
+  opacity: 0;
+}
+
+.upload_modal_header:hover .close_btn {
+  opacity: 1;
+  cursor: pointer;
+}
+
+button {
+  margin: 0;
+}
+
+.upload_btn_block {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 40px;
+}
+
+.album_success {
+  padding: 10px 20px 0;
+  text-align: center;
+}
+
+.upload {
+  cursor: pointer;
+}
+
+
+
+
+
+
+

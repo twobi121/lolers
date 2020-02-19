@@ -32,6 +32,7 @@ import { PhotoComponent } from './components/photo/photo.component';
 import { AlbumComponent } from './pages/album/album.component';
 import {AlbumContainer} from './pages/album/album.container';
 import { UploadComponent } from './pages/upload/upload.component';
+import { CreatealbumComponent } from './components/createalbum/createalbum.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -64,7 +65,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     PhotoComponent,
     AlbumComponent,
     AlbumContainer,
-    UploadComponent
+    UploadComponent,
+    CreatealbumComponent
   ],
   imports: [
     BrowserModule,

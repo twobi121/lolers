@@ -1,22 +1,31 @@
 <div class="upload wrapper">
-  <p class="upload_header">Загрузка фотографий</p>
+  <p class="upload_header">Загрузка фотографий
+  </p>
 
   <div class="upload_block">
-    <p  class="upload_preview"
+    <div class="upload_preview"
       *ngFor="let blob of blobs"
-       [ngStyle]="{background: 'url(' + blob.changingThisBreaksApplicationSecurity + ')', 'background-size': 'cover'} ">
-    </p>
+       [ngStyle]="{background: 'url(' + blob.changingThisBreaksApplicationSecurity + ')', 'background-size': 'cover'} "
+    >
+      <p [ngClass]="{
+        hide: !loading || loading.indexOf(blob) === -1,
+        show: loading.indexOf(blob) >= 0
+      }" class="upload_success">
+        <i class="far fa-check-circle fa-3x icon"></i>
+      </p>
+    </div>
   </div>
 
   <div class="upload_album">
-    <select name="" id="">
-      <option *ngFor="let lol of (albums$ | async)">
+    <form >
+      <select [(ngModel)]="selectedValue" name="upload" id="upload">
+        <option *ngFor="let album of albums" [value]="album._id">
+          {{album.name}}
+        </option>
+      </select>
+    </form>
 
-        {{lol.name}}
-      </option>
-    </select>
-
-    <button class="upload_btn" (click)="upload()">Загрузить</button>
+    <button class="upload_btn" (click)="upload()" [disabled]="loading && loading.length === blobs.length">Загрузить</button>
   </div>
 
 </div>

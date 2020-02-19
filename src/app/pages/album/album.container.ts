@@ -18,7 +18,8 @@ export class AlbumContainer implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private heroService: HeroService,
-              private dataService: DataService) { }
+              private dataService: DataService
+              ) { }
 
   ngOnInit(): void {
     this.getHero();

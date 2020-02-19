@@ -4,6 +4,7 @@ import {DataService} from '../../services/data-service';
 import {Hero} from '../../hero';
 import {HeroService} from '../../services/hero.service';
 import { Location } from '@angular/common';
+import {Subscription} from 'rxjs';
 
 interface Photo {
   filename: string;
@@ -21,7 +22,8 @@ export class PhotoComponent implements OnInit {
  selectedPhoto: Photo;
  url = 'http://localhost:8000/';
  albums: any[];
-
+ subs: Subscription[] = [];
+  deleteStatus = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -48,7 +50,6 @@ export class PhotoComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.selectedPhoto = this.photos.find(item => item.filename === params.get('photo'));
     });
-
   }
 
   nextPhoto() {
@@ -71,5 +72,17 @@ export class PhotoComponent implements OnInit {
       this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  '/'));
     }
     event.stopPropagation();
+  }
+
+  deletePhoto() {
+    const deleteStatus = this.heroService.deletePhoto(this.selectedPhoto._id);
+    this.subs.push(deleteStatus.subscribe(
+      item => {
+        if (item.status === 200) {
+          this.deleteStatus = true;
+          setTimeout(() => this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  '/')), 3000);
+        }
+      }
+    ));
   }
 }

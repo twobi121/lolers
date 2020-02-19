@@ -36,11 +36,6 @@ export class AlbumsContainer implements OnInit {
     });
   }
 
-  // getAlbum(): void {
-  //   this.route.paramMap.subscribe((params: ParamMap) => {
-  //     this.album$ = this.heroService.getAlbum(params.get('id'));
-  //   });
-  // }
 
 
 

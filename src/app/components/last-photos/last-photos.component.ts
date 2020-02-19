@@ -53,14 +53,4 @@ export class LastPhotosComponent {
 
   }
 
-  upload() {
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.heroService.uploadPhoto(this.selectedFiles[i]);
-    }
-
-    this.selectedFiles = null;
-  }
-
-
 }

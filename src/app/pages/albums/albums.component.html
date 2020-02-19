@@ -1,6 +1,25 @@
  <div class="album wrapper" *ngIf="hero && albums">
    <div class="album_header">
-     Альбомы <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
+     <span>
+       Альбомы <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
+     </span>
+
+     <button>
+       <a routerLink="create">
+         Создать альбом
+       </a>
+     </button>
+
+     <div class="add_photos_block" >
+       <input
+         style="display: none"
+         type="file" (change)="onFileChanged($event)" multiple
+         #fileInput>
+
+       <button (click)="fileInput.click()">
+         Добавить фотографии
+       </button>
+     </div>
    </div>
 
    <div class="albums" >

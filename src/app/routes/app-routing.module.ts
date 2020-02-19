@@ -13,13 +13,16 @@ import {AlbumsContainer} from '../pages/albums/albums.container';
 import {PhotoComponent} from '../components/photo/photo.component';
 import {AlbumContainer} from '../pages/album/album.container';
 import {UploadComponent} from '../pages/upload/upload.component';
+import {CreatealbumComponent} from '../components/createalbum/createalbum.component';
 
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [MainPageGuard]},
   { path: 'hero/:login/albums/:id/upload', component: UploadComponent, canActivate: [AuthGuard]},
+  { path: 'hero/:login/album/:album_id/upload', component: UploadComponent, canActivate: [AuthGuard]},
   { path: 'hero/:login/albums/:id', component: AlbumsContainer, canActivate: [AuthGuard], children: [
+      { path: 'create', component: CreatealbumComponent, canActivate: [AuthGuard]},
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
   { path: 'hero/:login/album/:id', component: AlbumContainer, canActivate: [AuthGuard], children: [

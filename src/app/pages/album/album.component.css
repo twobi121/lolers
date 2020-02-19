@@ -11,7 +11,11 @@ a {
 .album_header {
   border-bottom: 1px solid #d7d8db;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .albums {
   padding: 20px;
   display: flex;
@@ -65,6 +69,20 @@ a {
   flex-wrap: wrap;
   max-width: 95%;
   margin: auto;
+}
+
+.delete_block {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+button {
+  margin: 0;
+}
+
+.album_message {
+  padding: 20px;
 }
 
 

@@ -112,14 +112,16 @@ export class HeroService {
       );
   }
 
-  uploadPhoto(file: File) {
+  uploadPhoto(file: File, albumId?: string) {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
-    this.http.post(this.mediaUrl + 'uploadPhoto', uploadData, {
+    return this.http.post(this.mediaUrl + 'uploadPhoto/' + albumId, uploadData, {
       reportProgress: true,
       observe: 'events'
     })
-      .subscribe();
+      .pipe (
+        map( event => event)
+      );
   }
 
   getAlbum(id: string) {
@@ -143,6 +145,28 @@ export class HeroService {
         map(albums => albums)
       );
   }
+
+  createAlbum(value: any) {
+    return this.http.post(this.mediaUrl + 'create', value, {observe: 'response'})
+    .pipe (
+      map( response => response)
+    );
+  }
+
+  deleteAlbum(id: string) {
+    return this.http.delete(this.mediaUrl + 'album/' + id,  {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
+  deletePhoto(id: string) {
+    return this.http.delete(this.mediaUrl + 'photo/' + id,  {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
 }
 
 

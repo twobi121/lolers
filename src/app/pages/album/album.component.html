@@ -1,8 +1,22 @@
-<div class="album wrapper" *ngIf="hero && album">
+<div class="album wrapper" *ngIf="hero && album && !deleteStatus">
   <div class="album_header">
-    <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
-    > <a routerLink="/hero/{{hero.login}}/albums/{{hero._id}}"> Альбомы</a>
-    > {{album[0].name}}
+    <div>
+      <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
+      > <a routerLink="/hero/{{hero.login}}/albums/{{hero._id}}"> Альбомы</a>
+      > {{album[0].name}}
+    </div>
+
+    <div class="add_photos_block" >
+      <input
+        style="display: none"
+        type="file" (change)="onFileChanged($event)" multiple
+        #fileInput>
+
+      <button (click)="fileInput.click()">
+        Добавить фотографии
+      </button>
+
+    </div>
   </div>
 
   <div class="photos" >
@@ -22,6 +36,13 @@
 
   <router-outlet></router-outlet>
 
+  <div class="delete_block">
+    <button (click)="delete()">Удалить альбом</button>
+  </div>
 
+</div>
+
+<div class="album wrapper" *ngIf="deleteStatus">
+  <p class="album_message">Альбом успешно удален!</p>
 </div>
 

@@ -1,0 +1,38 @@
+<div class="upload_modal_overlay" (click)="close($event)">
+
+  <div class="upload_modal">
+
+    <div class="upload_modal_header">
+      <span>Создание альбома</span>
+
+      <div>
+        <i class="fas fa-times close_btn" (click)="close($event)" ></i>
+      </div>
+    </div>
+    <form action="" #myForm='ngForm'>
+      <div class='album_success' *ngIf="created">
+        Альбом успешно создан! <span class="upload" (click)="fileInput.click()">
+        Добавьте в него фотографии </span>
+
+
+          <input
+            style="display: none"
+            type="file" (change)="onFileChanged($event)" multiple
+            #fileInput>
+
+      </div>
+
+      <div class="upload_modal_block" >
+        <label for="name">Название</label>
+        <input type="text" id="name" name="name" ngModel>
+        <label for="description">Описание</label>
+        <textarea id="description" name="description" ngModel></textarea>
+      </div>
+
+      <div class="upload_btn_block">
+        <button (click)="create(myForm)">Создать</button>
+      </div>
+    </form>
+
+  </div>
+</div>
