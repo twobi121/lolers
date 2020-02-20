@@ -7,13 +7,14 @@ import {DataService} from '../../services/data-service';
 
 @Component({
   selector: 'app-albums-container',
-  template: '<app-albums [albumsPhotos]="albumsPhotos$ | async" [hero]="hero$ | async"></app-albums>',
+  template: '<app-albums [albumsPhotos]="albumsPhotos$ | async" [hero]="hero$ | async" [login] = "login$ | async"></app-albums>',
   styleUrls: ['./albums.component.css']
 })
 export class AlbumsContainer implements OnInit {
   albumsPhotos$: Observable<{}>;
   hero$: Observable<Hero>;
   url = 'http://localhost:8000/';
+  login$: Observable<string>;
 
   constructor(private route: ActivatedRoute,
               private heroService: HeroService,
@@ -22,6 +23,7 @@ export class AlbumsContainer implements OnInit {
   ngOnInit(): void {
     this.getHero();
     this.getAlbumsWithPhotos();
+    this.login$ = this.dataService.login$;
   }
 
   getHero(): void {

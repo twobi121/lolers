@@ -4,13 +4,13 @@
        Альбомы <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
      </span>
 
-     <button>
+     <button *ngIf="hero.login === login">
        <a routerLink="create">
          Создать альбом
        </a>
      </button>
 
-     <div class="add_photos_block" >
+     <div class="add_photos_block" *ngIf="hero.login === login">
        <input
          style="display: none"
          type="file" (change)="onFileChanged($event)" multiple
@@ -28,12 +28,12 @@
          'background-size': 'cover',
          'background-position': '50% 50%'} ">
 
-         </a>
-         <div class="album_title">
-           <p>{{album.name}}</p>
-<!--           <p>{{album.photos.length}}</p>-->
-         </div>
 
+           <div class="album_title">
+             <p>{{album.name}}</p>
+  <!--           <p>{{album.photos.length}}</p>-->
+           </div>
+         </a>
      </div>
    </div>
 

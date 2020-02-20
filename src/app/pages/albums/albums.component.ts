@@ -14,6 +14,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 export class AlbumsComponent implements OnChanges {
   @Input() albumsPhotos: any;
   @Input() hero: Hero;
+  @Input() login: string;
   albums: [];
   photosByYear = [];
   photos = [];

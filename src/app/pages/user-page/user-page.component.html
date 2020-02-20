@@ -5,11 +5,24 @@
     <app-user-info [hero]="hero"></app-user-info>
   </div>
 
+  <div class="user_friends_requests wrapper" *ngIf="hero.login === login">
+    <a routerLink="requests">Заявки в друзья</a>
+  </div>
+
+  <div class="user_friends_requests wrapper" *ngIf="hero.login !== login">
+    <button (click)="sendRequest()" *ngIf="!requestStatus">Добавить в друзья</button>
+    <span *ngIf="requestStatus">Запрос отправлен</span>
+  </div>
+
+  <div class="user_friends">
+    <a routerLink="/hero/{{hero.login}}/friends">Друзья {{hero.name}}</a>
+  </div>
+
   <div class="last-photos">
     <app-last-photos-container [hero]="hero"></app-last-photos-container>
   </div>
 
-
+  <router-outlet></router-outlet>
 
 
 </div>

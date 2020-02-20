@@ -1,0 +1,29 @@
+<div class="friends wrapper">
+
+  <div class="friends_header">
+    Друзья
+  </div>
+
+  <div class="friends_block">
+
+    <div class="friend_item" *ngFor="let friend of friends">
+      <div class="friend_avatar">
+        <a routerLink="/hero/{{friend.user.login}}">
+          <img [src]="url + friend.user.avatar.filename" alt="">
+        </a>
+
+      </div>
+
+      <div class="friend_info">
+        <a routerLink="/hero/{{friend.user.login}}">
+          {{friend.user.name}} {{friend.user.surname}}
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+

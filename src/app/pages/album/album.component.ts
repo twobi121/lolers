@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs';
 export class AlbumComponent implements OnChanges, OnDestroy {
   @Input() hero: Hero;
   @Input() album: [];
+  @Input() login: string;
   selectedFiles: [];
   blobs: SafeUrl[] = [];
   url = 'http://localhost:8000/';

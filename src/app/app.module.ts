@@ -33,6 +33,8 @@ import { AlbumComponent } from './pages/album/album.component';
 import {AlbumContainer} from './pages/album/album.container';
 import { UploadComponent } from './pages/upload/upload.component';
 import { CreatealbumComponent } from './components/createalbum/createalbum.component';
+import { RequestsComponent } from './components/requests/requests.component';
+import { FriendsComponent } from './pages/friends/friends.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -66,7 +68,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AlbumComponent,
     AlbumContainer,
     UploadComponent,
-    CreatealbumComponent
+    CreatealbumComponent,
+    RequestsComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,

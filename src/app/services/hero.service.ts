@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Hero} from '../hero';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpResponse} from '@angular/common/http';
 import {ActivatedRoute, Data} from '@angular/router';
 import {map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
@@ -49,7 +49,7 @@ export class HeroService {
   login(loginData: Data) {
     this.http.post(this.userUrl + 'login', loginData)
       .pipe(
-        map((data: Data) => {
+        tap((data: Data) => {
           if (data.token) {
             this.dataService.changeAuthState(true);
             localStorage.setItem('heroToken', data.token);
@@ -64,9 +64,9 @@ export class HeroService {
   }
 
   getUserLogin() {
-    return this.http.get(this.userUrl + 'user')
+    this.http.get(this.userUrl + 'user')
       .pipe(
-        map((data: Data) => {
+        tap((data: Data) => {
           this.router.navigateByUrl(`hero/${data}`);
         })
       )
@@ -93,7 +93,7 @@ export class HeroService {
       .subscribe();
   }
 
-  uploadAvatar(file: any) {
+  uploadAvatar(file: any): Observable<HttpEvent<object>> {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
     return this.http.post(this.mediaUrl + 'uploadAvatar', uploadData, {
@@ -112,7 +112,7 @@ export class HeroService {
       );
   }
 
-  uploadPhoto(file: File, albumId?: string) {
+  uploadPhoto(file: File, albumId?: string): Observable<HttpEvent<object>> {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
     return this.http.post(this.mediaUrl + 'uploadPhoto/' + albumId, uploadData, {
@@ -124,14 +124,14 @@ export class HeroService {
       );
   }
 
-  getAlbum(id: string) {
+  getAlbum(id: string): Observable<[]> {
     return this.http.get<any>(this.mediaUrl + 'album/' + id)
       .pipe(
         map(album => album)
       );
   }
 
-  getAlbumsWithPhotos(id: string) {
+  getAlbumsWithPhotos(id: string): Observable<[]> {
     return this.http.get<any>(this.mediaUrl + 'albums_photos/' + id)
       .pipe(
         map(albums => albums)
@@ -139,31 +139,67 @@ export class HeroService {
   }
 
 
-  getAlbums(id: string) {
+  getAlbums(id: string): Observable<[]> {
     return this.http.get<any>(this.mediaUrl + 'albums/' + id)
       .pipe(
         map(albums => albums)
       );
   }
 
-  createAlbum(value: any) {
+  createAlbum(value: any): Observable<HttpResponse<object>> {
     return this.http.post(this.mediaUrl + 'create', value, {observe: 'response'})
     .pipe (
       map( response => response)
     );
   }
 
-  deleteAlbum(id: string) {
+  deleteAlbum(id: string): Observable<HttpResponse<object>> {
     return this.http.delete(this.mediaUrl + 'album/' + id,  {observe: 'response'})
       .pipe (
         map( response => response)
       );
   }
 
-  deletePhoto(id: string) {
+  deletePhoto(id: string): Observable<HttpResponse<object>> {
     return this.http.delete(this.mediaUrl + 'photo/' + id,  {observe: 'response'})
       .pipe (
         map( response => response)
+      );
+  }
+
+  setPreview(filename, albumId): Observable<HttpResponse<object>> {
+    const ids = {filename, albumId};
+    return this.http.put(this.mediaUrl + 'preview', ids, {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
+  sendRequest(id: number): Observable<HttpResponse<object>> {
+    return this.http.post(this.userUrl + 'request', {id}, {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
+  getRequests(): Observable<any> {
+    return this.http.get(this.userUrl + 'requests')
+      .pipe (
+        map(item => item)
+      );
+  }
+
+  acceptRequest(id: string): Observable<HttpResponse<object>> {
+    return this.http.post(this.userUrl + 'accept', {id}, {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
+  getFriends(login: string) {
+    return this.http.get(this.userUrl + login + '/friends')
+      .pipe (
+        map(item => item)
       );
   }
 

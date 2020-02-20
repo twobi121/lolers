@@ -14,6 +14,9 @@ import {PhotoComponent} from '../components/photo/photo.component';
 import {AlbumContainer} from '../pages/album/album.container';
 import {UploadComponent} from '../pages/upload/upload.component';
 import {CreatealbumComponent} from '../components/createalbum/createalbum.component';
+import {RequestsComponent} from '../components/requests/requests.component';
+import {FriendsComponent} from '../pages/friends/friends.component';
+
 
 
 
@@ -28,7 +31,11 @@ const routes: Routes = [
   { path: 'hero/:login/album/:id', component: AlbumContainer, canActivate: [AuthGuard], children: [
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
-  { path: 'hero/:login', component: UserPageContainer, canActivate: [AuthGuard] },
+  { path: 'hero/:login/friends', component: FriendsComponent, canActivate: [AuthGuard]
+    },
+  { path: 'hero/:login', component: UserPageContainer, canActivate: [AuthGuard], children: [
+      { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard]}
+    ]},
   { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },
   { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },
   { path: 'dashboard', component: DashboardComponent},

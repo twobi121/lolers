@@ -4,7 +4,7 @@ import {DataService} from '../../services/data-service';
 import {Hero} from '../../hero';
 import {HeroService} from '../../services/hero.service';
 import { Location } from '@angular/common';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 interface Photo {
   filename: string;
@@ -23,13 +23,15 @@ export class PhotoComponent implements OnInit {
  url = 'http://localhost:8000/';
  albums: any[];
  subs: Subscription[] = [];
-  deleteStatus = false;
+ deleteStatus = false;
+ albumId: string;
+ updateStatus = false;
+ login$: Observable<string>;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
     private heroService: HeroService,
-    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -37,6 +39,7 @@ export class PhotoComponent implements OnInit {
     this.albums = this.dataService.albums;
     this.getHero();
     this.selectPhoto();
+    this.login$ = this.dataService.login$;
   }
 
   getHero() {
@@ -64,8 +67,6 @@ export class PhotoComponent implements OnInit {
     this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  this.photos[idx - 1].filename));
   }
 
-
-
   closePhoto(event: any ) {
     const target = event.target.className;
     if (target === 'fas fa-times close_btn' || target === 'upload_modal_overlay' ) {
@@ -85,4 +86,19 @@ export class PhotoComponent implements OnInit {
       }
     ));
   }
+
+  setPreview() {
+    this.route.parent.paramMap.subscribe((params: ParamMap) => {
+      this.albumId = params.get('id');
+    });
+
+    const updateStatus = this.heroService.setPreview(this.selectedPhoto.filename, this.albumId);
+    this.subs.push(updateStatus.subscribe(item => {
+      if (item.status === 200) {
+        this.updateStatus = true;
+        setTimeout(() => this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  '/')), 3000);
+      }
+    }));
+  }
+
 }

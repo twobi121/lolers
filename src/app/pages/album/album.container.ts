@@ -7,7 +7,7 @@ import {DataService} from '../../services/data-service';
 
 @Component({
   selector: 'app-album-container',
-  template: '<app-album [album]="album$ | async"  [hero]="hero$ | async"></app-album>',
+  template: '<app-album [album]="album$ | async"  [hero]="hero$ | async" [login] = "login$ | async"></app-album>',
   styleUrls: ['./album.component.css']
 })
 export class AlbumContainer implements OnInit {
@@ -15,6 +15,7 @@ export class AlbumContainer implements OnInit {
   album$: Observable<object>;
   hero$: Observable<Hero>;
   url = 'http://localhost:8000/';
+  login$: Observable<string>;
 
   constructor(private route: ActivatedRoute,
               private heroService: HeroService,
@@ -24,6 +25,7 @@ export class AlbumContainer implements OnInit {
   ngOnInit(): void {
     this.getHero();
     this.getAlbum();
+    this.login$ = this.dataService.login$;
   }
 
   getHero(): void {

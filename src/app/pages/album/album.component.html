@@ -6,7 +6,7 @@
       > {{album[0].name}}
     </div>
 
-    <div class="add_photos_block" >
+    <div class="add_photos_block"  *ngIf="hero.login === login">
       <input
         style="display: none"
         type="file" (change)="onFileChanged($event)" multiple
@@ -36,7 +36,7 @@
 
   <router-outlet></router-outlet>
 
-  <div class="delete_block">
+  <div class="delete_block"  *ngIf="hero.login === login">
     <button (click)="delete()">Удалить альбом</button>
   </div>
 

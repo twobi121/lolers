@@ -15,7 +15,20 @@
   margin: 10px 0 0 230px;
 }
 
+.user_friends_requests {
+  flex-basis: 100%;
+  width: 200px;
+  margin-top: 10px;
+  padding: 20px;
+}
 
+.user_friends_requests a {
+  text-decoration: none;
+}
+
+button {
+  margin-top: 0;
+}
 
 
 

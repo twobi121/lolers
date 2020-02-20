@@ -1,0 +1,38 @@
+<div class="upload_modal_overlay" (click)="close($event)">
+
+  <div class="upload_modal">
+    <div class="upload_modal_header">
+      <span>Запросы в друзья</span>
+
+      <div>
+        <i class="fas fa-times close_btn" (click)="close($event)"></i>
+      </div>
+    </div>
+
+    <div class="upload_modal_block" *ngIf = 'requests'>
+      <div class="request_block" *ngFor="let user of requests">
+        <div class="user_info">
+          <div class="user_avatar">
+            <a routerLink="/hero/{{user.user[0].login}}">
+              <img [src]="url + user.user[0].avatar.filename">
+            </a>
+          </div>
+
+          <div class="user_name">
+            <a routerLink="/hero/{{user.user[0].login}}">
+              {{user.user[0].name}} {{user.user[0].surname}}
+            </a>
+          </div>
+        </div>
+
+        <div class="request_btns">
+          <button (click)="accept(user._id)" [disabled]="acceptStatus[requests.indexOf(user)] || false">Принять запрос</button>
+          <button (click)="decline(user._id)" [disabled]="acceptStatus[requests.indexOf(user)] || false">Удалить запрос</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

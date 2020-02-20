@@ -73,6 +73,9 @@ img {
 .photo_data {
   width: 100%;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .photo_rightfield {
@@ -120,6 +123,10 @@ img {
 .likes i:hover {
   cursor: pointer;
   color: rosybrown;
+}
+
+button {
+  margin-top: 0;
 }
 
 

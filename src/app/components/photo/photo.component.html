@@ -17,13 +17,17 @@
       </div>
       <div class="photo_data" *ngIf="!deleteStatus">
         <a routerLink="/hero/{{hero.login}}/albums/{{albums[0].id}}/{{hero._id}}">{{albums[0].name}}</a>
-        <button (click)="deletePhoto()">
+        <button (click)="deletePhoto()"  *ngIf="hero.login === (login$ | async)">
           Удалить фото
+        </button>
+        <button (click)="setPreview()" [disabled]="updateStatus"  *ngIf="hero.login === (login$ | async)">
+          Установить обложкой
         </button>
       </div>
       <div *ngIf="deleteStatus">
         Фото успешно удалено
       </div>
+
     </div>
 
     <div class="photo_rightfield">
