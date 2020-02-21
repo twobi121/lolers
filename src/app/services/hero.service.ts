@@ -196,13 +196,34 @@ export class HeroService {
       );
   }
 
-  getFriends(login: string) {
+  declineRequest(id: string): Observable<HttpResponse<object>> {
+    return this.http.post(this.userUrl + 'decline', {id}, {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
+  getFriends(login: string): Observable<object> {
     return this.http.get(this.userUrl + login + '/friends')
       .pipe (
         map(item => item)
       );
   }
 
+  deleteFriend(id: string): Observable<HttpResponse<object>> {
+    return this.http.post(this.userUrl + 'unfriend', {id}, {observe: 'response'})
+      .pipe (
+        map( response => response)
+      );
+  }
+
+  updateAlbum(object: object) {
+    return this.http.put(this.mediaUrl + 'album', object, {observe: 'response'})
+      .pipe (
+        map( response => response)
+      )
+      .subscribe();
+  }
 }
 
 

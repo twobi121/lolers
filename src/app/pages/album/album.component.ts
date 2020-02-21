@@ -20,7 +20,9 @@ export class AlbumComponent implements OnChanges, OnDestroy {
   url = 'http://localhost:8000/';
   subs: Subscription[] = [];
   deleteStatus = false;
-
+  name: string;
+  status = false;
+  status1 = false;
   constructor(private dataService: DataService,
               private heroService: HeroService,
               private sanitizer: DomSanitizer,
@@ -34,6 +36,8 @@ export class AlbumComponent implements OnChanges, OnDestroy {
     // @ts-ignore
     this.dataService.photos = this.album[0].photos;
     this.dataService.albums = this.album;
+    // @ts-ignore
+    this.name = this.album[0].name;
   }
 
   ngOnDestroy(): void {
@@ -66,5 +70,27 @@ export class AlbumComponent implements OnChanges, OnDestroy {
         }
       }
     ));
+  }
+
+  showInput($event: Event) {
+    // @ts-ignore
+    if ($event.target.id === '1') {
+      this.status = true;
+    } else this.status1 = true;
+// @ts-ignore
+
+
+  }
+
+  updateAlbum(element: HTMLInputElement) {
+    if (element.name === 'name') {
+      // @ts-ignore
+      this.heroService.updateAlbum({id: this.album[0]._id, name: element.value});
+      this.status = false;
+    } else {
+      // @ts-ignore
+      this.heroService.updateAlbum({id: this.album[0]._id, description: element.value});
+      this.status1 = false;
+    }
   }
 }

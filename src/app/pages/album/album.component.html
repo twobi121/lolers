@@ -3,7 +3,12 @@
     <div>
       <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
       > <a routerLink="/hero/{{hero.login}}/albums/{{hero._id}}"> Альбомы</a>
-      > {{album[0].name}}
+      > <span *ngIf="!status" (click)="showInput($event)" id = '1' >{{name}}</span>
+      <input *ngIf="status" autofocus type="text" [(ngModel)]="name"
+             name = 'name'
+             (focusout)="updateAlbum(albumName)"
+             (keydown.enter)="updateAlbum(albumName)"
+             #albumName>
     </div>
 
     <div class="add_photos_block"  *ngIf="hero.login === login">
@@ -21,7 +26,18 @@
 
   <div class="photos" >
     <div class="album_item" *ngFor="let album of album">
-      <p class="album_year"> {{album.description}}</p>
+
+
+
+      <p class="album_year">
+        <span *ngIf="!status1" (click)="showInput($event)" id = '2'>{{album.description}}</span>
+        <input *ngIf="status1" autofocus type="text" [(ngModel)]="album.description"
+               name = 'description'
+               (focusout)="updateAlbum(albumDescription)"
+               (keydown.enter)="updateAlbum(albumDescription)"
+               #albumDescription>
+      </p>
+
       <div class="photo_previews">
         <a class="album_preview"
            *ngFor="let photo of album.photos"

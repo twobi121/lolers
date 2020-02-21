@@ -64,6 +64,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const loading = this.heroService.uploadPhoto(this.selectedFiles[i], this.selectedValue);
       this.subs.push(loading.subscribe(event => {
+        // @ts-ignore
         if (event instanceof HttpResponse && event.body === 'Файл загружен') {
           this.loading.push(this.blobs[i]);
         }

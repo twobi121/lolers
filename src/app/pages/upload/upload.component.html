@@ -17,7 +17,7 @@
   </div>
 
   <div class="upload_album">
-    <form >
+    <form *ngIf = 'albums'>
       <select [(ngModel)]="selectedValue" name="upload" id="upload">
         <option *ngFor="let album of albums" [value]="album._id">
           {{album.name}}

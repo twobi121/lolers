@@ -1,25 +1,52 @@
 <div class="friends wrapper">
 
   <div class="friends_header">
-    Друзья
+    Друзья {{friends.length}}
   </div>
 
   <div class="friends_block">
 
-    <div class="friend_item" *ngFor="let friend of friends">
-      <div class="friend_avatar">
-        <a routerLink="/hero/{{friend.user.login}}">
-          <img [src]="url + friend.user.avatar.filename" alt="">
-        </a>
+    <div class="friend_block" *ngFor="let friend of friends">
 
+      <div class="friend_item">
+        <div class="friend_avatar">
+          <a routerLink="/hero/{{friend.user.login}}">
+            <img [src]="url + friend.user.avatar.filename" alt="">
+          </a>
+
+        </div>
+
+        <div class="friend_info">
+          <a routerLink="/hero/{{friend.user.login}}">
+            {{friend.user.name}} {{friend.user.surname}}
+          </a>
+        </div>
       </div>
 
-      <div class="friend_info">
-        <a routerLink="/hero/{{friend.user.login}}">
-          {{friend.user.name}} {{friend.user.surname}}
-        </a>
+
+      <div class="friend_delete">
+        <div [ngClass]="{
+          hide: !successStatus[friends.indexOf(friend)],
+          show: successStatus[friends.indexOf(friend)]
+        }">
+          {{friend.user.name}} удален из друзей
+        </div>
+
+        <button (click)="deleteFriend(friend._id)"
+                [ngClass]="{
+          hide: successStatus[friends.indexOf(friend)],
+          show: !successStatus[friends.indexOf(friend)]
+        }">
+          Удалить друга</button>
       </div>
     </div>
+
+    <div class="friend_block" *ngIf="!friends.length">
+      Нет друзей... пока
+    </div>
+
+
+
 
   </div>
 

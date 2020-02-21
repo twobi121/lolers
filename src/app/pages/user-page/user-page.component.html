@@ -1,26 +1,35 @@
 <div class = "user_page_container" *ngIf="hero ">
-
-  <app-avatar [hero]="hero" ></app-avatar>
-  <div class="user_info wrapper">
+  <div class="block">
+    <app-avatar [hero]="hero" ></app-avatar>
+    <div class="user_info wrapper">
     <app-user-info [hero]="hero"></app-user-info>
   </div>
-
-  <div class="user_friends_requests wrapper" *ngIf="hero.login === login">
-    <a routerLink="requests">Заявки в друзья</a>
   </div>
 
-  <div class="user_friends_requests wrapper" *ngIf="hero.login !== login">
-    <button (click)="sendRequest()" *ngIf="!requestStatus">Добавить в друзья</button>
-    <span *ngIf="requestStatus">Запрос отправлен</span>
+  <div class="block">
+    <div class="friends">
+      <div class="user_friends requests wrapper" *ngIf="hero.login === login">
+        <a routerLink="requests">Заявки в друзья</a>
+      </div>
+
+      <div class="user_friends requests wrapper" *ngIf="hero.login !== login">
+        <button (click)="sendRequest()" *ngIf="!hero.friend && !hero.request && !requestStatus">Добавить в друзья</button>
+        <span *ngIf="requestStatus">Запрос отправлен</span>
+        <span *ngIf="hero.friend">{{hero.name}} у вас в друзьях</span>
+        <span *ngIf="hero.request">Вы подписаны</span>
+      </div>
+
+      <div class="user_friends list wrapper">
+        <a routerLink="/hero/{{hero.login}}/friends">Друзья {{hero.name}}</a>
+      </div>
+    </div>
+
+
+    <div class="last-photos">
+      <app-last-photos-container [hero]="hero"></app-last-photos-container>
+    </div>
   </div>
 
-  <div class="user_friends">
-    <a routerLink="/hero/{{hero.login}}/friends">Друзья {{hero.name}}</a>
-  </div>
-
-  <div class="last-photos">
-    <app-last-photos-container [hero]="hero"></app-last-photos-container>
-  </div>
 
   <router-outlet></router-outlet>
 

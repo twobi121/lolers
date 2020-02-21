@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class RequestsComponent implements OnInit {
   requests$: Observable<[]>;
-  requests: [];
+  requests: [] = [];
   url = 'http://localhost:8000/';
   subs: Subscription[] = [];
   acceptStatus: boolean[] = [];
@@ -52,6 +52,14 @@ export class RequestsComponent implements OnInit {
   }
 
   decline(id: string) {
-    this.heroService.declineRequest(id);
-  }
+    // @ts-ignore
+    const decline = this.heroService.declineRequest(id);
+    this.subs.push(decline.subscribe(
+      response => {
+        if (response.status === 200) {
+          this.acceptStatus.push(false);
+        }
+      }));
+    }
 }
+

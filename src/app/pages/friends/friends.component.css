@@ -16,12 +16,19 @@ a {
   align-items: center;
 }
 
+.friend_block {
+  display: flex;
+  padding: 20px;
+  border-bottom: 1px solid #d7d8db;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .friend_item {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #d7d8db;
+
 }
 
 .friend_avatar {
@@ -33,4 +40,16 @@ a {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+
+button {
+  margin-top: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
 }
