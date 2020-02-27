@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {DataService} from '../../services/data-service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
@@ -13,7 +13,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 })
 export class AlbumsComponent implements OnChanges {
   @Input() albumsPhotos: any;
-  @Input() hero: Hero;
+  @Input() hero: User;
   @Input() login: string;
   albums: [];
   photosByYear = [];
@@ -23,7 +23,7 @@ export class AlbumsComponent implements OnChanges {
   url = 'http://localhost:8000/';
 
   constructor(private route: ActivatedRoute,
-              private heroService: HeroService,
+              private heroService: UserService,
               private dataService: DataService,
               private sanitizer: DomSanitizer,
               private router: Router) { }

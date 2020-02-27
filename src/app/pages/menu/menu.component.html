@@ -9,15 +9,15 @@
     <a routerLink="registration">Регистрация</a>
   </div>
 
-  <div class="menu_item" *ngIf="isAuth">
-    <a routerLink="hero/{{login}}">Моя страница</a>
+  <div class="menu_item" *ngIf="isAuth && loggedUser">
+    <a routerLink="hero/{{loggedUser.login}}">Моя страница</a>
   </div>
 
-  <div class="menu_item" *ngIf="isAuth">
-    <a routerLink="hero/{{login}}/friends">Мои друзья</a>
+  <div class="menu_item" *ngIf="isAuth && loggedUser">
+    <a routerLink="hero/{{loggedUser.login}}/friends">Мои друзья</a>
   </div>
 
-  <div class="menu_item" *ngIf="isAuth">
+  <div class="menu_item" *ngIf="isAuth && loggedUser">
     <a routerLink="heroes">Герои</a>
   </div>
 
@@ -25,7 +25,7 @@
     <a routerLink="dashboard">Рейтинг</a>
   </div>
 
-  <div class="menu_item logout" *ngIf="isAuth" (click)="logout()">
+  <div class="menu_item logout" *ngIf="isAuth && loggedUser" (click)="logout()">
      Выйти
   </div>
 

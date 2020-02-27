@@ -1,8 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {DataService} from '../../services/data-service';
+import {ActivatedRoute, Data, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {State} from '../../store/states/app.state';
+import {GetLoggedUserAction} from '../../store/users/actions';
 
 @Component({
   selector: 'app-login-component',
@@ -13,11 +17,13 @@ import {DataService} from '../../services/data-service';
 export class LoginComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   loginForm: FormGroup;
-  regState: Observable<boolean> = this.dataService.registredState$ ;
   error: string;
 
-  constructor(private heroService: HeroService,
-              private dataService: DataService) { }
+  constructor(private heroService: UserService,
+              private dataService: DataService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private store: Store<State>) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -35,9 +41,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.heroService.login(this.loginForm.value);
+    const data$ = this.heroService.login(this.loginForm.value);
+    this.subs.push(data$.subscribe((data: Data) => {
+        if (data.token) {
+          localStorage.setItem('authUserToken', data.token);
+          this.store.dispatch(new GetLoggedUserAction());
+          this.router.navigateByUrl(`hero/${data.user.login}`);
+        }
+    }));
   }
-
 
   submit() {
     if (this.loginForm.invalid) {

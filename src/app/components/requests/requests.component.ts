@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {Observable, Subscription} from 'rxjs';
 import {DataService} from '../../services/data-service';
 import {Router} from '@angular/router';
@@ -17,7 +17,7 @@ export class RequestsComponent implements OnInit {
   acceptStatus: boolean[] = [];
 
   constructor(
-    private heroService: HeroService,
+    private heroService: UserService,
     private dataService: DataService,
     private router: Router,
   ) { }

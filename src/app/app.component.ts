@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from './services/data-service';
-
-
+import {State} from './store/states/app.state';
+import {Store} from '@ngrx/store';
+import {GetLoggedUserAction} from './store/users/actions';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +9,13 @@ import {DataService} from './services/data-service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit{
-  constructor(private dataService: DataService) {
+export class AppComponent implements OnInit {
+  constructor(private store: Store<State> ) {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('heroToken')) {
-      this.dataService.changeAuthState(true);
-    } else this.dataService.changeAuthState(false);
+    if (localStorage.getItem('authUserToken')) {
+      this.store.dispatch(new GetLoggedUserAction());
+    }
   }
 }

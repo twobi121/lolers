@@ -1,37 +1,25 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Hero} from '../../hero';
-import {HeroService} from '../../services/hero.service';
-import {Subscription} from 'rxjs';
-import {DataService} from '../../services/data-service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {User} from '../../interfaces/user';
+import {IsFriend} from '../../interfaces/isFriend';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
-export class UserPageComponent implements OnDestroy{
-  subs: Subscription[] = [];
-  requestStatus = false;
+export class UserPageComponent {
   @Input() login: string;
-  @Input() hero: Hero;
+  @Input() isAuth: boolean;
+  @Input() user: User;
+  @Input() loggedUser: User;
+  @Input() isFriend: IsFriend;
+  @Input() requestStatus: boolean;
+  @Output() requestEvent = new EventEmitter<number>();
 
-  constructor(
-    private heroService: HeroService,
-  ) { }
-
-
-  ngOnDestroy(): void {
-    this.subs.forEach(item => item.unsubscribe());
+  sendRequest(id: number) {
+    this.requestEvent.emit(id);
   }
 
-  sendRequest() {
-    const response = this.heroService.sendRequest(this.hero._id);
-    this.subs.push(response.subscribe(
-      item => {
-        if (item.status === 200) {
-          this.requestStatus = true;
-        }
-      }
-    ));
-  }
 }
+
+

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {DataService} from '../../services/data-service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {HttpHeaderResponse} from '@angular/common/http';
@@ -13,14 +13,16 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./last-photos.component.css']
 })
 export class LastPhotosComponent {
-  @Input() hero: Hero;
+  @Input() user: User;
+  @Input() loggedUser: User;
   @Input() lastPhotos: {};
   @Input() login: string;
+
   selectedFiles: [];
   blobs: SafeUrl[] = [];
   url = 'http://localhost:8000/';
 
-  constructor(private heroService: HeroService,
+  constructor(private heroService: UserService,
               private dataService: DataService,
               private sanitizer: DomSanitizer,
               private router: Router,

@@ -1,9 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import { HeroService } from '../../services/hero.service';
-import {Hero} from '../../hero';
-import {Observable, Subscription} from 'rxjs';
-import {DataService} from '../../services/data-service';
+import {UserService} from '../../services/user.service';
+import {User} from '../../interfaces/user';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -11,26 +10,22 @@ import {DataService} from '../../services/data-service';
   styleUrls: ['./registration.component.css']
 })
 
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegistrationComponent implements OnDestroy {
   subs: Subscription[] = [];
-  registrationState: Observable<boolean>;
+  regState = false;
 
-  constructor(private heroService: HeroService,
-              private dataService: DataService
+  constructor(private userService: UserService,
               ) { }
-
-  ngOnInit(): void {
-  }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  addHero(myForm: NgForm): void {
-    const hero: Hero = myForm.form.value;
-    this.registrationState = this.heroService.addHero(hero);
-    this.subs.push(this.registrationState
-      .subscribe(state => this.dataService.changeRegState(state))
-    );
+  addUser(myForm: NgForm): void {
+    const user: User = myForm.form.value;
+    const registration$ = this.userService.addHero(user);
+    this.subs.push(registration$.subscribe(response => {
+      this.regState = response.status === 201;
+    }));
   }
 }

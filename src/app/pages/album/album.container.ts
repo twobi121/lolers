@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {DataService} from '../../services/data-service';
 
 @Component({
@@ -13,12 +13,12 @@ import {DataService} from '../../services/data-service';
 export class AlbumContainer implements OnInit {
 
   album$: Observable<object>;
-  hero$: Observable<Hero>;
+  hero$: Observable<User>;
   url = 'http://localhost:8000/';
   login$: Observable<string>;
 
   constructor(private route: ActivatedRoute,
-              private heroService: HeroService,
+              private heroService: UserService,
               private dataService: DataService
               ) { }
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {DataService} from '../../services/data-service';
 
 @Component({
@@ -12,12 +12,12 @@ import {DataService} from '../../services/data-service';
 })
 export class AlbumsContainer implements OnInit {
   albumsPhotos$: Observable<{}>;
-  hero$: Observable<Hero>;
+  hero$: Observable<User>;
   url = 'http://localhost:8000/';
   login$: Observable<string>;
 
   constructor(private route: ActivatedRoute,
-              private heroService: HeroService,
+              private heroService: UserService,
               private dataService: DataService) { }
 
   ngOnInit(): void {

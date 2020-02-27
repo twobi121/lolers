@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SafeUrl} from '@angular/platform-browser';
 import {DataService} from '../../services/data-service';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
@@ -24,7 +24,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   loading: SafeUrl[] = [];
   constructor(
     private dataService: DataService,
-    private heroService: HeroService,
+    private heroService: UserService,
     private route: ActivatedRoute
   ) { }
 

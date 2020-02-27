@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HttpHeaderResponse} from '@angular/common/http';
+import {Component, Input} from '@angular/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {HeroService} from '../../services/hero.service';
-import {Hero} from '../../hero';
-import {DataService} from '../../services/data-service';
-import {Observable} from 'rxjs';
+import {User} from '../../interfaces/user';
+import {State} from '../../store/states/app.state';
+import {Store} from '@ngrx/store';
+import {constants} from '../../shared/constants/constants';
+import {UploadAvatarAction} from '../../store/media/actions';
 
 @Component({
   selector: 'app-avatar',
@@ -12,21 +12,16 @@ import {Observable} from 'rxjs';
   styleUrls: ['./avatar.component.css']
 })
 
-export class AvatarComponent implements OnInit {
-  @Input() hero: Hero;
-  login$: Observable<string>;
-  avatar: SafeUrl;
+export class AvatarComponent {
+  @Input() user: User;
+  @Input() loggedUser: User;
+  avatarBlob: SafeUrl;
   preview: SafeUrl;
   selectedFile: object;
-  url = 'http://localhost:8000/';
+  url = constants.url;
 
-  constructor(private heroService: HeroService,
-              private sanitizer: DomSanitizer,
-              private dataService: DataService) { }
-
-  ngOnInit(): void {
-    this.login$ = this.dataService.login$;
-  }
+  constructor(private sanitizer: DomSanitizer,
+              private store: Store<State>) { }
 
   onFileChanged(event) {
     this.selectedFile = event.target.files[0];
@@ -40,13 +35,8 @@ export class AvatarComponent implements OnInit {
     fileInput.value = '';
   }
 
-  upload(fileInput: HTMLInputElement) {
-    const loading = this.heroService.uploadAvatar(this.selectedFile);
-    loading.subscribe(event => {
-      if (event instanceof HttpHeaderResponse && event.ok) {
-        this.avatar = this.preview;
-      }
-    });
+  upload() {
+    this.store.dispatch(new UploadAvatarAction(this.selectedFile));
   }
 
 }

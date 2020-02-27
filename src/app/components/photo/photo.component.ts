@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {DataService} from '../../services/data-service';
-import {Hero} from '../../hero';
-import {HeroService} from '../../services/hero.service';
+import {User} from '../../interfaces/user';
+import {UserService} from '../../services/user.service';
 import { Location } from '@angular/common';
 import {Observable, Subscription} from 'rxjs';
 
@@ -17,7 +17,7 @@ interface Photo {
   styleUrls: ['./photo.component.css']
 })
 export class PhotoComponent implements OnInit {
- hero: Hero;
+ hero: User;
  photos: Photo[];
  selectedPhoto: Photo;
  url = 'http://localhost:8000/';
@@ -31,7 +31,7 @@ export class PhotoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
-    private heroService: HeroService,
+    private heroService: UserService,
   ) { }
 
   ngOnInit() {

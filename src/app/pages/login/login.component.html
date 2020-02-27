@@ -1,8 +1,7 @@
 <div class="login_form">
   <div>
     <h1>Вход</h1>
-    <div *ngIf="regState | async">Регистрация завершена! Войдите в учетную запись</div>
-    <div *ngIf="!(regState | async) && !error">Пожалуйста, залогиньтесь</div>
+    <div *ngIf="!error">Пожалуйста, залогиньтесь</div>
     <div *ngIf="error">{{error}}</div>
 
     <form [formGroup] = 'loginForm' (ngSubmit)="submit()">

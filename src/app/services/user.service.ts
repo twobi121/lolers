@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Hero} from '../hero';
+import {User} from '../interfaces/user';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpEvent, HttpResponse} from '@angular/common/http';
 import {ActivatedRoute, Data} from '@angular/router';
@@ -7,15 +7,16 @@ import {map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {error} from 'util';
 import {DataService} from './data-service';
+import {IsFriend} from '../interfaces/isFriend';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class HeroService {
+export class UserService {
   userUrl = 'http://localhost:8000/users/';
   mediaUrl = 'http://localhost:8000/media/';
-  hero: Hero;
+  user: User;
 
   constructor(
     private http: HttpClient,
@@ -24,43 +25,26 @@ export class HeroService {
     private route: ActivatedRoute) {
   }
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.userUrl);
+  getHeroes(): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl);
   }
 
-  getHero(login: string): Observable<Hero> {
-    return this.http.get<Hero>(this.userUrl + login);
+  getHero(login: string): Observable<User> {
+    return this.http.get<User>(this.userUrl + login);
   }
 
-  addHero(hero: {}): Observable<boolean> {
-    return this.http.post(this.userUrl + 'add', hero, {observe: 'response'})
+  addHero(user: User): Observable<HttpResponse<object>> {
+    return this.http.post(this.userUrl + 'add', user, {observe: 'response'})
       .pipe(
-        map(response => {
-            if (response.status === 201) {
-              this.router.navigateByUrl(`login`);
-              return true;
-            } else {
-              return false;
-            }
-          }
+        map(response => response
         ));
   }
 
-  login(loginData: Data) {
-    this.http.post(this.userUrl + 'login', loginData)
+  login(loginData: Data): Data {
+    return this.http.post(this.userUrl + 'login', loginData)
       .pipe(
-        tap((data: Data) => {
-          if (data.token) {
-            this.dataService.changeAuthState(true);
-            localStorage.setItem('heroToken', data.token);
-            localStorage.setItem('login', data.user.login);
-            this.dataService.setLogin(data.user.login);
-            this.router.navigateByUrl(`hero/${data.user.login}`);
-          }
-        }))
-      .subscribe(null, e => {
-        this.dataService.setAuthError(e.error.error);
-      });
+        map((data: Data) => data )
+      );
   }
 
   getUserLogin() {
@@ -77,31 +61,12 @@ export class HeroService {
 
   }
 
-
-  logout() {
-    this.http.post(this.userUrl + 'logout', null)
-      .pipe(
-        tap(() => {
-          localStorage.removeItem('heroToken');
-          localStorage.removeItem('login');
-          this.dataService.setLogin('');
-          this.dataService.changeAuthState(false);
-          this.dataService.changeRegState(false);
-          this.router.navigate([this.router.url + '/']);
-        })
-      )
-      .subscribe();
-  }
-
-  uploadAvatar(file: any): Observable<HttpEvent<object>> {
+  uploadAvatar(file: any): Observable<HttpResponse<object>> {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
-    return this.http.post(this.mediaUrl + 'uploadAvatar', uploadData, {
-      reportProgress: true,
-      observe: 'events'
-    })
+    return this.http.post(this.mediaUrl + 'uploadAvatar', uploadData, {observe: 'response'})
       .pipe (
-        map( event => event)
+        map( response => response)
       );
   }
 
@@ -181,6 +146,11 @@ export class HeroService {
         map( response => response)
       );
   }
+
+  getIsFriend(login: string): Observable<IsFriend> {
+    return this.http.get<IsFriend>(this.userUrl + login + '/isFriend');
+  }
+
 
   getRequests(): Observable<any> {
     return this.http.get(this.userUrl + 'requests')

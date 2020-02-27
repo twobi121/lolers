@@ -1,21 +1,19 @@
-import {Component, Input} from '@angular/core';
-import {HeroService} from '../../services/hero.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {User} from '../../interfaces/user';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
+
 export class MenuComponent {
-
+  @Input() loggedUser: User;
   @Input() isAuth: boolean;
-  @Input() login: string;
-
-
-  constructor(private heroService: HeroService) { }
-
+  @Output() logoutEmitter = new EventEmitter();
 
   logout() {
-    this.heroService.logout();
+    this.logoutEmitter.emit();
   }
+
 }

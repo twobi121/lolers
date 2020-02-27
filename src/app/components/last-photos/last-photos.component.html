@@ -1,5 +1,5 @@
 <div class="preview_photo wrapper"   >
-  <p *ngIf="lastPhotos && lastPhotos.id"><a  routerLink="albums/{{hero._id}}">Фотографии {{hero.name | titlecase}} {{hero.surname | titlecase}}</a></p>
+  <p *ngIf="lastPhotos && lastPhotos.id"><a  routerLink="albums/{{user._id}}">Фотографии {{user.name | titlecase}} {{user.surname | titlecase}}</a></p>
 
 
   <div class="preview_photo_block" >
@@ -9,14 +9,14 @@
       <div class="preview_photo_item"
            *ngFor="let photo of lastPhotos.lastphotos"
            [ngStyle]="{background: 'url(' + url + photo.filename + ')', 'background-size': 'cover'} ">
-        <a  routerLink="albums/{{hero._id}}/{{photo.filename}}"></a>
+        <a  routerLink="albums/{{user._id}}/{{photo.filename}}"></a>
 
       </div>
     </div>
 
 
 
-    <div class="add_photos_block" *ngIf="hero.login === login">
+    <div class="add_photos_block" *ngIf="user.login === loggedUser.login">
       <input
         style="display: none"
         type="file" (change)="onFileChanged($event)" multiple
@@ -28,7 +28,7 @@
       </i>
     </div>
 
-    <i class="fas fa-camera fa-2x" *ngIf="hero.login !== login">
+    <i class="fas fa-camera fa-2x" *ngIf="user.login !== loggedUser.login">
     </i>
 
   </div>

@@ -31,9 +31,9 @@ const routes: Routes = [
   { path: 'hero/:login/album/:id', component: AlbumContainer, canActivate: [AuthGuard], children: [
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
-  { path: 'hero/:login/friends', component: FriendsComponent, canActivate: [AuthGuard]
+  { path: 'hero/:login/friends', component: FriendsComponent
     },
-  { path: 'hero/:login', component: UserPageContainer, canActivate: [AuthGuard], children: [
+  { path: 'hero/:login', component: UserPageContainer, children: [
       { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard]}
     ]},
   { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },

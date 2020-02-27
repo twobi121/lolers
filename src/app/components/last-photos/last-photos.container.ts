@@ -1,27 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HeroService} from '../../services/hero.service';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {DataService} from '../../services/data-service';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-last-photos-container',
-  template: '<app-last-photos [lastPhotos] = "lastPhotos$ | async" [login] = "login$ | async" [hero]="hero"></app-last-photos>',
+  template: '<app-last-photos [lastPhotos] = "lastPhotos$ | async" [loggedUser] = "loggedUser" [user]="user"></app-last-photos>',
   styleUrls: ['./last-photos.component.css']
 })
-export class LastPhotosContainer implements OnInit {
-  @Input() hero: Hero;
-  login$: Observable<string>;
+export class LastPhotosContainer implements OnChanges {
+  @Input() user: User;
+  @Input() loggedUser: User;
   lastPhotos$: Observable<{}>;
 
-  constructor(private heroService: HeroService,
-              private dataService: DataService,
+  constructor(private heroService: UserService,
               ) { }
 
-  ngOnInit() {
-    this.login$ = this.dataService.login$;
-    this.lastPhotos$ = this.heroService.getLastPhotos(this.hero._id);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.lastPhotos$ = this.heroService.getLastPhotos(this.user._id);
   }
 
 }

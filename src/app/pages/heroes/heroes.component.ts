@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Hero} from '../../hero';
-import { HeroService } from '../../services/hero.service';
+import {User} from '../../interfaces/user';
+import { UserService } from '../../services/user.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -9,10 +9,10 @@ import {Observable} from 'rxjs';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Observable<Hero[]>;
+  heroes: Observable<User[]>;
 
 
-  constructor(private heroService: HeroService) {
+  constructor(private heroService: UserService) {
 
   }
 

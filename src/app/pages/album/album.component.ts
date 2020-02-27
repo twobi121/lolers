@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {DataService} from '../../services/data-service';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./album.component.css']
 })
 export class AlbumComponent implements OnChanges, OnDestroy {
-  @Input() hero: Hero;
+  @Input() hero: User;
   @Input() album: [];
   @Input() login: string;
   selectedFiles: [];
@@ -24,7 +24,7 @@ export class AlbumComponent implements OnChanges, OnDestroy {
   status = false;
   status1 = false;
   constructor(private dataService: DataService,
-              private heroService: HeroService,
+              private heroService: UserService,
               private sanitizer: DomSanitizer,
               private router: Router) { }
 

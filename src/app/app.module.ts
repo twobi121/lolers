@@ -5,7 +5,6 @@ import { HeroesComponent } from './pages/heroes/heroes.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import {UserEditContainer} from './pages/user-edit/user-edit.container';
-import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './routes/app-routing.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {RegistrationComponent} from './pages/registration/registration.component';
@@ -35,6 +34,13 @@ import { UploadComponent } from './pages/upload/upload.component';
 import { CreatealbumComponent } from './components/createalbum/createalbum.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import { FriendsComponent } from './pages/friends/friends.component';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './store';
+import {Effects} from './store/users/effects';
+import {UserModule} from './store/users/module';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -48,7 +54,6 @@ const INTERCEPTOR_PROVIDER: Provider = {
     HeroesComponent,
     UserEditComponent,
     UserEditContainer,
-    MessagesComponent,
     DashboardComponent,
     HeroFormComponentComponent,
     LoginComponent,
@@ -77,7 +82,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [DataService, AuthGuard, LoginGuard, MainPageGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]

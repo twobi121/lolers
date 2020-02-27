@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {ActivatedRoute} from '@angular/router';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -15,7 +15,7 @@ export class FriendsComponent implements OnInit {
   subs: Subscription[] = [];
   successStatus = [];
   constructor(
-    private heroService: HeroService,
+    private heroService: UserService,
     private route: ActivatedRoute
   ) { }
 

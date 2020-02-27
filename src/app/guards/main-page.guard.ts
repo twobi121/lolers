@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {HeroService} from '../services/hero.service';
+import {UserService} from '../services/user.service';
 
 
 
@@ -9,13 +9,13 @@ import {HeroService} from '../services/hero.service';
 export class MainPageGuard implements CanActivate {
 
 
-  constructor(private heroService: HeroService,
+  constructor(private heroService: UserService,
               private router: Router) {
   }
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): UrlTree | boolean  {
-    if (!localStorage.getItem('heroToken')) {
+    if (!localStorage.getItem('authUserToken')) {
       return true;
     } else {
       this.heroService.getUserLogin();

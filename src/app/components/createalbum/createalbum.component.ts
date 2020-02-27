@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {DataService} from '../../services/data-service';
-import {HeroService} from '../../services/hero.service';
+import {UserService} from '../../services/user.service';
 import {NgForm} from '@angular/forms';
 import {HttpResponse} from '@angular/common/http';
 import {Observable, Subscription} from 'rxjs';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
@@ -18,7 +18,7 @@ export class CreatealbumComponent implements OnInit, OnDestroy {
   private loading: Observable<HttpResponse<object>>;
   created = false;
   subs: Subscription[] = [];
-  hero: Hero;
+  hero: User;
   album: object;
   selectedFiles: [];
   blobs: SafeUrl[] = [];
@@ -27,7 +27,7 @@ export class CreatealbumComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
-    private heroService: HeroService,
+    private heroService: UserService,
     private sanitizer: DomSanitizer,
   ) { }
 

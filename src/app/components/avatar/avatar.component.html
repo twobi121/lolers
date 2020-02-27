@@ -1,9 +1,9 @@
-<div class="avatar wrapper">
+<div class="avatar wrapper" >
   <div class="avatar_img">
-    <img [src] = "avatar || (url + hero.avatar.filename)" alt="">
+    <img [src] = "avatarBlob || url + user.avatar.filename  " alt="">
   </div>
 
-  <div class="upload_btn" *ngIf="hero.login === (login$ | async)">
+  <div class="upload_btn" *ngIf="user.login === loggedUser.login">
     <input
       style="display: none"
       type="file" (change)="onFileChanged($event)"

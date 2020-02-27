@@ -1,6 +1,8 @@
 <h2>Регистрация</h2>
 
-<form #myForm='ngForm'>
+<div *ngIf="regState">Регистрация завершена! <a routerLink="/login">Войдите в учетную запись</a></div>
+
+<form *ngIf="!regState" #myForm='ngForm'>
 
   <div class="registration-form">
     <label>Введите логин
@@ -29,7 +31,7 @@
       <input placeholder="Введите ваш email" type="email" name="email" ngModel >
     </label>
 
-    <button (click)="addHero(myForm)">Зарегистрироваться</button>
+    <button (click)="addUser(myForm)">Зарегистрироваться</button>
     <button ><a routerLink="/login">Войти</a></button>
   </div>
 

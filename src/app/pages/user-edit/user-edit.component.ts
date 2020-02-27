@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Hero} from '../../hero';
+import {User} from '../../interfaces/user';
 import {Location} from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import {Location} from '@angular/common';
 })
 
 export class UserEditComponent {
-  @Input() hero: Hero;
+  @Input() hero: User;
 
   constructor( private location: Location
   ) {
