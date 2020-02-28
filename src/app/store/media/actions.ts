@@ -1,19 +1,18 @@
 import {Action} from '@ngrx/store';
-import {User} from '../../interfaces/user';
+import {LastPhoto} from '../../interfaces/lastPhoto';
+import {SafeUrl} from '@angular/platform-browser';
 
 export const ActionTypes = {
-  UPLOAD_AVATAR: 'Upload Avatar',
-  UPLOAD_AVATAR_SUCCESS: 'Upload Avatar Success',
-  UPLOAD_AVATAR_FAILURE: 'Upload Avatar Failure',
-  // GET_USER: 'Get User',
-  // GET_USER_SUCCESS: 'Get User Success',
-  // GET_USER_FAILURE: 'Get User Failure',
-  // GET_LOGGED_USER: 'Get Logged User',
-  // GET_LOGGED_USER_SUCCESS: 'Get Logged User Success',
-  // GET_LOGGED_USER_FAILURE: 'Get Logged User Failure',
-  // LOGOUT: 'Logout',
-  // LOGOUT_SUCCESS: 'Logout Success',
-  // LOGOUT_FAILURE: 'Logout Failure',
+
+  GET_LAST_PHOTOS: 'Get Last Photos',
+  GET_LAST_PHOTOS_SUCCESS: 'Get Last Photos Success',
+  GET_LAST_PHOTOS_FAILURE: 'Get Last Photos Failure',
+  SET_BLOBS: 'Set Blobs',
+  SET_BLOBS_SUCCESS: 'Set Blobs Success',
+  SET_BLOBS_FAILURE: 'Set Blobs Failure',
+  SET_SELECTED_FILES: 'Set Selected Files',
+  SET_SELECTED_FILES_SUCCESS: 'Set Selected Files Success',
+  SET_SELECTED_FILES_FAILURE: 'Set Selected Files Failure',
   // IS_FRIEND: 'Is Friend',
   // IS_FRIEND_SUCCESS: 'Is Friend Success',
   // IS_FRIEND_FAILURE: 'Is Friend Failure',
@@ -22,31 +21,78 @@ export const ActionTypes = {
   // SEND_REQUEST_FAILURE: 'Send Request Failure'
 };
 
-export class UploadAvatarAction implements Action {
-  public type = ActionTypes.UPLOAD_AVATAR;
+export class GetLastPhotosAction implements Action {
+  public type = ActionTypes.GET_LAST_PHOTOS;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class GetLastPhotosSuccessAction implements Action {
+  public type = ActionTypes.GET_LAST_PHOTOS_SUCCESS;
+
+  constructor(public payload: LastPhoto[]) {
+  }
+}
+
+export class GetLastPhotosFailureAction implements Action {
+  public type = ActionTypes.GET_LAST_PHOTOS_FAILURE;
 
   constructor(public payload?: any) {
   }
 }
 
-export class UploadAvatarSuccessAction implements Action {
-  public type = ActionTypes.UPLOAD_AVATAR_SUCCESS;
+export class SetBlobsAction implements Action {
+  public type = ActionTypes.SET_BLOBS;
 
-  constructor(public payload: any) {
+  constructor(public payload: SafeUrl[]) {
   }
 }
 
-export class UploadAvatarFailureAction implements Action {
-  public type = ActionTypes.UPLOAD_AVATAR_FAILURE;
+export class SetBlobsSuccessAction implements Action {
+  public type = ActionTypes.SET_BLOBS_SUCCESS;
+
+  constructor(public payload: SafeUrl[]) {
+  }
+}
+
+export class SetBlobsFailureAction implements Action {
+  public type = ActionTypes.SET_BLOBS_FAILURE;
 
   constructor(public payload?: any) {
   }
 }
 
+export class SetSelectedFilesAction implements Action {
+  public type = ActionTypes.SET_SELECTED_FILES;
 
+  constructor(public payload: FileList[]) {
+  }
+}
 
+export class SetSelectedFilesSuccessAction implements Action {
+  public type = ActionTypes.SET_SELECTED_FILES_SUCCESS;
+
+  constructor(public payload: FileList[]) {
+  }
+}
+
+export class SetSelectedFilesFailureAction implements Action {
+  public type = ActionTypes.SET_SELECTED_FILES_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
 
 export type Actions =
-  UploadAvatarAction
-  | UploadAvatarSuccessAction
-  | UploadAvatarFailureAction;
+  GetLastPhotosAction
+  | GetLastPhotosSuccessAction
+  | GetLastPhotosFailureAction
+  | SetBlobsAction
+  | SetBlobsSuccessAction
+  | SetBlobsFailureAction
+  | SetSelectedFilesAction
+  | SetSelectedFilesSuccessAction
+  | SetSelectedFilesFailureAction
+
+

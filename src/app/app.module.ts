@@ -41,6 +41,8 @@ import {StoreModule} from '@ngrx/store';
 import {reducers} from './store';
 import {Effects} from './store/users/effects';
 import {UserModule} from './store/users/module';
+import {MediaModule} from './store/media/module';
+import {RequestsContainer} from './components/requests/request.container';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -75,6 +77,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     UploadComponent,
     CreatealbumComponent,
     RequestsComponent,
+    RequestsContainer,
     FriendsComponent
   ],
   imports: [
@@ -84,6 +87,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AppRoutingModule,
     HttpClientModule,
     UserModule,
+    MediaModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

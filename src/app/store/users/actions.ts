@@ -1,5 +1,6 @@
 import {Action} from '@ngrx/store';
 import {User} from '../../interfaces/user';
+import {Request} from '../../interfaces/request';
 
 export const ActionTypes = {
   GET_USERS: 'Get Users',
@@ -19,7 +20,20 @@ export const ActionTypes = {
   IS_FRIEND_FAILURE: 'Is Friend Failure',
   SEND_REQUEST: 'Send Request',
   SEND_REQUEST_SUCCESS: 'Send Request Success',
-  SEND_REQUEST_FAILURE: 'Send Request Failure'
+  SEND_REQUEST_FAILURE: 'Send Request Failure',
+  GET_REQUESTS: 'Get Requests',
+  GET_REQUESTS_SUCCESS: 'Get Requests Success',
+  GET_REQUESTS_FAILURE: 'Get Requests Failure',
+  ACCEPT_REQUEST: 'Accept Request',
+  ACCEPT_REQUEST_SUCCESS: 'Accept Request Success',
+  ACCEPT_REQUEST_FAILURE: 'Accept Request Failure',
+  DECLINE_REQUEST: 'Decline Request',
+  DECLINE_REQUEST_SUCCESS: 'Decline Request Success',
+  DECLINE_REQUEST_FAILURE: 'Decline Request Failure',
+  UPLOAD_AVATAR: 'Upload Avatar',
+  UPLOAD_AVATAR_SUCCESS: 'Upload Avatar Success',
+  UPLOAD_AVATAR_FAILURE: 'Upload Avatar Failure',
+
 };
 
 export class GetUsersAction implements Action {
@@ -148,6 +162,90 @@ export class SendRequestFailureAction implements Action {
   }
 }
 
+export class GetRequestsAction implements Action {
+  public type = ActionTypes.GET_REQUESTS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class GetRequestsSuccessAction implements Action {
+  public type = ActionTypes.GET_REQUESTS_SUCCESS;
+
+  constructor(public payload: Request[]) {
+  }
+}
+
+export class GetRequestsFailureAction implements Action {
+  public type = ActionTypes.GET_REQUESTS_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class AcceptRequestAction implements Action {
+  public type = ActionTypes.ACCEPT_REQUEST;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class AcceptRequestSuccessAction implements Action {
+  public type = ActionTypes.ACCEPT_REQUEST_SUCCESS;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class AcceptRequestFailureAction implements Action {
+  public type = ActionTypes.ACCEPT_REQUEST_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class DeclineRequestAction implements Action {
+  public type = ActionTypes.DECLINE_REQUEST;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class DeclineRequestSuccessAction implements Action {
+  public type = ActionTypes.DECLINE_REQUEST_SUCCESS;
+
+  constructor(public payload: Request[]) {
+  }
+}
+
+export class DeclineRequestFailureAction implements Action {
+  public type = ActionTypes.DECLINE_REQUEST_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class UploadAvatarAction implements Action {
+  public type = ActionTypes.UPLOAD_AVATAR;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class UploadAvatarSuccessAction implements Action {
+  public type = ActionTypes.UPLOAD_AVATAR_SUCCESS;
+
+  constructor(public payload: any) {
+  }
+}
+
+export class UploadAvatarFailureAction implements Action {
+  public type = ActionTypes.UPLOAD_AVATAR_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
 
 
 export type Actions =
@@ -169,3 +267,16 @@ export type Actions =
   | SendRequestAction
   | SendRequestSuccessAction
   | SendRequestFailureAction
+  | GetRequestsAction
+  | GetRequestsSuccessAction
+  | GetRequestsFailureAction
+  | AcceptRequestAction
+  | AcceptRequestSuccessAction
+  | AcceptRequestFailureAction
+  | DeclineRequestAction
+  | DeclineRequestSuccessAction
+  | DeclineRequestFailureAction
+  | UploadAvatarAction
+  | UploadAvatarSuccessAction
+  | UploadAvatarFailureAction
+

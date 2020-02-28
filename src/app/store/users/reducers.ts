@@ -2,6 +2,7 @@ import {Actions as actions, ActionTypes} from './actions';
 import {UsersState, initialState} from '../states/users.state';
 import {User} from '../../interfaces/user';
 import {IsFriend} from '../../interfaces/isFriend';
+import {Request} from '../../interfaces/request';
 
 export function reducer(state: UsersState = initialState, action: actions): UsersState {
   switch (action.type) {
@@ -60,7 +61,7 @@ export function reducer(state: UsersState = initialState, action: actions): User
       return {
         ...state,
         isAuth: false,
-        loggedUser: {} as User
+        loggedUser: {} as User,
       };
     case ActionTypes.LOGOUT_FAILURE:
       return {
@@ -93,6 +94,52 @@ export function reducer(state: UsersState = initialState, action: actions): User
       return {
         ...state,
         requestStatus: false
+      };
+    case ActionTypes.GET_REQUESTS:
+      return {
+        ...state,
+        requests: [] as Request[]
+      };
+    case ActionTypes.GET_REQUESTS_SUCCESS:
+      return {
+        ...state,
+        requests: action.payload
+      };
+    case ActionTypes.GET_REQUESTS_FAILURE:
+      return {
+        ...state,
+        requests: [] as Request[]
+      };
+    case ActionTypes.ACCEPT_REQUEST:
+      return state;
+    case ActionTypes.ACCEPT_REQUEST_SUCCESS:
+      const idx = state.requests.findIndex((item: Request) => item._id === action.payload);
+      state.requests[idx].accepted = true;
+      return state;
+    case ActionTypes.ACCEPT_REQUEST_FAILURE:
+      return {
+        ...state,
+        requests: []
+      };
+    case ActionTypes.DECLINE_REQUEST:
+      return {
+        ...state,
+        requests: []
+      };
+    case ActionTypes.DECLINE_REQUEST_SUCCESS:
+      return {
+        ...state,
+        requests: action.payload
+      };
+    case ActionTypes.DECLINE_REQUEST_FAILURE:
+      return {
+        ...state,
+        requests: []
+      };
+    case ActionTypes.UPLOAD_AVATAR_SUCCESS:
+      return {
+        ...state,
+        user: {...state.user, avatar: action.payload}
       };
     default:
       return state;

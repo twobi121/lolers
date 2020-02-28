@@ -17,14 +17,28 @@ import {
   LogoutSuccessAction,
   IsFriendAction,
   IsFriendSuccessAction,
-  IsFriendFailureAction, SendRequestAction, SendRequestSuccessAction
+  IsFriendFailureAction,
+  SendRequestAction,
+  SendRequestSuccessAction,
+  UploadAvatarAction,
+  UploadAvatarFailureAction,
+  UploadAvatarSuccessAction,
+  GetRequestsAction,
+  SendRequestFailureAction,
+  GetRequestsSuccessAction,
+  AcceptRequestAction,
+  AcceptRequestFailureAction,
+  AcceptRequestSuccessAction,
+  DeclineRequestSuccessAction,
+  DeclineRequestAction, DeclineRequestFailureAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {User} from '../../interfaces/user';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {IsFriend} from '../../interfaces/isFriend';
+import {Request} from '../../interfaces/request';
 
 
 @Injectable()
@@ -91,7 +105,39 @@ export class Effects {
         return new SendRequestSuccessAction(true);
       }
     }),
+    catchError((err) => of(new SendRequestFailureAction()))
+  );
+
+  @Effect()
+  getRequest$ = this.actions$.pipe(
+    ofType<GetRequestsAction>(ActionTypes.GET_REQUESTS),
+    switchMap(() => this.service.getRequests()),
+    map((requests: Request[]) => new GetRequestsSuccessAction(requests)),
     catchError((err) => of(new IsFriendFailureAction()))
+  );
+
+  @Effect()
+  acceptRequest$ = this.actions$.pipe(
+    ofType<AcceptRequestAction>(ActionTypes.ACCEPT_REQUEST),
+    switchMap((action: AcceptRequestAction) => this.service.acceptRequest(action.payload)),
+    map((id: string) => new UploadAvatarSuccessAction(id)),
+    catchError((err) => of(new UploadAvatarFailureAction()))
+  );
+
+  @Effect()
+  declineRequest$ = this.actions$.pipe(
+    ofType<DeclineRequestAction>(ActionTypes.DECLINE_REQUEST),
+    switchMap((action: DeclineRequestAction) => this.service.declineRequest(action.payload)),
+    map((id: string) => new AcceptRequestSuccessAction(id)),
+    catchError((err) => of(new AcceptRequestFailureAction()))
+  );
+
+  @Effect()
+  uploadAvatar$ = this.actions$.pipe(
+    ofType<UploadAvatarAction>(ActionTypes.UPLOAD_AVATAR),
+    switchMap((action: UploadAvatarAction) => this.service.uploadAvatar(action.payload)),
+    map((response: HttpResponse<object>) => new UploadAvatarSuccessAction(response.body)),
+    catchError((err) => of(new UploadAvatarFailureAction()))
   );
 
 }

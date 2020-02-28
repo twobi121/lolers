@@ -14,27 +14,27 @@ import {PhotoComponent} from '../components/photo/photo.component';
 import {AlbumContainer} from '../pages/album/album.container';
 import {UploadComponent} from '../pages/upload/upload.component';
 import {CreatealbumComponent} from '../components/createalbum/createalbum.component';
-import {RequestsComponent} from '../components/requests/requests.component';
 import {FriendsComponent} from '../pages/friends/friends.component';
+import {RequestsContainer} from '../components/requests/request.container';
 
 
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [MainPageGuard]},
-  { path: 'hero/:login/albums/:id/upload', component: UploadComponent, canActivate: [AuthGuard]},
+  { path: 'hero/:login/albums/upload', component: UploadComponent, canActivate: [AuthGuard]},
   { path: 'hero/:login/album/:album_id/upload', component: UploadComponent, canActivate: [AuthGuard]},
-  { path: 'hero/:login/albums/:id', component: AlbumsContainer, canActivate: [AuthGuard], children: [
+  { path: 'hero/:login/albums', component: AlbumsContainer, canActivate: [AuthGuard], children: [
       { path: 'create', component: CreatealbumComponent, canActivate: [AuthGuard]},
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
-  { path: 'hero/:login/album/:id', component: AlbumContainer, canActivate: [AuthGuard], children: [
+  { path: 'hero/:login/album/:album_id', component: AlbumContainer, canActivate: [AuthGuard], children: [
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
   { path: 'hero/:login/friends', component: FriendsComponent
     },
   { path: 'hero/:login', component: UserPageContainer, children: [
-      { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard]}
+      { path: 'requests', component: RequestsContainer, canActivate: [AuthGuard]}
     ]},
   { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },
   { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },

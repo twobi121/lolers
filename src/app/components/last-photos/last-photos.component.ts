@@ -1,58 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
-import {DataService} from '../../services/data-service';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {HttpHeaderResponse} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
+import {LastPhoto} from '../../interfaces/lastPhoto';
+import {constants} from '../../shared/constants/constants';
 
 @Component({
   selector: 'app-last-photos',
   templateUrl: './last-photos.component.html',
   styleUrls: ['./last-photos.component.css']
 })
-export class LastPhotosComponent {
+export class LastPhotosComponent{
   @Input() user: User;
   @Input() loggedUser: User;
-  @Input() lastPhotos: {};
-  @Input() login: string;
-
-  selectedFiles: [];
-  blobs: SafeUrl[] = [];
-  url = 'http://localhost:8000/';
-
-  constructor(private heroService: UserService,
-              private dataService: DataService,
-              private sanitizer: DomSanitizer,
-              private router: Router,
-              private route: ActivatedRoute) { }
-
-
+  @Input() lastPhotos: LastPhoto[];
+  @Output() onFileChangedEmitter: EventEmitter<Event> = new EventEmitter<Event>();
+  @Input() selectedFiles: FileList[];
+  url = constants.url;
 
   onFileChanged($event: Event) {
-    // @ts-ignore
-    this.selectedFiles = $event.target.files;
-    if (this.selectedFiles.length ) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.blobs.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])));
-      }
-      this.dataService.blobs = this.blobs;
-      this.dataService.selectedFiles = this.selectedFiles;
-      // @ts-ignore
-      this.router.navigateByUrl(this.route.snapshot._routerState.url + `/albums/${this.hero._id}/upload`);
-    }
+    this.onFileChangedEmitter.emit($event);
   }
 
-  unselectFile(fileInput: HTMLInputElement, event: Event) {
-   // @ts-ignore
-    if (event.target.className === 'upload_modal_overlay' || event.target.innerText === 'Отмена' ) {
-     this.selectedFiles = null;
-     this.blobs = [];
-     fileInput.value = '';
-   }
 
-  }
+
+
 
 }

@@ -1,5 +1,6 @@
 import {User} from '../../interfaces/user';
 import {IsFriend} from '../../interfaces/isFriend';
+import {Request} from '../../interfaces/request';
 
 export interface UsersState {
   users: User[];
@@ -8,6 +9,7 @@ export interface UsersState {
   isAuth: boolean;
   isFriend: IsFriend;
   requestStatus: boolean;
+  requests: Request[];
 }
 
 export const initialState: UsersState = {
@@ -17,5 +19,6 @@ export const initialState: UsersState = {
   isAuth: !!localStorage.getItem('authUserToken'),
   isFriend: null,
   requestStatus: false,
+  requests: [],
 };
 

@@ -33,3 +33,8 @@ export const selectRequestStatus = createSelector(
   selectUsers,
   (state: UsersState) => state ? state.requestStatus : false
 );
+
+export const selectRequests = createSelector(
+  selectUsers,
+  (state: UsersState) => state ? state.requests : []
+);

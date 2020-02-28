@@ -11,5 +11,5 @@ import {Effects} from './effects';
   providers: [Service]
 })
 
-export class UserModule {
+export class MediaModule {
 }

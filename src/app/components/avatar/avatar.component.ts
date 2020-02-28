@@ -4,7 +4,7 @@ import {User} from '../../interfaces/user';
 import {State} from '../../store/states/app.state';
 import {Store} from '@ngrx/store';
 import {constants} from '../../shared/constants/constants';
-import {UploadAvatarAction} from '../../store/media/actions';
+import {UploadAvatarAction} from '../../store/users/actions';
 
 @Component({
   selector: 'app-avatar',

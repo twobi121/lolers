@@ -1,15 +1,15 @@
 <div class="preview_photo wrapper"   >
-  <p *ngIf="lastPhotos && lastPhotos.id"><a  routerLink="albums/{{user._id}}">Фотографии {{user.name | titlecase}} {{user.surname | titlecase}}</a></p>
+  <p *ngIf="lastPhotos"><a routerLink="albums">Фотографии {{user.name | titlecase}} {{user.surname | titlecase}}</a></p>
 
 
   <div class="preview_photo_block" >
 
-    <div class="preview_photo_item_container" *ngIf="lastPhotos && lastPhotos.lastphotos.length">
+    <div class="preview_photo_item_container" *ngIf="lastPhotos">
 
       <div class="preview_photo_item"
-           *ngFor="let photo of lastPhotos.lastphotos"
+           *ngFor="let photo of lastPhotos"
            [ngStyle]="{background: 'url(' + url + photo.filename + ')', 'background-size': 'cover'} ">
-        <a  routerLink="albums/{{user._id}}/{{photo.filename}}"></a>
+        <a  routerLink="albums/{{photo.filename}}"></a>
 
       </div>
     </div>

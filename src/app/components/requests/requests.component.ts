@@ -1,65 +1,29 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {Observable, Subscription} from 'rxjs';
-import {DataService} from '../../services/data-service';
-import {Router} from '@angular/router';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Request} from '../../interfaces/request';
+import {constants} from '../../shared/constants/constants';
 
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
   styleUrls: ['./requests.component.css']
 })
-export class RequestsComponent implements OnInit {
-  requests$: Observable<[]>;
-  requests: [] = [];
-  url = 'http://localhost:8000/';
-  subs: Subscription[] = [];
-  acceptStatus: boolean[] = [];
+export class RequestsComponent {
+  @Input() requests: Request[];
+  @Output() closeEmitter: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() acceptEmitter: EventEmitter<number> = new EventEmitter<number>();
+  @Output() declineEmitter: EventEmitter<number> = new EventEmitter<number>();
+  url = constants.url;
 
-  constructor(
-    private heroService: UserService,
-    private dataService: DataService,
-    private router: Router,
-  ) { }
-
-  ngOnInit() {
-    this.getRequests();
+  close($event: Event) {
+    this.closeEmitter.emit($event);
   }
 
-  getRequests() {
-    this.requests$ = this.heroService.getRequests();
-    this.subs.push(this.requests$.subscribe(
-      requests => this.requests = requests
-    ));
+  accept(id: number) {
+   this.acceptEmitter.emit(id);
   }
 
-  close(event: any ) {
-    const target = event.target.className;
-    if (target === 'fas fa-times close_btn' || target === 'upload_modal_overlay' ) {
-      this.router.navigateByUrl(this.router.url.replace('requests',  '/'));
-    }
-    event.stopPropagation();
+  decline(id: number) {
+    this.declineEmitter.emit(id);
   }
-
-  accept(id: string) {
-    const accept = this.heroService.acceptRequest(id);
-    this.subs.push(accept.subscribe(
-    response => {
-      if (response.status === 200) {
-        this.acceptStatus.push(true);
-      }
-    }));
-  }
-
-  decline(id: string) {
-    // @ts-ignore
-    const decline = this.heroService.declineRequest(id);
-    this.subs.push(decline.subscribe(
-      response => {
-        if (response.status === 200) {
-          this.acceptStatus.push(false);
-        }
-      }));
-    }
 }
 
