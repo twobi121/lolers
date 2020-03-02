@@ -30,7 +30,7 @@ import {
   AcceptRequestFailureAction,
   AcceptRequestSuccessAction,
   DeclineRequestSuccessAction,
-  DeclineRequestAction, DeclineRequestFailureAction
+  DeclineRequestAction, DeclineRequestFailureAction, GetRequestsFailureAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {User} from '../../interfaces/user';
@@ -113,23 +113,23 @@ export class Effects {
     ofType<GetRequestsAction>(ActionTypes.GET_REQUESTS),
     switchMap(() => this.service.getRequests()),
     map((requests: Request[]) => new GetRequestsSuccessAction(requests)),
-    catchError((err) => of(new IsFriendFailureAction()))
+    catchError((err) => of(new GetRequestsFailureAction()))
   );
 
   @Effect()
   acceptRequest$ = this.actions$.pipe(
     ofType<AcceptRequestAction>(ActionTypes.ACCEPT_REQUEST),
     switchMap((action: AcceptRequestAction) => this.service.acceptRequest(action.payload)),
-    map((id: string) => new UploadAvatarSuccessAction(id)),
-    catchError((err) => of(new UploadAvatarFailureAction()))
+    map((id: string) => new AcceptRequestSuccessAction(id)),
+    catchError((err) => of(new AcceptRequestFailureAction()))
   );
 
   @Effect()
   declineRequest$ = this.actions$.pipe(
     ofType<DeclineRequestAction>(ActionTypes.DECLINE_REQUEST),
     switchMap((action: DeclineRequestAction) => this.service.declineRequest(action.payload)),
-    map((id: string) => new AcceptRequestSuccessAction(id)),
-    catchError((err) => of(new AcceptRequestFailureAction()))
+    map((id: string) => new DeclineRequestSuccessAction(id)),
+    catchError((err) => of(new DeclineRequestFailureAction()))
   );
 
   @Effect()

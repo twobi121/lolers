@@ -9,11 +9,11 @@
 
   <div class="block">
     <div class="friends">
-      <div class="user_friends requests wrapper" *ngIf="user.login === loggedUser.login">
+      <div class="user_friends requests wrapper" *ngIf="loggedUser && user.login === loggedUser.login">
         <a routerLink="requests">Заявки в друзья</a>
       </div>
 
-      <div class="user_friends requests wrapper" *ngIf="user.login !== loggedUser.login && isAuth && isFriend">
+      <div class="user_friends requests wrapper" *ngIf="loggedUser && user.login !== loggedUser.login && isAuth && isFriend">
         <button (click)="sendRequest(user._id)" *ngIf="!isFriend.friend && !isFriend.request && !requestStatus">Добавить в друзья</button>
         <span *ngIf="requestStatus">Запрос отправлен</span>
         <span *ngIf="isFriend.friend">{{user.name}} у вас в друзьях</span>

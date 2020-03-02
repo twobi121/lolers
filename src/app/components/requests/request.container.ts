@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {Request} from '../../interfaces/request';
 import {State} from '../../store/states/app.state';
@@ -39,22 +39,10 @@ export class RequestsContainer implements OnInit {
 
   accept(id: number) {
     this.store.dispatch(new AcceptRequestAction(id));
-    // this.subs.push(accept.subscribe(
-    //   response => {
-    //     if (response.status === 200) {
-    //       this.acceptStatus.push(true);
-    //     }
-    //   }));
   }
 
   decline(id: number) {
     this.store.dispatch(new DeclineRequestAction(id));
-    // this.subs.push(decline.subscribe(
-    //   response => {
-    //     if (response.status === 200) {
-    //       this.acceptStatus.push(false);
-    //     }
-    //   }));
   }
 }
 

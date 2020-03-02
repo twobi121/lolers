@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (data.token) {
           localStorage.setItem('authUserToken', data.token);
           this.store.dispatch(new GetLoggedUserAction());
-          this.router.navigateByUrl(`hero/${data.user.login}`);
+          this.router.navigateByUrl(`user/${data.user.login}`);
         }
     }));
   }

@@ -214,7 +214,7 @@ export class DeclineRequestAction implements Action {
 export class DeclineRequestSuccessAction implements Action {
   public type = ActionTypes.DECLINE_REQUEST_SUCCESS;
 
-  constructor(public payload: Request[]) {
+  constructor(public payload: string) {
   }
 }
 

@@ -16,7 +16,7 @@
 
 
 
-    <div class="add_photos_block" *ngIf="user.login === loggedUser.login">
+    <div class="add_photos_block" *ngIf="loggedUser && user.login === loggedUser.login">
       <input
         style="display: none"
         type="file" (change)="onFileChanged($event)" multiple
@@ -28,7 +28,7 @@
       </i>
     </div>
 
-    <i class="fas fa-camera fa-2x" *ngIf="user.login !== loggedUser.login">
+    <i class="fas fa-camera fa-2x" *ngIf="loggedUser && user.login !== loggedUser.login">
     </i>
 
   </div>

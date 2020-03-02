@@ -10,14 +10,14 @@
 
       <div class="friend_item">
         <div class="friend_avatar">
-          <a routerLink="/hero/{{friend.user.login}}">
+          <a routerLink="/user/{{friend.user.login}}">
             <img [src]="url + friend.user.avatar.filename" alt="">
           </a>
 
         </div>
 
         <div class="friend_info">
-          <a routerLink="/hero/{{friend.user.login}}">
+          <a routerLink="/user/{{friend.user.login}}">
             {{friend.user.name}} {{friend.user.surname}}
           </a>
         </div>

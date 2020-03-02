@@ -3,7 +3,7 @@
     <img [src] = "avatarBlob || url + user.avatar.filename  " alt="">
   </div>
 
-  <div class="upload_btn" *ngIf="user.login === loggedUser.login">
+  <div class="upload_btn" *ngIf="loggedUser && user.login === loggedUser.login">
     <input
       style="display: none"
       type="file" (change)="onFileChanged($event)"

@@ -10,15 +10,15 @@
   </div>
 
   <div class="menu_item" *ngIf="isAuth && loggedUser">
-    <a routerLink="hero/{{loggedUser.login}}">Моя страница</a>
+    <a routerLink="user/{{loggedUser.login}}">Моя страница</a>
   </div>
 
   <div class="menu_item" *ngIf="isAuth && loggedUser">
-    <a routerLink="hero/{{loggedUser.login}}/friends">Мои друзья</a>
+    <a routerLink="user/{{loggedUser.login}}/friends">Мои друзья</a>
   </div>
 
   <div class="menu_item" *ngIf="isAuth && loggedUser">
-    <a routerLink="heroes">Герои</a>
+    <a routerLink="users">Герои</a>
   </div>
 
   <div class="menu_item">

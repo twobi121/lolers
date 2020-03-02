@@ -112,25 +112,23 @@ export function reducer(state: UsersState = initialState, action: actions): User
       };
     case ActionTypes.ACCEPT_REQUEST:
       return state;
-    case ActionTypes.ACCEPT_REQUEST_SUCCESS:
+    case ActionTypes.ACCEPT_REQUEST_SUCCESS: {
       const idx = state.requests.findIndex((item: Request) => item._id === action.payload);
       state.requests[idx].accepted = true;
       return state;
+    }
     case ActionTypes.ACCEPT_REQUEST_FAILURE:
       return {
         ...state,
         requests: []
       };
     case ActionTypes.DECLINE_REQUEST:
-      return {
-        ...state,
-        requests: []
-      };
-    case ActionTypes.DECLINE_REQUEST_SUCCESS:
-      return {
-        ...state,
-        requests: action.payload
-      };
+      return state;
+    case ActionTypes.DECLINE_REQUEST_SUCCESS: {
+      const idx = state.requests.findIndex((item: Request) => item._id === action.payload);
+      state.requests[idx].accepted = false;
+      return state;
+    }
     case ActionTypes.DECLINE_REQUEST_FAILURE:
       return {
         ...state,

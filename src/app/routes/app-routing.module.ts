@@ -22,22 +22,22 @@ import {RequestsContainer} from '../components/requests/request.container';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [MainPageGuard]},
-  { path: 'hero/:login/albums/upload', component: UploadComponent, canActivate: [AuthGuard]},
-  { path: 'hero/:login/album/:album_id/upload', component: UploadComponent, canActivate: [AuthGuard]},
-  { path: 'hero/:login/albums', component: AlbumsContainer, canActivate: [AuthGuard], children: [
+  { path: 'user/:login/albums/upload', component: UploadComponent, canActivate: [AuthGuard]},
+  { path: 'user/:login/album/:album_id/upload', component: UploadComponent, canActivate: [AuthGuard]},
+  { path: 'user/:login/albums', component: AlbumsContainer, canActivate: [AuthGuard], children: [
       { path: 'create', component: CreatealbumComponent, canActivate: [AuthGuard]},
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
-  { path: 'hero/:login/album/:album_id', component: AlbumContainer, canActivate: [AuthGuard], children: [
+  { path: 'user/:login/album/:album_id', component: AlbumContainer, canActivate: [AuthGuard], children: [
       { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
     ]},
-  { path: 'hero/:login/friends', component: FriendsComponent
+  { path: 'user/:login/friends', component: FriendsComponent
     },
-  { path: 'hero/:login', component: UserPageContainer, children: [
+  { path: 'user/:login', component: UserPageContainer, children: [
       { path: 'requests', component: RequestsContainer, canActivate: [AuthGuard]}
     ]},
   { path: 'edit/:login', component: UserEditContainer, canActivate: [AuthGuard] },
-  { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },
+  { path: 'users', component: HeroesComponent, canActivate: [AuthGuard]  },
   { path: 'dashboard', component: DashboardComponent},
   { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard]},
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},

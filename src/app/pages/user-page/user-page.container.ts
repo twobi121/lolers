@@ -18,7 +18,7 @@ export class UserPageContainer implements OnInit, OnDestroy {
   user$: Observable<User> = this.store.pipe(select(selectUser));
   isAuth$: Observable<boolean> = this.store.pipe(select(selectIsAuth));
   isFriend$: Observable<IsFriend> = this.store.pipe(select(selectIsFriend));
-  requestStatus$: Observable<boolean> = this.store.pipe(select(selectRequestStatus));;
+  requestStatus$: Observable<boolean> = this.store.pipe(select(selectRequestStatus));
   subs: Subscription[] = [];
 
   constructor(private route: ActivatedRoute,
