@@ -13,12 +13,9 @@ export const ActionTypes = {
   SET_SELECTED_FILES: 'Set Selected Files',
   SET_SELECTED_FILES_SUCCESS: 'Set Selected Files Success',
   SET_SELECTED_FILES_FAILURE: 'Set Selected Files Failure',
-  // IS_FRIEND: 'Is Friend',
-  // IS_FRIEND_SUCCESS: 'Is Friend Success',
-  // IS_FRIEND_FAILURE: 'Is Friend Failure',
-  // SEND_REQUEST: 'Send Request',
-  // SEND_REQUEST_SUCCESS: 'Send Request Success',
-  // SEND_REQUEST_FAILURE: 'Send Request Failure'
+  SWITCH_PHOTO: 'Switch photo',
+  SWITCH_PHOTO_SUCCESS: 'Switch photo success',
+  SWITCH_PHOTO_FAILURE: 'Switch photo failure',
 };
 
 export class GetLastPhotosAction implements Action {
@@ -84,6 +81,27 @@ export class SetSelectedFilesFailureAction implements Action {
   }
 }
 
+export class SwitchPhotoAction implements Action {
+  public type = ActionTypes.SWITCH_PHOTO;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class SwitchPhotoSuccessAction implements Action {
+  public type = ActionTypes.SWITCH_PHOTO_SUCCESS;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class SwitchPhotoFailureAction implements Action {
+  public type = ActionTypes.SWITCH_PHOTO_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
 export type Actions =
   GetLastPhotosAction
   | GetLastPhotosSuccessAction
@@ -94,5 +112,8 @@ export type Actions =
   | SetSelectedFilesAction
   | SetSelectedFilesSuccessAction
   | SetSelectedFilesFailureAction
+  | SwitchPhotoAction
+  | SwitchPhotoSuccessAction
+  | SwitchPhotoFailureAction
 
 

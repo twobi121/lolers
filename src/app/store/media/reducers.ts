@@ -53,6 +53,18 @@ export function reducer(state: MediaState = initialState, action: actions): Medi
       };
     case ActionsUsersTypes.LOGOUT_SUCCESS:
       return initialState;
+    case ActionTypes.SWITCH_PHOTO_SUCCESS:
+    {
+      let idx = state.photos.findIndex(item => item === state.selectedPhoto );
+      if (action.payload === 'back') {
+        idx = (idx === 0) ? state.photos.length : idx - 1;
+      } else if (action.payload === 'next') {
+        idx = (idx + 1 === state.photos.length) ? -1 : idx + 1;
+      }
+      state.selectedPhoto = state.photos[idx];
+      return state;
+    }
+
     default:
       return state;
   }

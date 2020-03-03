@@ -43,6 +43,7 @@ import {Effects} from './store/users/effects';
 import {UserModule} from './store/users/module';
 import {MediaModule} from './store/media/module';
 import {RequestsContainer} from './components/requests/request.container';
+import {PhotoContainer} from './components/photo/photo.container';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -72,6 +73,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AlbumsComponent,
     AlbumsContainer,
     PhotoComponent,
+    PhotoContainer,
     AlbumComponent,
     AlbumContainer,
     UploadComponent,

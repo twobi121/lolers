@@ -1,14 +1,14 @@
 <div class="upload_modal_overlay" (click)="closePhoto($event)">
 
-  <div class="upload_modal"  *ngIf="hero" >
+  <div class="upload_modal"  *ngIf="user" >
     <div class="photo_block" >
       <div class="photo_item" *ngIf="!deleteStatus">
         <div class="move_icon">
-          <div class="icon_item" (click)="prevPhoto()">
+          <div class="icon_item" (click)="switchPhoto('back')">
             <i class="fas fa-chevron-left fa-2x icon"></i>
           </div>
 
-          <div class="icon_item" (click)="nextPhoto()">
+          <div class="icon_item" (click)="switchPhoto('next')">
             <i class="fas fa-chevron-right fa-2x icon"></i>
           </div>
 
@@ -16,11 +16,11 @@
         <img [src]="url + selectedPhoto.filename">
       </div>
       <div class="photo_data" *ngIf="!deleteStatus">
-        <a routerLink="/hero/{{hero.login}}/albums/{{albums[0].id}}/{{hero._id}}">{{albums[0].name}}</a>
-        <button (click)="deletePhoto()"  *ngIf="hero.login === (login$ | async)">
+        <a routerLink="/hero/{{user.login}}/albums/{{albums[0].id}}/{{user._id}}">{{albums[0].name}}</a>
+        <button (click)="deletePhoto()"  *ngIf="user.login === loggedUser.login">
           Удалить фото
         </button>
-        <button (click)="setPreview()" [disabled]="updateStatus"  *ngIf="hero.login === (login$ | async)">
+        <button (click)="setPreview()" [disabled]="updateStatus"  *ngIf="user.login === loggedUser.login">
           Установить обложкой
         </button>
       </div>
@@ -35,15 +35,15 @@
       <div class="hero_data_wrapper">
         <div class="hero_data">
           <div class="hero_avatar_thumb">
-            <a routerLink="/hero/{{hero.login}}">
-              <img [src]="url + hero.avatar.filename" alt="">
+            <a routerLink="/hero/{{user.login}}">
+              <img [src]="url + user.avatar.filename" alt="">
             </a>
           </div>
 
           <div>
             <div class="hero_name">
-              <a routerLink="/hero/{{hero.login}}">
-                {{hero.name}} {{hero.surname}}
+              <a routerLink="/hero/{{user.login}}">
+                {{user.name}} {{user.surname}}
               </a>
             </div>
             <div class="photo_date">

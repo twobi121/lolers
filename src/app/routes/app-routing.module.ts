@@ -10,12 +10,12 @@ import {LoginGuard} from '../guards/login.guard';
 import {UserPageContainer} from '../pages/user-page/user-page.container';
 import {MainPageGuard} from '../guards/main-page.guard';
 import {AlbumsContainer} from '../pages/albums/albums.container';
-import {PhotoComponent} from '../components/photo/photo.component';
 import {AlbumContainer} from '../pages/album/album.container';
 import {UploadComponent} from '../pages/upload/upload.component';
 import {CreatealbumComponent} from '../components/createalbum/createalbum.component';
 import {FriendsComponent} from '../pages/friends/friends.component';
 import {RequestsContainer} from '../components/requests/request.container';
+import {PhotoContainer} from '../components/photo/photo.container';
 
 
 
@@ -26,10 +26,10 @@ const routes: Routes = [
   { path: 'user/:login/album/:album_id/upload', component: UploadComponent, canActivate: [AuthGuard]},
   { path: 'user/:login/albums', component: AlbumsContainer, canActivate: [AuthGuard], children: [
       { path: 'create', component: CreatealbumComponent, canActivate: [AuthGuard]},
-      { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
+      { path: ':photo', component: PhotoContainer, canActivate: [AuthGuard]}
     ]},
   { path: 'user/:login/album/:album_id', component: AlbumContainer, canActivate: [AuthGuard], children: [
-      { path: ':photo', component: PhotoComponent, canActivate: [AuthGuard]}
+      { path: ':photo', component: PhotoContainer, canActivate: [AuthGuard]}
     ]},
   { path: 'user/:login/friends', component: FriendsComponent
     },
