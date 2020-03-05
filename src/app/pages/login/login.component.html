@@ -1,8 +1,8 @@
 <div class="login_form">
   <div>
     <h1>Вход</h1>
-    <div *ngIf="!error">Пожалуйста, залогиньтесь</div>
-    <div *ngIf="error">{{error}}</div>
+    <div *ngIf="!loginError">Пожалуйста, залогиньтесь</div>
+    <div *ngIf="loginError">{{loginError}}</div>
 
     <form [formGroup] = 'loginForm' (ngSubmit)="submit()">
         <div [ngClass]="{invalid: loginForm.get('login').touched && loginForm.get('login').invalid}">
@@ -14,7 +14,17 @@
             <small *ngIf="loginForm.get('login').errors.required">
               Поле логин не должно быть пустым
             </small>
+
           </div>
+
+          <div *ngIf="loginForm.get('login').touched && loginForm.get('login').invalid">
+            <small *ngIf="loginForm.get('login').errors.minlength">
+              Минимальная длина логина - 3 символа
+            </small>
+
+          </div>
+
+
         </div>
 
         <div [ngClass]="{invalid: loginForm.get('password').touched && loginForm.get('password').invalid}">

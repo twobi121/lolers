@@ -1,35 +1,50 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
-import {DataService} from '../../services/data-service';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {User} from '../../interfaces/user';
-import {UserService} from '../../services/user.service';
-import { Location } from '@angular/common';
 import {Observable, Subscription} from 'rxjs';
 import {Photo} from '../../interfaces/photo';
 import {selectLoggedUser, selectUser} from '../../store/users/selectors';
 import {State} from '../../store/states/app.state';
 import {Store} from '@ngrx/store';
-import {SwitchPhotoAction} from '../../store/media/actions';
+import {
+  DeletePhotoAction,
+  GetCurrentAlbumAction,
+  SetAlbumPreviewAction,
+  SetSelectedPhotoAction,
+  SwitchPhotoAction, UnsetSelectedPhotoAction
+} from '../../store/media/actions';
 import {Album} from '../../interfaces/album';
+import {
+  selectAlbums,
+  selectAlbumUpdatedStatus,
+  selectCurrentAlbum,
+  selectDeleteStatus,
+  selectPhotos,
+  selectSelectedPhoto
+} from '../../store/media/selectors';
+import {Preview} from '../../interfaces/preview';
 
 
 
 @Component({
   selector: 'app-photo-container',
-  template: `<app-photo (switchPhotoEmitter)="switchPhoto($event)"
-                        (deletePhotoEmitter)="deletePhoto()"
-                        (setAlbumPreviewEmitter)="setPreview()"
+  template: `<app-photo (setSelectedPhotoEmitter)="setSelectedPhoto()"
+                        (switchPhotoEmitter)="switchPhoto($event)"
+                        (deletePhotoEmitter)="deletePhoto($event)"
+                        (setAlbumPreviewEmitter)="setPreview($event)"
+                        (closePhotoEmitter)="closePhoto($event)"
                         [user]="user$ | async"
                         [loggedUser]="loggedUser$ | async"
                         [photos]="photos$ | async"
                         [albums]="albums$ | async"
                         [selectedPhoto]="selectedPhoto$ | async"
                         [currentAlbum]="currentAlbum$ | async"
-                        [deleteStatus]="deleteStatus$ | async"></app-photo>`,
+                        [deleteStatus]="deleteStatus$ | async"
+                        [albumUpdateStatus]="albumUpdateStatus$ | async"></app-photo>`,
   styleUrls: ['./photo.component.css']
 })
 
-export class PhotoContainer implements OnInit {
+export class PhotoContainer {
   user$: Observable<User> = this.store.select(selectUser);
   loggedUser$: Observable<User> = this.store.select(selectLoggedUser);
   photos$: Observable<Photo[]> = this.store.select(selectPhotos);
@@ -37,37 +52,37 @@ export class PhotoContainer implements OnInit {
   selectedPhoto$: Observable<Photo> = this.store.select(selectSelectedPhoto);
   currentAlbum$: Observable<Album> = this.store.select(selectCurrentAlbum);
   deleteStatus$: Observable<boolean> = this.store.select(selectDeleteStatus);
-
+  albumUpdateStatus$: Observable<boolean> = this.store.select(selectAlbumUpdatedStatus);
+  subs: Subscription[] = [];
 
   constructor(
+    private store: Store<State>,
     private route: ActivatedRoute,
-    private router: Router,
-    private store: Store<State>
+    private router: Router
   ) { }
 
-  ngOnInit() {
+  setSelectedPhoto() {
+    this.subs.push(
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        this.store.dispatch(new SetSelectedPhotoAction(params.get('photo')));
+      }));
   }
-
 
   switchPhoto(event: string) {
     this.store.dispatch(new SwitchPhotoAction(event));
-    this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  this.photos[idx - 1].filename));
   }
 
-  closePhoto(event: any ) {
-    const target = event.target.className;
-    if (target === 'fas fa-times close_btn' || target === 'upload_modal_overlay' ) {
-      this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  '/'));
-    }
-    event.stopPropagation();
+  deletePhoto(id: number) {
+    this.store.dispatch(new DeletePhotoAction(id));
   }
 
-  deletePhoto() {
-    this.store.dispatch(new DeletePhotoAction());
+  setPreview(preview: Preview) {
+   this.store.dispatch(new SetAlbumPreviewAction(preview));
   }
 
-  setPreview() {
-   this.store.dispatch(new SetAlbumPreviewAction());
+  closePhoto(filename: string) {
+    this.store.dispatch(new UnsetSelectedPhotoAction());
+    this.router.navigateByUrl(this.router.url.replace(filename,  ''));
   }
 
 }

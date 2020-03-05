@@ -2,7 +2,7 @@ import {Actions as actions, ActionTypes} from './actions';
 import {ActionTypes as ActionsUsersTypes} from '../users/actions';
 import {MediaState, initialState} from '../states/media.state';
 import {LastPhoto} from '../../interfaces/lastPhoto';
-import {SafeUrl} from '@angular/platform-browser';
+import {Blob} from '../../interfaces/blob';
 
 export function reducer(state: MediaState = initialState, action: actions): MediaState {
   switch (action.type) {
@@ -34,7 +34,7 @@ export function reducer(state: MediaState = initialState, action: actions): Medi
     case ActionTypes.SET_BLOBS_FAILURE:
       return {
         ...state,
-        blobs: [] as SafeUrl[]
+        blobs: [] as Blob[]
       };
     case ActionTypes.SET_SELECTED_FILES:
       return {
@@ -51,20 +51,88 @@ export function reducer(state: MediaState = initialState, action: actions): Medi
         ...state,
         selectedFiles: [] as FileList[]
       };
+    case ActionTypes.SET_SELECTED_PHOTO:
+      return {
+        ...state,
+        selectedPhoto: state.photos.find(item => item.filename === action.payload),
+        albumUpdateStatus: false
+      };
+    case ActionTypes.UNSET_SELECTED_PHOTO:
+      return {
+        ...state,
+        selectedPhoto: null
+      };
     case ActionsUsersTypes.LOGOUT_SUCCESS:
       return initialState;
-    case ActionTypes.SWITCH_PHOTO_SUCCESS:
-    {
+    case ActionTypes.SWITCH_PHOTO: {
       let idx = state.photos.findIndex(item => item === state.selectedPhoto );
       if (action.payload === 'back') {
-        idx = (idx === 0) ? state.photos.length : idx - 1;
+        idx = (idx === 0) ? state.photos.length - 1 : idx - 1;
       } else if (action.payload === 'next') {
-        idx = (idx + 1 === state.photos.length) ? -1 : idx + 1;
+        idx = (idx + 1 === state.photos.length) ? 0 : idx + 1;
       }
-      state.selectedPhoto = state.photos[idx];
-      return state;
+      return {
+        ...state,
+        selectedPhoto: state.photos[idx],
+        deleteStatus: false,
+      };
     }
-
+    case ActionTypes.DELETE_PHOTO_SUCCESS: {
+      const idx = state.photos.indexOf(state.selectedPhoto);
+      return {
+        ...state,
+        photos: state.photos.splice(idx, 1),
+        deleteStatus: true,
+        selectedPhoto: null
+      };
+    }
+    case ActionTypes.SET_ALBUM_PREVIEW_SUCCESS: {
+      return {
+        ...state,
+        albumUpdateStatus: true
+      };
+    }
+    case ActionTypes.GET_CURRENT_ALBUM_SUCCESS: {
+      return {
+        ...state,
+        albumDeleteStatus: false,
+        photos: action.payload.photos,
+        currentAlbum: action.payload
+      };
+    }
+    case ActionTypes.GET_CURRENT_ALBUM_FAILURE: {
+      return {
+        ...state,
+        currentAlbum: null
+      };
+    }
+    case ActionTypes.DELETE_ALBUM_SUCCESS: {
+      return {
+        ...state,
+        currentAlbum: null,
+        albumDeleteStatus: true
+      };
+    }
+    case ActionTypes.GET_ALBUMS_WITH_PHOTOS_SUCCESS: {
+      return {
+        ...state,
+        albums: action.payload.albums,
+        sortedPhotos: action.payload.sortedPhotos,
+        photos: action.payload.sortedPhotos.reduce((acc, elem) => acc.concat(elem.photos), []),
+      };
+    }
+    case ActionTypes.GET_ALBUMS_SUCCESS: {
+      return {
+        ...state,
+        albums: action.payload
+      };
+    }
+    case ActionTypes.UPLOAD_SUCCESS: {
+      state.blobs[action.payload].loaded = true;
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }

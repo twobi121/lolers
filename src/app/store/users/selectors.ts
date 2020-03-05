@@ -38,3 +38,18 @@ export const selectRequests = createSelector(
   selectUsers,
   (state: UsersState) => state ? state.requests : []
 );
+
+export const selectFriends = createSelector(
+  selectUsers,
+  (state: UsersState) => state ? state.friends : []
+);
+
+export const selectLoginError = createSelector(
+  selectUsers,
+  (state: UsersState) => state ? state.loginError : ''
+);
+
+export const selectRegState = createSelector(
+  selectUsers,
+  (state: UsersState) => state ? state.regState : false
+);

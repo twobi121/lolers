@@ -5,6 +5,9 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {IsFriend} from '../../interfaces/isFriend';
 import {constants} from '../../shared/constants/constants';
+import {Friend} from '../../interfaces/friend';
+import {Data} from '@angular/router';
+import {LoginData} from '../../interfaces/loginData';
 
 
 @Injectable()
@@ -79,7 +82,45 @@ export class Service {
     uploadData.append('file', file, file.name);
     return this.http.post(this.mediaUrl + 'uploadAvatar', uploadData, {observe: 'response'})
       .pipe (
-        map( response => response)
+        map( (response: HttpResponse<object>) => response)
       );
   }
+
+  getFriends(login: string): Observable<Friend[]> {
+    return this.http.get(this.userUrl + login + '/friends')
+      .pipe (
+        map((item: Friend[]) => item)
+      );
+  }
+
+  deleteFriend(id: number): Observable<number> {
+    return this.http.post(this.userUrl + 'unfriend', {id})
+      .pipe (
+        map( () => id)
+      );
+  }
+
+  login(loginData: LoginData): Data {
+    return this.http.post(this.userUrl + 'login', loginData)
+      .pipe(
+        map((data: Data) => data )
+      );
+  }
+
+  addUser(user: User): Observable<HttpResponse<object>> {
+    return this.http.post(this.userUrl + 'add', user, {observe: 'response'})
+      .pipe(
+        map(response => response
+        ));
+  }
+
+  searchUsers(value: string): Observable<User[]> {
+    console.log(value)
+    // @ts-ignore
+    return this.http.post(this.userUrl + 'search', {value})
+      .pipe(
+        map(users => users)
+      );
+  }
+
 }

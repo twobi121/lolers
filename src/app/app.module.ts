@@ -1,16 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, Provider} from '@angular/core';
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './pages/heroes/heroes.component';
+import { UsersComponent } from './pages/users/users.component';
+import {UsersContainer} from './pages/users/users.container';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import {UserEditContainer} from './pages/user-edit/user-edit.container';
 import { AppRoutingModule } from './routes/app-routing.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {DashboardContainer} from './pages/dashboard/dashboard.container';
 import {RegistrationComponent} from './pages/registration/registration.component';
+import {RegistrationContainer} from './pages/registration/registration.container';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HeroFormComponentComponent } from './pages/hero-form/hero-form-component.component';
 import { LoginComponent } from './pages/login/login.component';
+import {LoginContainer} from './pages/login/login.container';
 import {DataService} from './services/data-service';
 import {AuthGuard} from './guards/auth.guard';
 import { CheckAuthComponent } from './check-auth/check-auth.component';
@@ -31,9 +35,11 @@ import { PhotoComponent } from './components/photo/photo.component';
 import { AlbumComponent } from './pages/album/album.component';
 import {AlbumContainer} from './pages/album/album.container';
 import { UploadComponent } from './pages/upload/upload.component';
+import {UploadContainer} from './pages/upload/upload.container';
 import { CreatealbumComponent } from './components/createalbum/createalbum.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import { FriendsComponent } from './pages/friends/friends.component';
+import {FriendsContainer} from './pages/friends/friends.container';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
@@ -45,6 +51,11 @@ import {MediaModule} from './store/media/module';
 import {RequestsContainer} from './components/requests/request.container';
 import {PhotoContainer} from './components/photo/photo.container';
 
+
+
+
+
+
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
@@ -54,13 +65,17 @@ const INTERCEPTOR_PROVIDER: Provider = {
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
+    UsersComponent,
+    UsersContainer,
     UserEditComponent,
     UserEditContainer,
     DashboardComponent,
+    DashboardContainer,
     HeroFormComponentComponent,
     LoginComponent,
+    LoginContainer,
     RegistrationComponent,
+    RegistrationContainer,
     CheckAuthComponent,
     MenuComponent,
     MenuContainer,
@@ -77,10 +92,12 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AlbumComponent,
     AlbumContainer,
     UploadComponent,
+    UploadContainer,
     CreatealbumComponent,
     RequestsComponent,
     RequestsContainer,
-    FriendsComponent
+    FriendsComponent,
+    FriendsContainer
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,8 @@
 import {Action} from '@ngrx/store';
 import {User} from '../../interfaces/user';
 import {Request} from '../../interfaces/request';
+import {Friend} from '../../interfaces/friend';
+import {LoginData} from '../../interfaces/loginData';
 
 export const ActionTypes = {
   GET_USERS: 'Get Users',
@@ -33,7 +35,21 @@ export const ActionTypes = {
   UPLOAD_AVATAR: 'Upload Avatar',
   UPLOAD_AVATAR_SUCCESS: 'Upload Avatar Success',
   UPLOAD_AVATAR_FAILURE: 'Upload Avatar Failure',
-
+  GET_FRIENDS: 'Get Friends',
+  GET_FRIENDS_SUCCESS: 'Get Friends Success',
+  GET_FRIENDS_FAILURE: 'Get Friends Failure',
+  DELETE_FRIEND: 'Delete Friend',
+  DELETE_FRIEND_SUCCESS: 'Delete Friend Success',
+  DELETE_FRIEND_FAILURE: 'Delete Friend Failure',
+  LOGIN: 'Login',
+  LOGIN_SUCCESS: 'Login Success',
+  LOGIN_FAILURE: 'Login Failure',
+  ADD_USER: 'Add User',
+  ADD_USER_SUCCESS: 'Add User Success',
+  ADD_USER_FAILURE: 'Add User Failure',
+  SEARCH: 'Search',
+  SEARCH_SUCCESS: 'Search Success',
+  SEARCH_FAILURE: 'Search Failure',
 };
 
 export class GetUsersAction implements Action {
@@ -246,7 +262,110 @@ export class UploadAvatarFailureAction implements Action {
   }
 }
 
+export class GetFriendsAction implements Action {
+  public type = ActionTypes.GET_FRIENDS;
 
+  constructor(public payload: string) {
+  }
+}
+
+export class GetFriendsSuccessAction implements Action {
+  public type = ActionTypes.GET_FRIENDS_SUCCESS;
+
+  constructor(public payload: Friend[]) {
+  }
+}
+
+export class GetFriendsFailureAction implements Action {
+  public type = ActionTypes.GET_FRIENDS_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class DeleteFriendAction implements Action {
+  public type = ActionTypes.DELETE_FRIEND;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class DeleteFriendSuccessAction implements Action {
+  public type = ActionTypes.DELETE_FRIEND_SUCCESS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class DeleteFriendFailureAction implements Action {
+  public type = ActionTypes.DELETE_FRIEND_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class LoginAction implements Action {
+  public type = ActionTypes.LOGIN;
+
+  constructor(public payload: LoginData) {
+  }
+}
+
+export class LoginSuccessAction implements Action {
+  public type = ActionTypes.LOGIN_SUCCESS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class LoginFailureAction implements Action {
+  public type = ActionTypes.LOGIN_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class AddUserAction implements Action {
+  public type = ActionTypes.ADD_USER;
+
+  constructor(public payload: User) {
+  }
+}
+
+export class AddUserSuccessAction implements Action {
+  public type = ActionTypes.ADD_USER_SUCCESS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class AddUserFailureAction implements Action {
+  public type = ActionTypes.ADD_USER_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SearchAction implements Action {
+  public type = ActionTypes.SEARCH;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class SearchSuccesAction implements Action {
+  public type = ActionTypes.SEARCH_SUCCESS;
+
+  constructor(public payload: User[]) {
+  }
+}
+
+export class SearchFailureAction implements Action {
+  public type = ActionTypes.SEARCH_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
 
 export type Actions =
   GetUsersAction
@@ -279,4 +398,18 @@ export type Actions =
   | UploadAvatarAction
   | UploadAvatarSuccessAction
   | UploadAvatarFailureAction
-
+  | GetFriendsAction
+  | GetFriendsSuccessAction
+  | GetFriendsFailureAction
+  | DeleteFriendAction
+  | DeleteFriendSuccessAction
+  | DeleteFriendFailureAction
+  | LoginAction
+  | LoginSuccessAction
+  | LoginFailureAction
+  | AddUserAction
+  | AddUserSuccessAction
+  | AddUserFailureAction
+  | SearchAction
+  | SearchSuccesAction
+  | SearchFailureAction

@@ -5,11 +5,11 @@
   <div class="upload_block">
     <div class="upload_preview"
       *ngFor="let blob of blobs"
-       [ngStyle]="{background: 'url(' + blob.changingThisBreaksApplicationSecurity + ')', 'background-size': 'cover'} "
+       [ngStyle]="{background: 'url(' + blob.blob.changingThisBreaksApplicationSecurity + ')', 'background-size': 'cover'} "
     >
       <p [ngClass]="{
-        hide: !loading || loading.indexOf(blob) === -1,
-        show: loading.indexOf(blob) >= 0
+        hide: !blob.loaded,
+        show: blob.loaded
       }" class="upload_success">
         <i class="far fa-check-circle fa-3x icon"></i>
       </p>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="upload_album">
-    <form *ngIf = 'albums'>
+    <form *ngIf = 'albums && albums.length'>
       <select [(ngModel)]="selectedValue" name="upload" id="upload">
         <option *ngFor="let album of albums" [value]="album._id">
           {{album.name}}
@@ -25,7 +25,7 @@
       </select>
     </form>
 
-    <button class="upload_btn" (click)="upload()" [disabled]="loading && loading.length === blobs.length">Загрузить</button>
+    <button class="upload_btn" (click)="upload()" [disabled]="loading">Загрузить</button>
   </div>
 
 </div>

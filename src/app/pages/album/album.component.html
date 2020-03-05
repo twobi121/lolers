@@ -1,9 +1,9 @@
-<div class="album wrapper" *ngIf="hero && album && !deleteStatus">
+<div class="album wrapper" *ngIf="user && currentAlbum && !albumDeleteStatus">
   <div class="album_header">
     <div>
-      <a routerLink="/hero/{{hero.login}}"> {{hero.name | titlecase}} {{hero.surname | titlecase}}</a>
-      > <a routerLink="/hero/{{hero.login}}/albums/{{hero._id}}"> Альбомы</a>
-      > <span *ngIf="!status" (click)="showInput($event)" id = '1' >{{name}}</span>
+      <a routerLink="/user/{{user.login}}"> {{user.name | titlecase}} {{user.surname | titlecase}}</a>
+      > <a routerLink="/user/{{user.login}}/albums/{{user._id}}"> Альбомы</a>
+      > <span *ngIf="!status" (click)="showInput()" id = '1' >{{currentAlbum.name}}</span>
       <input *ngIf="status" autofocus type="text" [(ngModel)]="name"
              name = 'name'
              (focusout)="updateAlbum(albumName)"
@@ -11,7 +11,7 @@
              #albumName>
     </div>
 
-    <div class="add_photos_block"  *ngIf="hero.login === login">
+    <div class="add_photos_block"  *ngIf="user.login === loggedUser.login">
       <input
         style="display: none"
         type="file" (change)="onFileChanged($event)" multiple
@@ -25,13 +25,13 @@
   </div>
 
   <div class="photos" >
-    <div class="album_item" *ngFor="let album of album">
+    <div class="album_item">
 
 
 
-      <p class="album_year">
-        <span *ngIf="!status1" (click)="showInput($event)" id = '2'>{{album.description}}</span>
-        <input *ngIf="status1" autofocus type="text" [(ngModel)]="album.description"
+      <p class="album_year" #flag>
+        <span  (click)="!flag" id = '2'>{{currentAlbum.description}}</span>
+        <input autofocus type="text" [(ngModel)]="currentAlbum.description"
                name = 'description'
                (focusout)="updateAlbum(albumDescription)"
                (keydown.enter)="updateAlbum(albumDescription)"
@@ -40,7 +40,7 @@
 
       <div class="photo_previews">
         <a class="album_preview"
-           *ngFor="let photo of album.photos"
+           *ngFor="let photo of currentAlbum.photos"
            [ngStyle]="{background: 'url(' + url + photo.filename + ')',
                  'background-size': 'cover',
                  'background-position': '50% 50%'} "
@@ -52,13 +52,13 @@
 
   <router-outlet></router-outlet>
 
-  <div class="delete_block"  *ngIf="hero.login === login">
+  <div class="delete_block"  *ngIf="user.login === loggedUser.login">
     <button (click)="delete()">Удалить альбом</button>
   </div>
 
 </div>
 
-<div class="album wrapper" *ngIf="deleteStatus">
+<div class="album wrapper" *ngIf="albumDeleteStatus">
   <p class="album_message">Альбом успешно удален!</p>
 </div>
 

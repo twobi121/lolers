@@ -1,24 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { User } from '../../interfaces/user';
-import { UserService } from '../../services/user.service';
+import {constants} from '../../shared/constants/constants';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: [ './dashboard.component.css' ]
 })
-export class DashboardComponent implements OnInit {
-  heroes: User[] = [];
-  url = 'http://localhost:8000/';
 
-  constructor(private heroService: UserService) { }
-
-  ngOnInit() {
-    this.getHeroes();
-  }
-
-  getHeroes(): void {
-    this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes);
-  }
+export class DashboardComponent {
+  @Input() users: User[];
+  url = constants.url;
 }

@@ -51,7 +51,7 @@ export class UserService {
     this.http.get(this.userUrl + 'user')
       .pipe(
         tap((data: Data) => {
-          this.router.navigateByUrl(`hero/${data}`);
+          this.router.navigateByUrl(`user/${data}`);
         })
       )
       .subscribe(null, () => {
@@ -103,7 +103,6 @@ export class UserService {
       );
   }
 
-
   getAlbums(id: string): Observable<[]> {
     return this.http.get<any>(this.mediaUrl + 'albums/' + id)
       .pipe(
@@ -125,20 +124,9 @@ export class UserService {
       );
   }
 
-  deletePhoto(id: string): Observable<HttpResponse<object>> {
-    return this.http.delete(this.mediaUrl + 'photo/' + id,  {observe: 'response'})
-      .pipe (
-        map( response => response)
-      );
-  }
 
-  setPreview(filename, albumId): Observable<HttpResponse<object>> {
-    const ids = {filename, albumId};
-    return this.http.put(this.mediaUrl + 'preview', ids, {observe: 'response'})
-      .pipe (
-        map( response => response)
-      );
-  }
+
+
 
   sendRequest(id: number): Observable<HttpResponse<object>> {
     return this.http.post(this.userUrl + 'request', {id}, {observe: 'response'})

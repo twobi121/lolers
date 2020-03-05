@@ -1,6 +1,6 @@
-<div class="upload_modal_overlay" (click)="closePhoto($event)">
+<div class="upload_modal_overlay"  *ngIf="user && selectedPhoto"  (click)="closePhoto($event)">
 
-  <div class="upload_modal"  *ngIf="user" >
+  <div class="upload_modal" >
     <div class="photo_block" >
       <div class="photo_item" *ngIf="!deleteStatus">
         <div class="move_icon">
@@ -16,13 +16,20 @@
         <img [src]="url + selectedPhoto.filename">
       </div>
       <div class="photo_data" *ngIf="!deleteStatus">
-        <a routerLink="/hero/{{user.login}}/albums/{{albums[0].id}}/{{user._id}}">{{albums[0].name}}</a>
-        <button (click)="deletePhoto()"  *ngIf="user.login === loggedUser.login">
-          Удалить фото
-        </button>
-        <button (click)="setPreview()" [disabled]="updateStatus"  *ngIf="user.login === loggedUser.login">
-          Установить обложкой
-        </button>
+        <a routerLink="/hero/{{user.login}}/albums/{{currentAlbum && currentAlbum._id || selectedPhoto.album._id}}/{{user._id}}">{{currentAlbum && currentAlbum.name || selectedPhoto.album.name}}</a>
+        <div>
+          <button (click)="deletePhoto()"  *ngIf="user.login === loggedUser.login">
+            Удалить фото
+          </button>
+        </div>
+        <div>
+          <button (click)="setPreview()" *ngIf="!albumUpdateStatus && user.login === loggedUser.login">
+            Установить обложкой
+          </button>
+
+          <span *ngIf="albumUpdateStatus">Обложка успешно обновлена</span>
+        </div>
+
       </div>
       <div *ngIf="deleteStatus">
         Фото успешно удалено
@@ -65,4 +72,5 @@
         {{selectedPhoto.likes}}
       </div>
     </div>
-  </div>
+    </div>
+</div>

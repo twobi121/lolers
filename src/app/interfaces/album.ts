@@ -1,3 +1,5 @@
+import {Photo} from './photo';
+
 export interface Album {
   _id: number;
   main: boolean;
@@ -6,4 +8,5 @@ export interface Album {
   description: string;
   owner_id: number;
   preview: string;
+  photos?: Photo[];
 }

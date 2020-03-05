@@ -1,4 +1,4 @@
-<div class="friends wrapper">
+<div class="friends wrapper" *ngIf="user && loggedUser && friends">
 
   <div class="friends_header">
     Друзья {{friends.length}}
@@ -25,18 +25,13 @@
 
 
       <div class="friend_delete">
-        <div [ngClass]="{
-          hide: !successStatus[friends.indexOf(friend)],
-          show: successStatus[friends.indexOf(friend)]
-        }">
+        <div *ngIf="friend.user.deleteStatus">
           {{friend.user.name}} удален из друзей
         </div>
 
-        <button (click)="deleteFriend(friend._id)"
-                [ngClass]="{
-          hide: successStatus[friends.indexOf(friend)],
-          show: !successStatus[friends.indexOf(friend)]
-        }">
+        <button *ngIf="!friend.user.deleteStatus && user.login === loggedUser.login"
+          (click)="deleteFriend(friend._id)"
+                >
           Удалить друга</button>
       </div>
     </div>

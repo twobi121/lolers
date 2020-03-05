@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {ActivatedRoute} from '@angular/router';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
-import {Subscription} from 'rxjs';
+import {Friend} from '../../interfaces/friend';
+import {constants} from '../../shared/constants/constants';
 
 @Component({
   selector: 'app-friends',
@@ -10,37 +9,24 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
-  friends: [] = [];
-  url = 'http://localhost:8000/';
-  subs: Subscription[] = [];
-  successStatus = [];
+  @Input() user: User;
+  @Input() loggedUser: User;
+  @Input() friends: Friend[];
+  @Output() getUserEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() deleteFriendEmitter: EventEmitter<number> = new EventEmitter<number>();
+  url = constants.url;
+
   constructor(
-    private heroService: UserService,
-    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.getFriends();
+    if (!this.user) {
+      this.getUserEmitter.emit();
+    }
   }
 
-  getFriends() {
-    // @ts-ignore
-    const friends = this.heroService.getFriends(this.route.params.value.login);
-    friends.subscribe(item => {
-      // @ts-ignore
-      this.friends = item;
-    });
-  }
-
-  deleteFriend(id: string) {
-    const success = this.heroService.deleteFriend(id);
-    this.subs.push(success.subscribe(
-      response => {
-        if (response.status === 200) {
-          this.successStatus.push(true);
-        }
-      }
-    ));
+  deleteFriend(id: number) {
+    this.deleteFriendEmitter.emit(id);
   }
 
 }

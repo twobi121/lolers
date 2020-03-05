@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {State} from './store/states/app.state';
 import {Store} from '@ngrx/store';
-import {GetLoggedUserAction} from './store/users/actions';
+import {GetLoggedUserAction, GetUserAction} from './store/users/actions';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {GetAlbumsWithPhotosAction} from './store/media/actions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +13,8 @@ import {GetLoggedUserAction} from './store/users/actions';
 })
 
 export class AppComponent implements OnInit {
-  constructor(private store: Store<State> ) {
+  constructor(private store: Store<State>,
+              ) {
   }
 
   ngOnInit(): void {

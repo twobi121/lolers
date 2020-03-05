@@ -1,3 +1,5 @@
+import {Album} from './album';
+
 export interface Photo {
   _id: number;
   date: Date;
@@ -5,4 +7,5 @@ export interface Photo {
   album_id: number;
   owner_id: number;
   likes: number;
+  album?: Album;
 }

@@ -3,6 +3,7 @@ import {UsersState, initialState} from '../states/users.state';
 import {User} from '../../interfaces/user';
 import {IsFriend} from '../../interfaces/isFriend';
 import {Request} from '../../interfaces/request';
+import {Friend} from '../../interfaces/friend';
 
 export function reducer(state: UsersState = initialState, action: actions): UsersState {
   switch (action.type) {
@@ -25,6 +26,7 @@ export function reducer(state: UsersState = initialState, action: actions): User
       return {
         ...state,
         user: null,
+        requestStatus: false,
       };
     case ActionTypes.GET_USER_SUCCESS:
       return {
@@ -53,10 +55,7 @@ export function reducer(state: UsersState = initialState, action: actions): User
         loggedUser: {} as User
       };
     case ActionTypes.LOGOUT:
-      return {
-        ...state,
-        loggedUser: {} as User
-      };
+      return state;
     case ActionTypes.LOGOUT_SUCCESS:
       return {
         ...state,
@@ -64,10 +63,7 @@ export function reducer(state: UsersState = initialState, action: actions): User
         loggedUser: {} as User,
       };
     case ActionTypes.LOGOUT_FAILURE:
-      return {
-        ...state,
-        loggedUser: {} as User
-      };
+      return state;
     case ActionTypes.IS_FRIEND:
       return {
         ...state,
@@ -138,6 +134,39 @@ export function reducer(state: UsersState = initialState, action: actions): User
       return {
         ...state,
         user: {...state.user, avatar: action.payload}
+      };
+    case ActionTypes.GET_FRIENDS_SUCCESS:
+      return {
+        ...state,
+        friends: action.payload
+      };
+    case ActionTypes.DELETE_FRIEND_SUCCESS: {
+      const idx = state.friends.findIndex((item: Friend) => item._id === action.payload);
+      state.friends[idx].user.deleteStatus = true;
+      return {
+        ...state
+      };
+    }
+    case ActionTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuth: true,
+        loggedUser: action.payload
+      };
+    case ActionTypes.LOGIN_FAILURE:
+      return {
+        ...state,
+        loginError: action.payload
+      };
+    case ActionTypes.ADD_USER_SUCCESS:
+      return {
+        ...state,
+        regState: true
+      };
+    case ActionTypes.SEARCH_SUCCESS:
+      return {
+        ...state,
+        users: action.payload
       };
     default:
       return state;

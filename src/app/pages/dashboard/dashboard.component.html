@@ -2,13 +2,13 @@
 <div class="grid grid-pad">
 
 
-  <a *ngFor="let hero of heroes" class="col-1-4"
-     routerLink="/user/{{hero.login}}">
+  <a *ngFor="let user of users" class="col-1-4"
+     routerLink="/user/{{user.login}}">
     <div class="module hero">
 
-      <div>{{hero.name}} {{hero.surname}}</div>
+      <div>{{user.name}} {{user.surname}}</div>
       <div>
-        <img [src]="url + hero.avatar.filename">
+        <img [src]="url + user.avatar.filename">
       </div>
 
     </div>

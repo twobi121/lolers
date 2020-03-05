@@ -4,15 +4,18 @@ import {User} from '../../interfaces/user';
 import {LastPhoto} from '../../interfaces/lastPhoto';
 import {State} from '../../store/states/app.state';
 import {Store} from '@ngrx/store';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GetLastPhotosAction, SetBlobsAction, SetSelectedFilesAction} from '../../store/media/actions';
 import {selectLastPhotos} from '../../store/media/selectors';
-import {FileChangeEvent} from '@angular/compiler-cli/src/perform_watch';
+import {Blob} from '../../interfaces/blob';
 
 @Component({
   selector: 'app-last-photos-container',
-  template: '<app-last-photos [lastPhotos] = "lastPhotos$ | async" [loggedUser] = "loggedUser" [user]="user" (onFileChangedEmitter)="onFileChanged($event)"></app-last-photos>',
+  template: `<app-last-photos [lastPhotos] = "lastPhotos$ | async"
+                              [loggedUser] = "loggedUser" [user]="user"
+                              (onFileChangedEmitter)="onFileChanged($event)">
+                            </app-last-photos>`,
   styleUrls: ['./last-photos.component.css']
 })
 export class LastPhotosContainer implements OnInit {
@@ -20,7 +23,7 @@ export class LastPhotosContainer implements OnInit {
   @Input() loggedUser: User;
   lastPhotos$: Observable<LastPhoto[]> = this.store.select(selectLastPhotos);
   selectedFiles: FileList[];
-  blobs: SafeUrl[] = [];
+  blobs: Blob[] = [];
 
   constructor(private store: Store<State>,
               private sanitizer: DomSanitizer,
@@ -37,12 +40,16 @@ export class LastPhotosContainer implements OnInit {
     if (this.selectedFiles.length ) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.blobs.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])));
+        const obj = {
+          blob: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])),
+          loaded: false
+        };
+        this.blobs.push(obj);
       }
       this.store.dispatch(new SetBlobsAction(this.blobs));
       this.store.dispatch(new SetSelectedFilesAction(this.selectedFiles));
       // @ts-ignore
-      this.router.navigateByUrl(this.route.snapshot._routerState.url + `/albums/upload`);
+      this.router.navigateByUrl('user/' + this.route.snapshot.params.login + `/albums/upload`);
     }
   }
 

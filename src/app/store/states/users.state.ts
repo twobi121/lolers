@@ -1,6 +1,7 @@
 import {User} from '../../interfaces/user';
 import {IsFriend} from '../../interfaces/isFriend';
 import {Request} from '../../interfaces/request';
+import {Friend} from '../../interfaces/friend';
 
 export interface UsersState {
   users: User[];
@@ -10,6 +11,9 @@ export interface UsersState {
   isFriend: IsFriend;
   requestStatus: boolean;
   requests: Request[];
+  friends: Friend[];
+  loginError: string;
+  regState: boolean;
 }
 
 export const initialState: UsersState = {
@@ -20,5 +24,8 @@ export const initialState: UsersState = {
   isFriend: null,
   requestStatus: false,
   requests: [],
+  friends: [],
+  loginError: '',
+  regState: false,
 };
 

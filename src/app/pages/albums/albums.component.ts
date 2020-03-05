@@ -1,62 +1,41 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {User} from '../../interfaces/user';
-import {DataService} from '../../services/data-service';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {constants} from '../../shared/constants/constants';
+import {Album} from '../../interfaces/album';
+import {SortedPhotos} from '../../interfaces/sortedPhotos';
+import {Photo} from '../../interfaces/photo';
 
 @Component({
   selector: 'app-albums',
   templateUrl: './albums.component.html',
   styleUrls: ['./albums.component.css']
 })
-export class AlbumsComponent implements OnChanges {
-  @Input() albumsPhotos: any;
-  @Input() hero: User;
-  @Input() login: string;
-  albums: [];
-  photosByYear = [];
-  photos = [];
-  selectedFiles: [];
-  blobs: SafeUrl[] = [];
-  url = 'http://localhost:8000/';
+export class AlbumsComponent implements OnInit, OnChanges {
+  @Input() user: User;
+  @Input() loggedUser: User;
+  @Input() albums: Album[];
+  @Input() sortedPhotos: SortedPhotos[];
+  @Input() photos: Photo[];
+  @Output() onFileChangedEmitter: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() getAlbumsEmitter: EventEmitter<number> = new EventEmitter<number>();
+  @Output() getCurrentUserEmitter: EventEmitter<void> = new EventEmitter<void>();
+  url = constants.url;
 
-  constructor(private route: ActivatedRoute,
-              private heroService: UserService,
-              private dataService: DataService,
-              private sanitizer: DomSanitizer,
-              private router: Router) { }
-
-
-  ngOnChanges(): void {
-    if (!this.albumsPhotos) {
-      return;
+  ngOnInit() {
+    if (!this.user) {
+      this.getCurrentUserEmitter.emit();
     }
-
-    this.albums = this.albumsPhotos.albums;
-    this.photosByYear = this.albumsPhotos.photos;
-    this.photosByYear.forEach(item => this.photos = this.photos.concat(item.filenames));
-    this.dataService.photos = this.photos;
-    this.dataService.albums = this.albums;
   }
 
-  selectPhoto(photo: string) {
-    this.dataService.photos = this.photos;
+  ngOnChanges(changes: SimpleChanges) {
+    // @ts-ignore
+    if (changes.user && changes.user.currentValue) {
+      this.getAlbumsEmitter.emit(this.user._id);
+    }
   }
 
   onFileChanged($event: Event) {
-    // @ts-ignore
-    this.selectedFiles = $event.target.files;
-    if (this.selectedFiles.length ) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.blobs.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])));
-      }
-      this.dataService.blobs = this.blobs;
-      this.dataService.selectedFiles = this.selectedFiles;
-      // @ts-ignore
-      this.router.navigateByUrl(`hero/${this.hero.login}/albums/${this.hero._id}/upload`);
-    }
+    this.onFileChangedEmitter.emit($event);
+    this.getAlbumsEmitter.emit(this.user._id);
   }
 }

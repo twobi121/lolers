@@ -1,85 +1,43 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
-import {DataService} from '../../services/data-service';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
-import {Subscription} from 'rxjs';
+import {constants} from '../../shared/constants/constants';
+import {Album} from '../../interfaces/album';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
   styleUrls: ['./album.component.css']
 })
-export class AlbumComponent implements OnChanges, OnDestroy {
-  @Input() hero: User;
-  @Input() album: [];
-  @Input() login: string;
-  selectedFiles: [];
-  blobs: SafeUrl[] = [];
-  url = 'http://localhost:8000/';
-  subs: Subscription[] = [];
-  deleteStatus = false;
+export class AlbumComponent implements OnInit{
+  @Input() user: User;
+  @Input() loggedUser: User;
+  @Input() currentAlbum: Album;
+  @Input() albumDeleteStatus: boolean;
+  @Output() onFileChangedEmitter: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() deleteAlbumEmitter: EventEmitter<number> = new EventEmitter<number>();
+  @Output() getCurrentUserEmitter: EventEmitter<void> = new EventEmitter<void>();
+  url = constants.url;
   name: string;
   status = false;
   status1 = false;
-  constructor(private dataService: DataService,
-              private heroService: UserService,
-              private sanitizer: DomSanitizer,
-              private router: Router) { }
 
-  ngOnChanges(): void {
-    if (!this.album) {
-      return;
+  ngOnInit() {
+    if (!this.user) {
+      this.getCurrentUserEmitter.emit();
     }
-
-    // @ts-ignore
-    this.dataService.photos = this.album[0].photos;
-    this.dataService.albums = this.album;
-    // @ts-ignore
-    this.name = this.album[0].name;
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach(item => item.unsubscribe());
   }
 
   onFileChanged($event: Event) {
-    // @ts-ignore
-    this.selectedFiles = $event.target.files;
-    if (this.selectedFiles.length ) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.blobs.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.selectedFiles[i])));
-      }
-      this.dataService.blobs = this.blobs;
-      this.dataService.selectedFiles = this.selectedFiles;
-      // @ts-ignore
-      this.router.navigateByUrl(`hero/${this.hero.login}/album/${this.album[0]._id}/upload`);
-    }
+    this.onFileChangedEmitter.emit($event);
   }
 
   delete() {
-    // @ts-ignore
-    const success = this.heroService.deleteAlbum(this.album[0]._id);
-    this.subs.push(success.subscribe(
-      item => {
-        if (item.status === 200) {
-          this.deleteStatus = true;
-          setTimeout(() => this.router.navigateByUrl(`hero/${this.hero.login}/albums/${this.hero._id}`), 3000);
-        }
-      }
-    ));
+    this.deleteAlbumEmitter.emit(this.currentAlbum._id);
   }
 
-  showInput($event: Event) {
-    // @ts-ignore
-    if ($event.target.id === '1') {
-      this.status = true;
-    } else this.status1 = true;
-// @ts-ignore
-
-
+  showInput() {
+    const state = false;
+    return !state;
   }
 
   updateAlbum(element: HTMLInputElement) {

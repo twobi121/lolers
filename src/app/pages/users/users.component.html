@@ -1,0 +1,30 @@
+<h2>Люди</h2>
+
+<div class="search_input">
+  <input type="search" (input)="search($event)">
+</div>
+
+<div class="users">
+  <div class="users_item" *ngFor="let user of users">
+    <a routerLink="/user/{{user.login}}">
+      <div class="users_item_avatar"
+           [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} ">
+      </div>
+    </a>
+
+    <div class="users_item_info">
+        <p>{{user.name | titlecase}} {{user.surname | titlecase}}</p>
+        <p>{{user.birth_year}}</p>
+        <p>{{user.phone}}</p>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+
+

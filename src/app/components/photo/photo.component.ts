@@ -1,19 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
-import {DataService} from '../../services/data-service';
 import {User} from '../../interfaces/user';
 import {constants} from '../../shared/constants/constants';
 import {Photo} from '../../interfaces/photo';
 import {Album} from '../../interfaces/album';
-
-
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-photo',
   templateUrl: './photo.component.html',
   styleUrls: ['./photo.component.css']
 })
-export class PhotoComponent implements OnInit {
+
+export class PhotoComponent implements OnChanges {
  @Input() user: User;
  @Input() loggedUser: User;
  @Input() photos: Photo[];
@@ -21,37 +20,48 @@ export class PhotoComponent implements OnInit {
  @Input() selectedPhoto: Photo;
  @Input() currentAlbum: Album;
  @Input() deleteStatus: boolean;
+ @Input() albumUpdateStatus: boolean;
  url = constants.url;
+ @Output() setSelectedPhotoEmitter: EventEmitter<string> = new EventEmitter<string>();
  @Output() switchPhotoEmitter: EventEmitter<string> = new EventEmitter<string>();
- @Output() deletePhotoEmitter: EventEmitter<void> = new EventEmitter<void>();
- @Output() setAlbumPreviewEmitter: EventEmitter<void> = new EventEmitter<void>();
+ @Output() deletePhotoEmitter: EventEmitter<number> = new EventEmitter<number>();
+ @Output() setAlbumPreviewEmitter: EventEmitter<object> = new EventEmitter<object>();
+ @Output() closePhotoEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.photos && changes.photos.currentValue.length && changes.photos.currentValue !== changes.photos.previousValue && !this.selectedPhoto) {
+      this.setSelectedPhotoEmitter.emit();
+    }
+
+    if (changes.selectedPhoto && changes.selectedPhoto.currentValue !== changes.selectedPhoto.previousValue && this.selectedPhoto) {
+      // @ts-ignore
+      this.router.navigateByUrl(this.router.url.replace(this.route.url.value[0].path,  this.selectedPhoto.filename));
+    }
   }
 
   switchPhoto(move: string) {
     this.switchPhotoEmitter.emit(move);
-    console.log(this.router);
   }
 
-  closePhoto(event: any ) {
+  closePhoto(event: any) {
     const target = event.target.className;
     if (target === 'fas fa-times close_btn' || target === 'upload_modal_overlay' ) {
-      this.router.navigateByUrl(this.router.url.replace(this.selectedPhoto.filename,  '/'));
+      this.closePhotoEmitter.emit(this.selectedPhoto.filename);
     }
     event.stopPropagation();
   }
 
   deletePhoto() {
-    this.deletePhotoEmitter.emit();
+    this.deletePhotoEmitter.emit(this.selectedPhoto._id);
   }
 
   setPreview() {
-    this.setAlbumPreviewEmitter.emit();
+    this.setAlbumPreviewEmitter.emit({filename: this.selectedPhoto.filename, albumId: this.currentAlbum._id});
   }
 
 }

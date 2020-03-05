@@ -1,0 +1,79 @@
+/* UsersComponent's private CSS styles */
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  padding: 20px;
+}
+
+.search_input {
+  width: 100%;
+  padding: 20px;
+}
+
+.search_input input {
+  width: 100%;
+}
+
+.users {
+  padding: 20px;
+}
+
+.users_item {
+  padding: 10px;
+  border-bottom: 1px solid black;
+  display: flex;
+}
+
+.users_item_avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.users_item_info {
+  padding-left: 10px;
+}
+
+.users_item_info p {
+  font-size: 20px;
+}
+
+.heroes {
+  margin: 0 0 2em 0;
+  padding: 0;
+  width: 250px;
+  border-collapse: collapse;
+}
+
+.heroes td {
+  padding: 20px;
+  border: solid 1px black;
+}
+
+.heroes a {
+  color: #039be5;
+  text-decoration: none;
+  position: relative;
+  width: 250px;
+}
+
+.heroes a:hover {
+  color:#607D8B;
+}
+
+.heroes .badge {
+  font-size: small;
+  color: white;
+  background-color:#405061;
+  min-width: 16px;
+  text-align: right;
+}
+
+.remove_btn {
+  display: inline;
+}

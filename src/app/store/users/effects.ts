@@ -30,15 +30,29 @@ import {
   AcceptRequestFailureAction,
   AcceptRequestSuccessAction,
   DeclineRequestSuccessAction,
-  DeclineRequestAction, DeclineRequestFailureAction, GetRequestsFailureAction
+  DeclineRequestAction,
+  DeclineRequestFailureAction,
+  GetRequestsFailureAction,
+  GetFriendsAction,
+  GetFriendsSuccessAction,
+  GetFriendsFailureAction,
+  DeleteFriendAction,
+  DeleteFriendFailureAction,
+  DeleteFriendSuccessAction,
+  LoginAction,
+  LoginSuccessAction,
+  LoginFailureAction, AddUserAction, AddUserSuccessAction, AddUserFailureAction, SearchAction, SearchSuccesAction, SearchFailureAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {User} from '../../interfaces/user';
 import {Observable, of} from 'rxjs';
-import {HttpResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {Data, Router} from '@angular/router';
 import {IsFriend} from '../../interfaces/isFriend';
 import {Request} from '../../interfaces/request';
+import {Friend} from '../../interfaces/friend';
+import {Store} from '@ngrx/store';
+import {State} from '../states/app.state';
 
 
 @Injectable()
@@ -46,7 +60,8 @@ export class Effects {
   constructor(
     private actions$: Actions,
     private service: Service,
-    private router: Router
+    private router: Router,
+    private store: Store<State>
   ) {
   }
 
@@ -139,5 +154,54 @@ export class Effects {
     map((response: HttpResponse<object>) => new UploadAvatarSuccessAction(response.body)),
     catchError((err) => of(new UploadAvatarFailureAction()))
   );
+
+  @Effect()
+  getFriends$ = this.actions$.pipe(
+    ofType<GetFriendsAction>(ActionTypes.GET_FRIENDS),
+    switchMap((action: GetFriendsAction) => this.service.getFriends(action.payload)),
+    map((friends: Friend[]) => new GetFriendsSuccessAction(friends)),
+    catchError((err) => of(new GetFriendsFailureAction()))
+  );
+
+  @Effect()
+  deleteFriend$ = this.actions$.pipe(
+    ofType<DeleteFriendAction>(ActionTypes.DELETE_FRIEND),
+    switchMap((action: DeleteFriendAction) => this.service.deleteFriend(action.payload)),
+    map((id: number) => new DeleteFriendSuccessAction(id)),
+    catchError((err) => of(new DeleteFriendFailureAction()))
+  );
+
+
+  @Effect()
+  login$ = this.actions$.pipe(
+    ofType<LoginAction>(ActionTypes.LOGIN),
+    // @ts-ignore
+    switchMap((action: LoginAction) => this.service.login(action.payload)),
+    map((data: Data) => {
+        if (data.token) {
+          localStorage.setItem('authUserToken', data.token);
+          this.router.navigateByUrl(`user/${data.user.login}`);
+        }
+        return new LoginSuccessAction(data.user);
+    }),
+    catchError((err: HttpErrorResponse) => of(new LoginFailureAction(err.error.error)))
+  );
+
+  @Effect()
+  addUser$ = this.actions$.pipe(
+    ofType<AddUserAction>(ActionTypes.ADD_USER),
+    switchMap((action: AddUserAction) => this.service.addUser(action.payload)),
+    map(() => new AddUserSuccessAction()),
+    catchError((err: HttpErrorResponse) => of(new AddUserFailureAction(err.error.error)))
+  );
+
+  @Effect()
+  search$ = this.actions$.pipe(
+    ofType<SearchAction>(ActionTypes.SEARCH),
+    switchMap((action: SearchAction) => this.service.searchUsers(action.payload)),
+    map((users: User[]) => new SearchSuccesAction(users)),
+    catchError((err: HttpErrorResponse) => of(new SearchFailureAction(err.error.error)))
+  );
+
 
 }
