@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {User} from '../../interfaces/user';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {IsFriend} from '../../interfaces/isFriend';
 import {constants} from '../../shared/constants/constants';
@@ -18,8 +18,13 @@ export class Service {
       private http: HttpClient,
     ) { }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.userUrl);
+  // tslint:disable-next-line:variable-name
+  getUsers(obj: object): Observable<User[]> {
+    // @ts-ignore
+    return this.http.post(this.userUrl, obj)
+      .pipe(
+        map(users => users)
+      );
   }
 
   getUser(login: string): Observable<User> {
@@ -114,10 +119,9 @@ export class Service {
         ));
   }
 
-  searchUsers(value: string): Observable<User[]> {
-    console.log(value)
+  searchUsers(obj: object): Observable<User[]> {
     // @ts-ignore
-    return this.http.post(this.userUrl + 'search', {value})
+    return this.http.post(this.userUrl + 'search', obj)
       .pipe(
         map(users => users)
       );

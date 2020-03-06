@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {HttpClient, HttpEvent, HttpResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {LastPhoto} from '../../interfaces/lastPhoto';
@@ -79,6 +79,24 @@ export class Service {
           }
         })
       );
+  }
+
+  uploadArray(array: any[]): Observable<number> {
+    const uploaded = new Subject<number>();
+    array.forEach(obj => {
+      const uploadData = new FormData();
+      uploadData.append('file', obj.file, obj.file.name);
+
+      const sub = this.http.post(this.mediaUrl + 'uploadPhoto/' + obj.albumId, uploadData, {
+        observe: 'response'
+      }).subscribe((response: HttpResponse<object>) => {
+        if (response.status === 200) {
+          uploaded.next(obj.idx);
+        }
+        sub.unsubscribe();
+      });
+    });
+    return uploaded;
   }
 
 }

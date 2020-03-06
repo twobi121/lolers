@@ -7,19 +7,29 @@ import {constants} from '../../shared/constants/constants';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
+
 export class UsersComponent {
   @Input() users: User[];
-  @Output() searchEmitter: EventEmitter<string> = new EventEmitter<string>();
-  @Output() getUsersEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() setSortEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() getUsersEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() setListNumberEmitter: EventEmitter<number> = new EventEmitter<number>();
   url = constants.url;
+  timer: number;
+  listNumber = 5;
 
   search(event: Event) {
     // @ts-ignore
     const value = event.target.value;
-    if (value.length && value.length % 3 === 0) {
-      this.searchEmitter.emit(value);
-    } else if (!value.length) {
-      this.getUsersEmitter.emit();
-    }
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.getUsersEmitter.emit(value), 1000);
+  }
+
+  setListNumber(value: string) {
+    this.listNumber = +value;
+    this.setListNumberEmitter.emit(+value);
+  }
+
+  setSort(value: string) {
+    this.setSortEmitter.emit(value);
   }
 }

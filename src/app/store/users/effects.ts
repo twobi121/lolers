@@ -68,7 +68,7 @@ export class Effects {
   @Effect()
   getUsers$ = this.actions$.pipe(
     ofType<GetUsersAction>(ActionTypes.GET_USERS),
-    switchMap(() => this.service.getUsers()),
+    switchMap((action: GetUsersAction) => this.service.getUsers(action.payload)),
     map((users: User[]) => new GetUsersSuccessAction(users)),
     catchError((err) => of(new GetUsersFailureAction()))
   );

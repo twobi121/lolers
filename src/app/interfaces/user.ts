@@ -10,4 +10,5 @@ export interface User {
   birth_year: number;
   email: string;
   deleteStatus?: boolean;
+  totalCount?: number;
 }

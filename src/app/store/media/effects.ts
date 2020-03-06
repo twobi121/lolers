@@ -101,12 +101,13 @@ export class Effects {
   @Effect()
   upload$ = this.actions$.pipe(
     ofType<UploadAction>(ActionTypes.UPLOAD),
-    switchMap((action: UploadAction) => this.service.upload(action.payload)),
-    map((idx: number) => new UploadSuccessAction(idx)),
-    catchError((err) => of(new UploadFailureAction()))
+    switchMap((action: UploadAction) => {
+      return this.service.uploadArray(action.payload);
+    }),
+    switchMap((idx: number) => {
+      return of(new UploadSuccessAction(idx));
+    }),
+    catchError((err) => of(new UploadFailureAction(err)))
   );
-
-
-
 
 }

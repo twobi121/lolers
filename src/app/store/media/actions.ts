@@ -304,7 +304,7 @@ export class GetAlbumsFailureAction implements Action {
 export class UploadAction implements Action {
   public type = ActionTypes.UPLOAD;
 
-  constructor(public payload: object) {
+  constructor(public payload: any[]) {
   }
 }
 

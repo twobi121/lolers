@@ -4,7 +4,27 @@
   <input type="search" (input)="search($event)">
 </div>
 
-<div class="users">
+<div class="settings">
+  <div class="list_number">
+    Показывать по:
+    <select (change)="setListNumber($event.target.value)">
+      <option selected value="5">5</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+    </select>
+  </div>
+
+  <div class="sort">
+    Сортировать по:
+    <select (change)="setSort($event.target.value)">
+      <option value="name">имени</option>
+      <option value="surname">фамилии</option>
+      <option value="birth_year">дате рождения</option>
+    </select>
+  </div>
+</div>
+
+<div class="users" *ngIf="users && users.length">
   <div class="users_item" *ngFor="let user of users">
     <a routerLink="/user/{{user.login}}">
       <div class="users_item_avatar"
@@ -19,11 +39,9 @@
     </div>
 
   </div>
-
-
 </div>
 
-
+<app-pagination *ngIf='users && users.length' [dataItems]="users" [listNumber]="listNumber" ></app-pagination>
 
 
 

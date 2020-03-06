@@ -55,7 +55,7 @@ export const ActionTypes = {
 export class GetUsersAction implements Action {
   public type = ActionTypes.GET_USERS;
 
-  constructor(public payload?: any) {
+  constructor(public payload: object) {
   }
 }
 
@@ -349,7 +349,7 @@ export class AddUserFailureAction implements Action {
 export class SearchAction implements Action {
   public type = ActionTypes.SEARCH;
 
-  constructor(public payload: string) {
+  constructor(public payload: object) {
   }
 }
 

@@ -43,18 +43,14 @@ import {FriendsContainer} from './pages/friends/friends.container';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
-import {StoreModule} from '@ngrx/store';
+import {ActionReducer, MetaReducer, StoreModule} from '@ngrx/store';
 import {reducers} from './store';
 import {Effects} from './store/users/effects';
 import {UserModule} from './store/users/module';
 import {MediaModule} from './store/media/module';
 import {RequestsContainer} from './components/requests/request.container';
 import {PhotoContainer} from './components/photo/photo.container';
-
-
-
-
-
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -97,7 +93,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     RequestsComponent,
     RequestsContainer,
     FriendsComponent,
-    FriendsContainer
+    FriendsContainer,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
