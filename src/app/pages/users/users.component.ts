@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {constants} from '../../shared/constants/constants';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -8,20 +9,37 @@ import {constants} from '../../shared/constants/constants';
   styleUrls: ['./users.component.css']
 })
 
-export class UsersComponent {
+export class UsersComponent implements OnInit{
   @Input() users: User[];
+  @Input() listNumber: number;
+  @Input() currentPage: number;
+  @Input() sortValue: string;
   @Output() setSortEmitter: EventEmitter<string> = new EventEmitter<string>();
-  @Output() getUsersEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() searchEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Output() setListNumberEmitter: EventEmitter<number> = new EventEmitter<number>();
+  @Output() changePageEmitter: EventEmitter<number> = new EventEmitter<number>();
   url = constants.url;
   timer: number;
-  listNumber = 5;
+  listForm: FormGroup;
+  sortForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.listForm = this.fb.group({
+      listControl: [this.listNumber]
+    });
+    this.sortForm = this.fb.group({
+      sortControl: [this.sortValue]
+    });
+
+  }
 
   search(event: Event) {
     // @ts-ignore
     const value = event.target.value;
     clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.getUsersEmitter.emit(value), 1000);
+    this.timer = setTimeout(() => this.searchEmitter.emit(value), 1000);
   }
 
   setListNumber(value: string) {
@@ -31,5 +49,9 @@ export class UsersComponent {
 
   setSort(value: string) {
     this.setSortEmitter.emit(value);
+  }
+
+  changePage(page: number) {
+    this.changePageEmitter.emit(page);
   }
 }

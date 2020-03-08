@@ -7,11 +7,6 @@ import {Friend} from '../../interfaces/friend';
 
 export function reducer(state: UsersState = initialState, action: actions): UsersState {
   switch (action.type) {
-    case ActionTypes.GET_USERS:
-      return {
-        ...state,
-        users: []
-      };
     case ActionTypes.GET_USERS_SUCCESS:
       return {
         ...state,

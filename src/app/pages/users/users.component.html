@@ -6,21 +6,27 @@
 
 <div class="settings">
   <div class="list_number">
-    Показывать по:
-    <select (change)="setListNumber($event.target.value)">
-      <option selected value="5">5</option>
-      <option value="15">15</option>
-      <option value="20">20</option>
-    </select>
+    <form [formGroup]="listForm">
+      <label>Показывать по:
+        <select (change)="setListNumber($event.target.value)" formControlName="listControl">
+          <option value="5">5</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+       </label>
+    </form>
   </div>
 
   <div class="sort">
-    Сортировать по:
-    <select (change)="setSort($event.target.value)">
-      <option value="name">имени</option>
-      <option value="surname">фамилии</option>
-      <option value="birth_year">дате рождения</option>
-    </select>
+    <form [formGroup]="sortForm">
+      <label>Сортировать по:
+        <select (change)="setSort($event.target.value)" formControlName="sortControl">
+          <option value="name">имени</option>
+          <option value="surname">фамилии</option>
+          <option value="birth_year">дате рождения</option>
+        </select>
+      </label>
+    </form>
   </div>
 </div>
 
@@ -41,7 +47,11 @@
   </div>
 </div>
 
-<app-pagination *ngIf='users && users.length' [dataItems]="users" [listNumber]="listNumber" ></app-pagination>
+<app-pagination *ngIf='users && users.length'
+                (changePageEmitter)="changePage($event)"
+                [dataItems]="users"
+                [listNumber]="listNumber"
+                [currentPage]="currentPage"></app-pagination>
 
 
 

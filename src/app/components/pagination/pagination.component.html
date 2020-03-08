@@ -1,19 +1,18 @@
-<ul *ngIf="pager && pager.pages && pager.pages.length" class="pagination">
-  <li [ngClass]="{disabled:pager.currentPage === 1}">
-    <a (click)="setPage(1)">Первая</a>
+<ul *ngIf="this.pages && this.pages.length" class="pagination">
+  <li [ngClass]="{disabled:this.currentPage === 1}">
+    <a (click)="changePage(1)">Первая</a>
   </li>
-  <li [ngClass]="{disabled:pager.currentPage === 1}">
-    <a (click)="setPage(pager.currentPage - 1)">Предыдущая</a>
+  <li [ngClass]="{disabled:this.currentPage === 1}">
+    <a (click)="changePage(currentPage - 1)">Предыдущая</a>
   </li>
-  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-    <a (click)="setPage(page)">{{page}}</a>
+  <li *ngFor="let page of this.pages" [ngClass]="{active:this.currentPage === page}">
+    <a (click)="changePage(page)">{{page}}</a>
   </li>
-  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-    <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+  <li [ngClass]="{disabled:this.currentPage === this.totalPages}">
+    <a  (click)="changePage(currentPage + 1)" >Вперед</a>
   </li>
-  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-    <a (click)="setPage(pager.totalPages)">Последняя</a>
+  <li [ngClass]="{disabled:this.currentPage === this.totalPages}">
+    <a (click)="changePage(endPage)">Последняя</a>
   </li>
 </ul>
 
-<button (click)="emitter()"></button>

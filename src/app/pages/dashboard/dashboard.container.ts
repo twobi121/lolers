@@ -22,6 +22,6 @@ export class DashboardContainer implements OnInit {
   }
 
   getUsers(): void {
-    this.store.dispatch(new GetUsersAction());
+    this.store.dispatch(new GetUsersAction({sort: 'name', number: 10}));
   }
 }

@@ -6,11 +6,21 @@
 }
 
 li {
-  padding: 6px 12px;
+
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
   color: #337ab7;
+}
+
+a {
+  display: block;
+  padding: 6px 12px;
+}
+
+.disabled a {
+  cursor: not-allowed;
+  color: #777;
 }
 
 .active {
