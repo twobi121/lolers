@@ -51,6 +51,11 @@ import {MediaModule} from './store/media/module';
 import {RequestsContainer} from './components/requests/request.container';
 import {PhotoContainer} from './components/photo/photo.container';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { DialoguesComponent } from './pages/dialogues/dialogues.component';
+import {WebsocketService} from './services/websockets.service';
+import {ChatService} from './services/chat.service';
+import {DialoguesModule} from './store/dialogues/module';
+import {DialoguesContainer} from './pages/dialogues/dialogues.container';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -95,6 +100,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     FriendsComponent,
     FriendsContainer,
     PaginationComponent,
+    DialoguesComponent,
+    DialoguesContainer
   ],
   imports: [
     BrowserModule,
@@ -104,11 +111,12 @@ const INTERCEPTOR_PROVIDER: Provider = {
     HttpClientModule,
     UserModule,
     MediaModule,
+    DialoguesModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [DataService, AuthGuard, LoginGuard, MainPageGuard, INTERCEPTOR_PROVIDER],
+  providers: [DataService, WebsocketService, ChatService, AuthGuard, LoginGuard, MainPageGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,17 @@
+<div *ngIf="dialogues && dialogues.length">
+  <div class="dialogues_number">
+    {{dialogues.length}} диалога
+  </div>
+  <div *ngFor="let dialogue of dialogues" class="dialogues_item">
+    <div *ngFor="let user of dialogue.users">
+        <a routerLink="dialogue/{{dialogue._id}}" *ngIf="user._id !== loggedUser._id" class="dialogue_link">
+          <div class="user_avatar" [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} ">
+
+          </div>
+          <div class="user_info">
+            {{user.name | titlecase}} {{user.surname | titlecase}}
+          </div>
+        </a>
+    </div>
+  </div>
+</div>

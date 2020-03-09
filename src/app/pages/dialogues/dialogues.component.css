@@ -1,0 +1,23 @@
+.dialogues_number {
+  padding: 20px;
+}
+
+.dialogues_item {
+  border-top: 1px solid #e3e4e8;
+  padding: 10px;
+}
+
+.dialogues_item:last-of-type {
+  border-bottom: 1px solid #e3e4e8;
+}
+.user_avatar {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.dialogue_link {
+  text-decoration: none;
+  display: flex;
+  color: #626d7a;
+}
