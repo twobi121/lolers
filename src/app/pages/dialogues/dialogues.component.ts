@@ -15,8 +15,8 @@ export class DialoguesComponent implements OnChanges{
   @Input() dialogues: Dialogue[];
   @Input() loggedUser: User;
   url = constants.url;
+  messages = '';
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.dialogues)
   }
 }

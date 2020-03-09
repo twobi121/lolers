@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {NgModule, Provider} from '@angular/core';
+import {LOCALE_ID, NgModule, Provider} from '@angular/core';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './pages/users/users.component';
 import {UsersContainer} from './pages/users/users.container';
@@ -56,6 +56,9 @@ import {WebsocketService} from './services/websockets.service';
 import {ChatService} from './services/chat.service';
 import {DialoguesModule} from './store/dialogues/module';
 import {DialoguesContainer} from './pages/dialogues/dialogues.container';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+registerLocaleData(localeRu, 'ru');
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -116,7 +119,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [DataService, WebsocketService, ChatService, AuthGuard, LoginGuard, MainPageGuard, INTERCEPTOR_PROVIDER],
+  providers: [DataService, WebsocketService, ChatService, AuthGuard, LoginGuard, MainPageGuard, INTERCEPTOR_PROVIDER, { provide: LOCALE_ID, useValue: 'ru' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

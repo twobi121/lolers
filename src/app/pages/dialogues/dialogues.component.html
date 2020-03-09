@@ -1,17 +1,31 @@
-<div *ngIf="dialogues && dialogues.length">
-  <div class="dialogues_number">
-    {{dialogues.length}} диалога
-  </div>
-  <div *ngFor="let dialogue of dialogues" class="dialogues_item">
-    <div *ngFor="let user of dialogue.users">
-        <a routerLink="dialogue/{{dialogue._id}}" *ngIf="user._id !== loggedUser._id" class="dialogue_link">
-          <div class="user_avatar" [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} ">
+<div *ngIf="dialogues && dialogues.length" class="dialogues_wrapper">
 
-          </div>
-          <div class="user_info">
-            {{user.name | titlecase}} {{user.surname | titlecase}}
-          </div>
-        </a>
+
+  <div class="dialogues">
+    <div class="dialogues_list">
+      <div class="dialogues_number">
+        {{dialogues.length}} диалога
+      </div>
+      <div *ngFor="let dialogue of dialogues" class="dialogues_item">
+        <div *ngFor="let user of dialogue.users">
+          <a routerLink="dialogue/{{dialogue._id}}" *ngIf="user._id !== loggedUser._id" class="dialogue_link">
+            <div class="user">
+              <div class="user_avatar" [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} "></div>
+              <div class="user_info">
+                <span>{{user.name | titlecase}} {{user.surname | titlecase}}</span>
+                <div class="last-message">{{dialogue.lastMessage.message}}</div>
+              </div>
+
+            </div>
+
+            <div class="date">{{dialogue.lastMessage.date | date: 'd MMMM'}}</div>
+          </a>
+        </div>
+      </div>
     </div>
+
+
+    <div class="dialogue"></div>
   </div>
+
 </div>
