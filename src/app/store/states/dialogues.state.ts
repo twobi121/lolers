@@ -4,9 +4,11 @@ import {Message} from '../../interfaces/message';
 export interface DialoguesState {
   dialogues: Dialogue[];
   messages: Message[];
+  activeDialogue: Dialogue;
 }
 
 export const initialState: DialoguesState = {
   dialogues: [],
-  messages: []
+  messages: [],
+  activeDialogue: null,
 };

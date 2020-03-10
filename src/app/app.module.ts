@@ -58,6 +58,8 @@ import {DialoguesModule} from './store/dialogues/module';
 import {DialoguesContainer} from './pages/dialogues/dialogues.container';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+import { DialogueComponent } from './components/dialogue/dialogue.component';
+import { DialogueContainer } from './components/dialogue/dialogue.container';
 registerLocaleData(localeRu, 'ru');
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -104,7 +106,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     FriendsContainer,
     PaginationComponent,
     DialoguesComponent,
-    DialoguesContainer
+    DialoguesContainer,
+    DialogueComponent,
+    DialogueContainer
   ],
   imports: [
     BrowserModule,

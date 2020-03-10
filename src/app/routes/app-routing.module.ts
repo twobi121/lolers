@@ -17,12 +17,15 @@ import {PhotoContainer} from '../components/photo/photo.container';
 import {DashboardContainer} from '../pages/dashboard/dashboard.container';
 import {RegistrationContainer} from '../pages/registration/registration.container';
 import {DialoguesContainer} from '../pages/dialogues/dialogues.container';
+import {DialogueContainer} from '../components/dialogue/dialogue.container';
 
 
 
 const routes: Routes = [
   { path: '', component: LoginContainer, canActivate: [MainPageGuard]},
-  { path: 'user/:login/dialogues', component: DialoguesContainer},
+  { path: 'user/:login/dialogues', component: DialoguesContainer, canActivate: [AuthGuard], children: [
+      { path: ':id', component: DialogueContainer, canActivate: [AuthGuard]}
+      ]},
   { path: 'user/:login/albums/upload', component: UploadContainer, canActivate: [AuthGuard]},
   { path: 'user/:login/albums', component: AlbumsContainer, canActivate: [AuthGuard], children: [
       { path: 'create', component: CreatealbumComponent, canActivate: [AuthGuard]},

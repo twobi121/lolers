@@ -14,4 +14,12 @@ export const selectMessages = createSelector(
   (state: DialoguesState) => state ? state.messages : []
 );
 
+export const selectActiveDialogue = createSelector(
+  selectDialogues,
+  (state: DialoguesState) => state ? state.activeDialogue : null
+);
 
+export const selectDialogueMembers = createSelector(
+  selectDialogues,
+  (state: DialoguesState) => state ? state.activeDialogue.users : null
+);

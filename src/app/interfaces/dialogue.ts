@@ -5,4 +5,5 @@ export interface Dialogue {
   _id: number;
   users: User[];
   lastMessage: Message;
+  active: boolean;
 }

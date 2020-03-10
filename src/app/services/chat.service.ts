@@ -1,25 +1,33 @@
 import { Injectable } from '@angular/core';
-import { WebsocketService } from './websockets.service';
+import * as io from 'socket.io-client';
+import {constants} from '../shared/constants/constants';
 import { Observable, Subject } from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Message} from '../interfaces/message';
 
 @Injectable()
 export class ChatService {
+  private socket;
+  url = constants.url
 
-  messages: Subject<any>;
+  constructor() {}
 
-  // Our constructor calls our wsService connect method
-  constructor(private wsService: WebsocketService) {
-    // this.messages = this.wsService.connect()
-    // map((response: any): any => {
-    //     return response;
-    //   });
+  setConnection(id: number) {
+    this.socket = io(this.url);
+    this.socket.emit('join', id);
   }
 
-  // Our simplified interface for sending
-  // messages back to our socket.io server
-  sendMsg(msg) {
-    this.messages.next(msg);
+  sendMessage(message: Message) {
+    this.socket.emit('message', message);
   }
+
+  getMessages(): Observable<Message> {
+    return new Observable((observer) => {
+      this.socket.on('new-message', (message) => {
+        observer.next(message);
+      });
+    });
+  }
+
 
 }

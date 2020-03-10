@@ -1,0 +1,58 @@
+<div class="dialogue">
+  <div class="dialogue_header">
+    <div *ngFor="let user of dialogueMembers">
+      <div *ngIf="user._id !== loggedUser._id" class="dialogue_header_items">
+        <div class="dialogue_header_user">
+          <a routerLink="/user/{{user.login}}">
+            {{user.name | titlecase}} {{user.surname | titlecase}}
+          </a>
+        </div>
+        <div class="dialogue_header_search">
+          Поиск
+        </div>
+        <div *ngIf="user._id !== loggedUser._id"
+             class="dialogue_header user_avatar"
+             [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} ">
+          <a routerLink="/user/{{user.login}}"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="messages">
+    <div class="last-message_date">
+      <span *ngIf="(activeDialogue.lastMessage.date | date: 'yyyy-MM-dd' ) !== today; else elseBlock">{{activeDialogue.lastMessage.date | date: 'd MMMM'}}</span>
+      <ng-template #elseBlock>Сегодня</ng-template>
+    </div>
+
+    <div class="message">
+      <div  class='message_item' *ngFor="let message of messages">
+<!--            [ngClass]="{-->
+<!--          'logged-user' : message.owner_id === loggedUser._id,-->
+<!--          'user' : message.owner_id !== loggedUser._id-->
+<!--          }"-->
+        <div class="user_avatar"
+             [ngStyle]="{background:
+             'url(' + url + message.owner_id.avatar.filename + ')', 'background-size': 'cover'} ">
+        </div>
+
+        <div class="message_info">
+          <div class="message_owner">
+            {{message.owner_id.name | titlecase}}
+          </div>
+
+          <div>
+            {{message.message}}
+          </div>
+
+        </div>
+
+    </div>
+
+    <div class="input">
+      <input type="text" (keydown.enter)="sendMessage($event)">
+    </div>
+
+
+  </div>
+</div>

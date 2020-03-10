@@ -10,10 +10,26 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
         dialogues: action.payload
       };
     }
+    case ActionTypes.GET_MESSAGES: {
+      state.dialogues.forEach(item => item.active = false);
+      const idx = state.dialogues.findIndex(item => item._id === action.payload);
+      state.dialogues[idx].active = true;
+      return {
+        ...state,
+        activeDialogue: state.dialogues[idx]
+      };
+    }
     case ActionTypes.GET_MESSAGES_SUCCESS: {
       return {
         ...state,
         messages: action.payload
+      };
+    }
+    case ActionTypes.ADD_MESSAGE: {
+      state.activeDialogue.lastMessage =  action.payload;
+      return {
+        ...state,
+        messages: state.messages.concat(action.payload)
       };
     }
     default:
