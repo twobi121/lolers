@@ -12,7 +12,7 @@ export class ChatService {
 
   constructor() {}
 
-  setConnection(id: number) {
+  setConnection(id: string) {
     this.socket = io(this.url);
     this.socket.emit('join', id);
   }

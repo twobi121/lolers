@@ -1,25 +1,40 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import * as io from 'socket.io-client';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
 import {constants} from '../../shared/constants/constants';
-import {Observable, Subject} from 'rxjs';
-import {ChatService} from '../../services/chat.service';
 import {Dialogue} from '../../interfaces/dialogue';
 import {User} from '../../interfaces/user';
-import {Message} from '../../interfaces/message';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {Subscription} from 'rxjs';
+
 
 @Component({
   selector: 'app-dialogues',
   templateUrl: './dialogues.component.html',
   styleUrls: ['./dialogues.component.css']
 })
-export class DialoguesComponent {
+export class DialoguesComponent implements OnChanges, OnDestroy {
   @Input() dialogues: Dialogue[];
-  @Input() messages: Message[];
   @Input() loggedUser: User;
+  @Output() setDialogueEmitter: EventEmitter<string> = new EventEmitter<string>();
   url = constants.url;
-  @Output() openDialogueEmitter: EventEmitter<number> = new EventEmitter<number>();
+  subs: Subscription[] = [];
+  constructor(private route: ActivatedRoute) {
+  }
 
-  openDialogue(id: number) {
-    this.openDialogueEmitter.emit(id);
+  ngOnChanges(changes: SimpleChanges): void {
+    // @ts-ignore
+    if (changes.dialogues && changes.dialogues.currentValue.length && this.route.firstChild && this.route.firstChild.params.value) {
+        this.subs.push(
+          this.route.firstChild.paramMap.subscribe((params: ParamMap) => {
+          this.setActiveDialogue(params.get('id'));
+        }));
+      }
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  setActiveDialogue(id: string) {
+    this.setDialogueEmitter.emit(id);
   }
 }

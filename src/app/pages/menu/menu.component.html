@@ -18,6 +18,10 @@
   </div>
 
   <div class="menu_item" *ngIf="isAuth && loggedUser">
+    <a routerLink="user/{{loggedUser.login}}/dialogues">Диалоги</a>
+  </div>
+
+  <div class="menu_item" *ngIf="isAuth && loggedUser">
     <a routerLink="users">Герои</a>
   </div>
 

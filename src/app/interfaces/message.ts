@@ -5,5 +5,6 @@ export interface Message {
   date?: Date;
   message: string;
   owner_id: User | number;
+  receivers_id: User[] | number[];
   chat_id: number;
 }

@@ -12,8 +12,10 @@ export const ActionTypes = {
   GET_MESSAGES_FAILURE: 'Get Messages Failure',
   ADD_MESSAGE: 'Add Message',
   ADD_MESSAGE_SUCCESS: 'Add Message Success',
-  ADD_MESSAGE_FAILURE: 'Add Message Failure'
-
+  ADD_MESSAGE_FAILURE: 'Add Message Failure',
+  SET_DIALOGUE: 'Set Dialogue',
+  SET_DIALOGUE_SUCCESS: 'Set Dialogue Success',
+  SET_DIALOGUE_FAILURE: 'Set Dialogue Failure',
 };
 
 export class GetDialoguesAction implements Action {
@@ -40,7 +42,7 @@ export class GetDialoguesFailureAction implements Action {
 export class GetMessagesAction implements Action {
   public type = ActionTypes.GET_MESSAGES;
 
-  constructor(public payload: number) {
+  constructor(public payload: string) {
   }
 }
 
@@ -65,6 +67,13 @@ export class AddMessageAction implements Action {
   }
 }
 
+export class SetDialogueAction implements Action {
+  public type = ActionTypes.SET_DIALOGUE;
+
+  constructor(public payload: string) {
+  }
+}
+
 
 export type Actions =
   GetDialoguesAction
@@ -74,5 +83,7 @@ export type Actions =
   | GetMessagesSuccessAction
   | GetMessagesFailureAction
   | AddMessageAction
+  | SetDialogueAction
+
 
 

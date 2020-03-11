@@ -26,6 +26,11 @@ a {
   padding: 10px;
 }
 
+.messages {
+  overflow-y: scroll;
+  height: 500px;
+}
+
 .message_item {
   display: flex;
   padding: 20px;

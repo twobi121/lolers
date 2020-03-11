@@ -1,4 +1,4 @@
-<div *ngIf="dialogues && dialogues.length" class="dialogues_wrapper">
+<div *ngIf="dialogues && dialogues.length && loggedUser" class="dialogues_wrapper">
 
 
   <div class="dialogues">
@@ -7,8 +7,9 @@
         {{dialogues.length}} диалога
       </div>
 
-      <div *ngFor="let dialogue of dialogues" class="dialogues_item" (click)="openDialogue(dialogue._id)" [ngClass]="{'active':dialogue.active}">
-        <div *ngFor="let user of dialogue.users">
+      <div *ngFor="let dialogue of dialogues" class="dialogues_item" [ngClass]="{'active':dialogue.active}" (click)="setActiveDialogue(dialogue._id.toString())">
+        <a routerLink="{{dialogue._id}}">
+          <div *ngFor="let user of dialogue.users">
           <div *ngIf="user._id !== loggedUser._id" class="dialogue_link">
             <div class="user">
               <div class="user_avatar" [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} ">
@@ -24,13 +25,13 @@
             <div class="date">{{dialogue.lastMessage.date | date: 'd MMMM'}}</div>
           </div>
         </div>
+        </a>
       </div>
     </div>
   </div>
 
-  <div class="dialogue">
-    <app-dialogue-container *ngIf="messages && messages.length"
-    ></app-dialogue-container>
+  <div class="dialogue" >
+    <router-outlet></router-outlet>
   </div>
 
 

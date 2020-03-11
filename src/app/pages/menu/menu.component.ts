@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {User} from '../../interfaces/user';
 
 @Component({
@@ -7,13 +7,20 @@ import {User} from '../../interfaces/user';
   styleUrls: ['./menu.component.css']
 })
 
-export class MenuComponent {
+export class MenuComponent implements OnChanges{
   @Input() loggedUser: User;
   @Input() isAuth: boolean;
-  @Output() logoutEmitter = new EventEmitter();
+  @Output() logoutEmitter: EventEmitter<void> = new EventEmitter();
+  @Output() subscribeNotificationsEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   logout() {
     this.logoutEmitter.emit();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.loggedUser && changes.loggedUser.currentValue) {
+      this.subscribeNotificationsEmitter.emit(this.loggedUser._id);
+    }
   }
 
 }

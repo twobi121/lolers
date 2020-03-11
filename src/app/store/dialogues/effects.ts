@@ -8,14 +8,11 @@ import {
   GetDialoguesSuccessAction,
   GetMessagesAction,
   GetMessagesFailureAction,
-  GetMessagesSuccessAction,
+  GetMessagesSuccessAction
 
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
-import {LastPhoto} from '../../interfaces/lastPhoto';
 import {of} from 'rxjs';
-import {Album} from '../../interfaces/album';
-import {AlbumsPhotos} from '../../interfaces/albumsPhotos';
 import {Dialogue} from '../../interfaces/dialogue';
 import {Message} from '../../interfaces/message';
 
@@ -42,6 +39,5 @@ export class Effects {
     map((messages: Message[]) => new GetMessagesSuccessAction(messages)),
     catchError((err) => of(new GetMessagesFailureAction()))
   );
-
 
 }

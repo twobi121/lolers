@@ -10,7 +10,7 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
         dialogues: action.payload
       };
     }
-    case ActionTypes.GET_MESSAGES: {
+    case ActionTypes.SET_DIALOGUE: {
       state.dialogues.forEach(item => item.active = false);
       const idx = state.dialogues.findIndex(item => item._id === action.payload);
       state.dialogues[idx].active = true;

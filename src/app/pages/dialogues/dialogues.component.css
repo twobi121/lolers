@@ -63,3 +63,7 @@
   background: white;
   border: 1px solid #e3e4e8;
 }
+
+a {
+  text-decoration: none;
+}

@@ -60,6 +60,8 @@ import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueContainer } from './components/dialogue/dialogue.container';
+import {SocketModule} from './store/socket/module';
+import {NotificationsModule} from './store/notifications/module';
 registerLocaleData(localeRu, 'ru');
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -119,6 +121,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     UserModule,
     MediaModule,
     DialoguesModule,
+    SocketModule,
+    NotificationsModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
