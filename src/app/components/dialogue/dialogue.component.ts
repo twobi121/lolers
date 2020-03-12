@@ -25,14 +25,8 @@ export class DialogueComponent {
       message: event.target.value,
       owner_id: this.loggedUser._id,
       chat_id: this.activeDialogue._id,
-      receivers_id: this.activeDialogue.users.map(user => {
-        if (user._id === this.loggedUser._id) {
-          return;
-        }
-        return user._id;
-      })
+      receivers_id: this.activeDialogue.users
     };
-    // console.log(message.receivers_id);
     event.target.value = '';
     this.sendMessageEmitter.emit(message);
   }

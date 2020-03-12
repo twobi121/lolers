@@ -25,6 +25,23 @@
   display: flex;
 }
 
+.avatar_wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user_info {
+  padding-left: 10px;
+  max-width: 230px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .user_info span{
   color: black;
   font-weight: bold;
@@ -33,12 +50,37 @@
 .user_avatar {
   width: 50px;
   height: 50px;
+}
+
+.small {
+  width: 24px;
+  height: 24px;
+  margin-right: 1px;
+}
+
+.middle {
+  width: 24px;
+  height: 50px;
+  margin-right: 1px;
+}
+
+.round {
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 .last-message {
-  padding-top: 5px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.last-message_text {
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+.date {
+  flex-shrink: 0;
 }
 
 .dialogue_link {
@@ -66,4 +108,8 @@
 
 a {
   text-decoration: none;
+}
+
+a:visited {
+  color: grey;
 }

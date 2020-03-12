@@ -14,7 +14,6 @@ import {selectLoggedUser} from './store/users/selectors';
 })
 
 export class AppComponent implements OnInit {
-  loggedUser$: Observable<User> = this.store.select(selectLoggedUser);
   constructor(private store: Store<State>,
               ) {
   }
@@ -22,7 +21,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (localStorage.getItem('authUserToken')) {
       this.store.dispatch(new GetLoggedUserAction());
-      this.store.dispatch(new SetConnectionAction());
     }
   }
 }

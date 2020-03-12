@@ -1,0 +1,42 @@
+<div class="user">
+      <div *ngFor="let user of dialogue.users; let i = index" class="user_avatar"
+           [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')',
+                         'background-size': 'cover',
+                         'margin-left': ((i-1)*10) + 'px',
+
+                         }  " [hidden]="i > 3">
+
+      </div>
+
+      <div class="user_info">
+        <span *ngFor="let user of dialogue.users; let i = index">{{user.name | titlecase}} {{user.surname | titlecase}}</span>
+      </div>
+
+</div>
+
+
+<div class="user" *ngIf="dialogue.users.length < 2">
+  <div class="avatar_wrap">
+    <div *ngFor="let user of dialogue.users; let i = index" class="user_avatar"
+         [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')',
+                         'background-size': 'cover',
+                         'left': (i*10) + 'px'
+                         }  " [hidden]="i > 3">
+
+    </div>
+  </div>
+
+  <div class="user_info">
+    <span *ngFor="let user of dialogue.users; let i = index">{{user.name | titlecase}} {{user.surname | titlecase}}</span>
+  </div>
+</div>
+display: flex;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+overflow: auto;
+
+width: 50%;
+height: 50%;
+/* border-radius: 50%; */
+margin-right: 2px;

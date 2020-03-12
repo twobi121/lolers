@@ -5,11 +5,11 @@ import {State} from '../../store/states/app.state';
 import {User} from '../../interfaces/user';
 import {selectIsAuth, selectLoggedUser} from '../../store/users/selectors';
 import {LogoutAction} from '../../store/users/actions';
-import {JoinRoomAction, SubscribeNotificationsAction} from '../../store/socket/actions';
+import {JoinRoomAction, SetConnectionAction, SubscribeNotificationsAction} from '../../store/socket/actions';
 
 @Component({
   selector: 'app-menu-container',
-  template: `<app-menu  (subscribeNotificationsEmitter)="subscribeNotifications($event)"
+  template: `<app-menu  (setConnectionEmitter)="setConnection($event)"
                         (logoutEmitter)="logout()"
                         [loggedUser]="loggedUser$ | async"
                         [isAuth]="isAuth$ | async">
@@ -28,8 +28,12 @@ export class MenuContainer {
     this.store.dispatch(new LogoutAction());
   }
 
-  subscribeNotifications(id: number) {
-    this.store.dispatch(new JoinRoomAction(id.toString()));
+  setConnection(id: number) {
+    this.store.dispatch(new SetConnectionAction(id));
+    this.subscribeNotifications();
+  }
+
+  subscribeNotifications() {
     this.store.dispatch(new SubscribeNotificationsAction());
   }
 

@@ -22,7 +22,7 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     // @ts-ignore
-    if (changes.dialogues && changes.dialogues.currentValue.length && this.route.firstChild && this.route.firstChild.params.value) {
+    if (changes.dialogues && changes.dialogues.currentValue && changes.dialogues.currentValue.length && this.route.firstChild && this.route.firstChild.params.value) {
         this.subs.push(
           this.route.firstChild.paramMap.subscribe((params: ParamMap) => {
           this.setActiveDialogue(params.get('id'));
@@ -36,5 +36,9 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
 
   setActiveDialogue(id: string) {
     this.setDialogueEmitter.emit(id);
+  }
+
+  lastMessageUser(ownerId: number, chatId: number) {
+    // this.dialogues.
   }
 }

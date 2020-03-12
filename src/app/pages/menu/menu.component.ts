@@ -11,15 +11,14 @@ export class MenuComponent implements OnChanges{
   @Input() loggedUser: User;
   @Input() isAuth: boolean;
   @Output() logoutEmitter: EventEmitter<void> = new EventEmitter();
-  @Output() subscribeNotificationsEmitter: EventEmitter<number> = new EventEmitter<number>();
-
+  @Output() setConnectionEmitter: EventEmitter<number> = new EventEmitter<number>();
   logout() {
     this.logoutEmitter.emit();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.loggedUser && changes.loggedUser.currentValue) {
-      this.subscribeNotificationsEmitter.emit(this.loggedUser._id);
+      this.setConnectionEmitter.emit(this.loggedUser._id);
     }
   }
 

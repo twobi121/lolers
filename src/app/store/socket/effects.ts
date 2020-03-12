@@ -32,7 +32,7 @@ export class Effects {
   @Effect({dispatch: false})
   setConnection$ = this.actions$.pipe(
     ofType<SetConnectionAction>(ActionTypes.SET_CONNECTION),
-    map((action: SetConnectionAction) => this.service.setConnection()),
+    map((action: SetConnectionAction) => this.service.setConnection(action.payload)),
     catchError((err) => of(console.log(err)))
   );
 

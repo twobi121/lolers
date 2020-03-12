@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import {constants} from '../../shared/constants/constants';
 import {Message} from '../../interfaces/message';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable()
 export class Service {
@@ -11,8 +11,14 @@ export class Service {
 
   constructor() { }
 
-  setConnection() {
-    this.socket = io(this.url);
+  setConnection(id: number) {
+    this.socket = io(this.url,  { query: {id},
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax : 5000,
+      reconnectionAttempts: 99999 } );
+
+    this.socket.on('connect_error', err => this.errorHandle(err));
   }
 
   joinRoom(id: string) {
@@ -27,6 +33,7 @@ export class Service {
 
   sendMessage(message: Message) {
     this.socket.emit('message', message);
+    this.socket.on('error', err => console.log(err));
   }
 
   getMessages(): Observable<Message> {
@@ -43,6 +50,10 @@ export class Service {
         observer.next(message);
       });
     });
+  }
+
+  errorHandle(err) {
+    console.log(err);
   }
 
 }
