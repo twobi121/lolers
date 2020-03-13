@@ -65,3 +65,11 @@ input {
   border-radius: 5px;
   border: 1px solid #e3e4e8;
 }
+
+.unread {
+  background-color: #3975ff;
+}
+
+.unread2::after {
+  content: 'непрочитано';
+}

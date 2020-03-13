@@ -1,5 +1,7 @@
 import {Action} from '@ngrx/store';
 import {Dialogue} from '../../interfaces/dialogue';
+import {Message} from '../../interfaces/message';
+import {Friend} from '../../interfaces/friend';
 
 
 export const ActionTypes = {
@@ -12,14 +14,14 @@ export const ActionTypes = {
 export class SetNotificationsAction implements Action {
   public type = ActionTypes.SET_NOTIFICATIONS;
 
-  constructor(public payload: string) {
+  constructor(public payload: Message | Friend | number ) {
   }
 }
 
 export class SetNotificationsSuccessAction implements Action {
   public type = ActionTypes.SET_NOTIFICATIONS_SUCCESS;
 
-  constructor(public payload: Dialogue[]) {
+  constructor(public payload?: any) {
   }
 }
 

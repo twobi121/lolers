@@ -7,7 +7,7 @@ import {State} from '../../store/states/app.state';
 import {Store} from '@ngrx/store';
 import {Dialogue} from '../../interfaces/dialogue';
 import {selectMessages, selectRooms} from '../../store/dialogues/selectors';
-import {GetDialoguesAction, GetMessagesAction, SetDialogueAction} from '../../store/dialogues/actions';
+import {GetDialoguesAction, SetDialogueAction} from '../../store/dialogues/actions';
 import {User} from '../../interfaces/user';
 import {selectLoggedUser} from '../../store/users/selectors';
 import {Message} from '../../interfaces/message';

@@ -26,10 +26,26 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
       };
     }
     case ActionTypes.ADD_MESSAGE: {
-      state.activeDialogue.lastMessage =  action.payload;
+      const idx = state.dialogues.findIndex(dialogue => dialogue._id === action.payload[0].chat_id);
+      state.dialogues[idx].lastMessage =  action.payload[0];
+      // if  ('5e3c21aebfca372564a52f1b' !== action.payload[0].owner_id) {
+      //   setTimeout(() => state.messages.forEach(message => message.readUsers = [], 3000));
+      // }
+      // setTimeout(() => state.messages.forEach(message => message.readUsers.length = 0), 4000);
       return {
         ...state,
         messages: state.messages.concat(action.payload)
+      };
+    }
+    case ActionTypes.SET_READ_MESSAGES: {
+      return {
+        ...state,
+        messages: state.messages.filter(message => {
+          if (message.readUsers.length) {
+            message.readUsers = [];
+          }
+          return message;
+        })
       };
     }
     default:

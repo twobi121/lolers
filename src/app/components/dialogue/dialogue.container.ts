@@ -8,13 +8,14 @@ import {User} from '../../interfaces/user';
 import {selectLoggedUser} from '../../store/users/selectors';
 import {Dialogue} from '../../interfaces/dialogue';
 import {ChatService} from '../../services/chat.service';
-import {GetMessagesAction} from '../../store/dialogues/actions';
+import {SetMessagesAsReadAction, SubscribeGetMessagesAction} from '../../store/dialogues/actions';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {JoinRoomAction, LeaveRoomAction, SendMessageAction, SubscribeMessagesAction} from '../../store/socket/actions';
 
 @Component({
   selector: 'app-dialogue-container',
   template: `<app-dialogue (sendMessageEmitter)="sendMessage($event)"
+                           (setMessagesAsReadEmitter)="setMessagesAsRead($event)"
                             [messages]="messages$|async"
                            [loggedUser]="loggedUser$|async"
                            [activeDialogue]="activeDialogue$|async"
@@ -46,11 +47,12 @@ export class DialogueContainer implements OnInit, OnDestroy {
   }
 
   getLastMessages() {
-    this.subs.push(
-      this.route.paramMap.subscribe((params: ParamMap) => {
-        this.store.dispatch(new GetMessagesAction(params.get('id')));
-      })
-    );
+    this.store.dispatch(new SubscribeGetMessagesAction());
+    // this.subs.push(
+    //   this.route.paramMap.subscribe((params: ParamMap) => {
+    //     this.store.dispatch(new GetMessagesAction(params.get('id')));
+    //   })
+    // );
   }
 
   subscribeMessages() {
@@ -59,6 +61,10 @@ export class DialogueContainer implements OnInit, OnDestroy {
 
   sendMessage(message: Message) {
     this.store.dispatch(new SendMessageAction(message));
+  }
+
+  setMessagesAsRead(id: number) {
+    this.store.dispatch(new SetMessagesAsReadAction(id));
   }
 
   ngOnDestroy() {

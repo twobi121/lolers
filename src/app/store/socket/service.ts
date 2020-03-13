@@ -21,8 +21,17 @@ export class Service {
     this.socket.on('connect_error', err => this.errorHandle(err));
   }
 
+  getStartMessages(): Observable<Message[]> {
+    return new Observable((observer) => {
+      this.socket.on('get-messages', (messages) => {
+        observer.next(messages);
+      });
+    });
+  }
+
   joinRoom(id: string) {
     this.socket.emit('join', id);
+    this.socket.emit('read', id);
   }
 
   leaveRoom() {
@@ -39,12 +48,15 @@ export class Service {
   getMessages(): Observable<Message> {
     return new Observable((observer) => {
       this.socket.on('new-message', (message) => {
+        if (message[0].owner_id !== this.socket.id) {
+          setTimeout(() => this.socket.emit('read', message[0].owner_id), 5000);
+        }
         observer.next(message);
       });
     });
   }
 
-  getNotifications(): Observable<string> {
+  getNotifications(): Observable<string | number> {
     return new Observable((observer) => {
       this.socket.on('not', (message) => {
         observer.next(message);

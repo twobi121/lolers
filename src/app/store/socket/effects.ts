@@ -18,8 +18,10 @@ import {catchError, map, switchMap} from 'rxjs/operators';
 
 import {of} from 'rxjs';
 import {Message} from '../../interfaces/message';
-import {AddMessageAction} from '../dialogues/actions';
+import {AddMessageAction, SetMessagesAsReadAction} from '../dialogues/actions';
 import {SetNotificationsAction} from '../notifications/actions';
+import {not} from 'rxjs/internal-compatibility';
+import {Friend} from '../../interfaces/friend';
 
 @Injectable()
 export class Effects {
@@ -69,7 +71,12 @@ export class Effects {
   subscribeNotifications$ = this.actions$.pipe(
     ofType<SubscribeNotificationsAction>(ActionTypes.SUBSCRIBE_NOTIFICATION),
     switchMap(() => this.service.getNotifications()),
-    map((notification: string) => new SetNotificationsAction(notification)),
+    switchMap((notification: any) => {
+      if (notification.event === 'read') {
+          return of(new SetMessagesAsReadAction(notification.payload));
+        // tslint:disable-next-line:align
+      } return of(new SubscribeNotificationsSuccessAction(notification.payload));
+    }),
     catchError((err) => of(new SubscribeNotificationsFailureAction()))
   );
 

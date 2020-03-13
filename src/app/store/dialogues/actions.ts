@@ -16,6 +16,7 @@ export const ActionTypes = {
   SET_DIALOGUE: 'Set Dialogue',
   SET_DIALOGUE_SUCCESS: 'Set Dialogue Success',
   SET_DIALOGUE_FAILURE: 'Set Dialogue Failure',
+  SET_READ_MESSAGES: 'Set Read Messages'
 };
 
 export class GetDialoguesAction implements Action {
@@ -39,21 +40,21 @@ export class GetDialoguesFailureAction implements Action {
   }
 }
 
-export class GetMessagesAction implements Action {
+export class SubscribeGetMessagesAction implements Action {
   public type = ActionTypes.GET_MESSAGES;
 
-  constructor(public payload: string) {
+  constructor(public payload?: any) {
   }
 }
 
-export class GetMessagesSuccessAction implements Action {
+export class SubscribeGetMessagesSuccessAction implements Action {
   public type = ActionTypes.GET_MESSAGES_SUCCESS;
 
   constructor(public payload: Message[]) {
   }
 }
 
-export class GetMessagesFailureAction implements Action {
+export class SubscribeGetMessagesFailureAction implements Action {
   public type = ActionTypes.GET_MESSAGES_FAILURE;
 
   constructor(public payload?: any) {
@@ -74,16 +75,26 @@ export class SetDialogueAction implements Action {
   }
 }
 
+export class SetMessagesAsReadAction implements Action {
+  public type = ActionTypes.SET_READ_MESSAGES;
+
+  constructor(public payload: number) {
+  }
+}
+
+
+
 
 export type Actions =
   GetDialoguesAction
   | GetDialoguesSuccessAction
   | GetDialoguesFailureAction
-  | GetMessagesAction
-  | GetMessagesSuccessAction
-  | GetMessagesFailureAction
+  | SubscribeGetMessagesAction
+  | SubscribeGetMessagesSuccessAction
+  | SubscribeGetMessagesFailureAction
   | AddMessageAction
   | SetDialogueAction
+  | SetMessagesAsReadAction
 
 
 

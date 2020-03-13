@@ -26,19 +26,21 @@
     </div>
 
     <div class="message">
-      <div  class='message_item' *ngFor="let message of messages">
-<!--            [ngClass]="{-->
-<!--          'logged-user' : message.owner_id === loggedUser._id,-->
-<!--          'user' : message.owner_id !== loggedUser._id-->
-<!--          }"-->
+      <div  class='message_item' *ngFor="let message of messages"
+            [ngClass]="{
+            'normal' : message.owner_id === loggedUser._id,
+            'unread' : message.owner_id !== loggedUser._id && message.readUsers.length,
+            'unread2': message.owner_id === loggedUser._id && message.readUsers.length
+            }">
+
         <div class="user_avatar"
              [ngStyle]="{background:
-             'url(' + url + message.owner_id.avatar.filename + ')', 'background-size': 'cover'} ">
+             'url(' + url + message.owner.avatar.filename + ')', 'background-size': 'cover'} ">
         </div>
 
         <div class="message_info">
           <div class="message_owner">
-            {{message.owner_id.name | titlecase}}
+            {{message.owner.name | titlecase}}
           </div>
 
           <div>

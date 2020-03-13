@@ -6,6 +6,7 @@ export interface Message {
   message: string;
   owner_id: User | number;
   receivers_id: User[] | number[];
+  readUsers?: number[];
   chat_id: number;
   owner?: User;
 }

@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Service} from './service';
+import {Service as SocketService} from '../socket/service';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {
   ActionTypes,
   GetDialoguesAction,
   GetDialoguesFailureAction,
   GetDialoguesSuccessAction,
-  GetMessagesAction,
-  GetMessagesFailureAction,
-  GetMessagesSuccessAction
+  SubscribeGetMessagesAction, SubscribeGetMessagesFailureAction, SubscribeGetMessagesSuccessAction
 
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
@@ -21,6 +20,7 @@ export class Effects {
   constructor(
     private actions$: Actions,
     private service: Service,
+    private socketService: SocketService
   ) {
   }
 
@@ -34,10 +34,10 @@ export class Effects {
 
   @Effect()
   getMessages$ = this.actions$.pipe(
-    ofType<GetMessagesAction>(ActionTypes.GET_MESSAGES),
-    switchMap((action: GetMessagesAction) => this.service.getMessages(action.payload)),
-    map((messages: Message[]) => new GetMessagesSuccessAction(messages)),
-    catchError((err) => of(new GetMessagesFailureAction()))
+    ofType<SubscribeGetMessagesAction>(ActionTypes.GET_MESSAGES),
+    switchMap(() => this.socketService.getStartMessages()),
+    map((messages: Message[]) => new SubscribeGetMessagesSuccessAction(messages)),
+    catchError((err) => of(new SubscribeGetMessagesFailureAction()))
   );
 
 }
