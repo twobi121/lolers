@@ -1,5 +1,5 @@
 import {Actions as actions, ActionTypes} from './actions';
-import {NotificationsState, initialState} from '../states/notifications';
+import {NotificationsState, initialState} from '../states/notifications.state';
 
 export function reducer(state: NotificationsState = initialState, action: actions): NotificationsState {
   switch (action.type) {

@@ -5,7 +5,6 @@
 .user_avatar {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
 }
 
 .dialogue_header_items {
@@ -66,10 +65,33 @@ input {
   border: 1px solid #e3e4e8;
 }
 
-.unread {
+.new {
   background-color: #3975ff;
 }
 
-.unread2::after {
-  content: 'непрочитано';
+.unread::after {
+  content: 'Непрочитано';
+  font-size: 10px;
+}
+
+.read::after {
+  content: 'Прочитано';
+  font-size: 10px;
+}
+
+
+
+.avatar_wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.small {
+  width: 24px;
+  height: 24px;
+  margin-right: 1px;
 }

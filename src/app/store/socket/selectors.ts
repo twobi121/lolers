@@ -1,20 +1,11 @@
 import {createSelector} from '@ngrx/store';
 import {State} from '../states/app.state';
-import {DialoguesState} from '../states/dialogues.state';
+import {SocketState} from '../states/socket.state';
 
-const selectDialogues = (state: State) => state.dialogues;
+const selectSocket = (state: State) => state.socket;
 
-export const selectRooms = createSelector(
-  selectDialogues,
-  (state: DialoguesState) => state ? state.dialogues : []
+export const selectIsConnected = createSelector(
+  selectSocket,
+  (state: SocketState) => state ? state.connected : false
 );
 
-export const selectMessages = createSelector(
-  selectDialogues,
-  (state: DialoguesState) => state ? state.messages : []
-);
-
-export const selectActiveDialogue = createSelector(
-  selectDialogues,
-  (state: DialoguesState) => state ? state.activeDialogue : null
-);

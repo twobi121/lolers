@@ -16,7 +16,11 @@ export const ActionTypes = {
   SET_DIALOGUE: 'Set Dialogue',
   SET_DIALOGUE_SUCCESS: 'Set Dialogue Success',
   SET_DIALOGUE_FAILURE: 'Set Dialogue Failure',
-  SET_READ_MESSAGES: 'Set Read Messages'
+  SET_READ_MESSAGES: 'Set Read Messages',
+  GET_PREVIOUS_MESSAGES: 'Get Previous Messages',
+  GET_PREVIOUS_MESSAGES_SUCCESS: 'Get Previous Messages Success',
+  GET_PREVIOUS_MESSAGES_FAILURE: 'Get Previous Messages Failure',
+  SET_READ_MESSAGES_ON_JOIN: 'Set Read Messages On Join'
 };
 
 export class GetDialoguesAction implements Action {
@@ -84,6 +88,35 @@ export class SetMessagesAsReadAction implements Action {
 
 
 
+export class GetPreviousMessagesAction implements Action {
+  public type = ActionTypes.GET_PREVIOUS_MESSAGES;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class GetPreviousMessagesSuccessAction implements Action {
+  public type = ActionTypes.GET_PREVIOUS_MESSAGES_SUCCESS;
+
+  constructor(public payload: Message[]) {
+  }
+}
+
+export class GetPreviousMessagesFailureAction implements Action {
+  public type = ActionTypes.GET_PREVIOUS_MESSAGES_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetReadMessageOnJoinAction implements Action {
+  public type = ActionTypes.SET_READ_MESSAGES_ON_JOIN;
+
+  constructor(public payload: number) {
+  }
+}
+
+
 
 export type Actions =
   GetDialoguesAction
@@ -95,6 +128,10 @@ export type Actions =
   | AddMessageAction
   | SetDialogueAction
   | SetMessagesAsReadAction
+  | GetPreviousMessagesAction
+  | GetPreviousMessagesSuccessAction
+  | GetPreviousMessagesFailureAction
+  | SetReadMessageOnJoinAction
 
 
 

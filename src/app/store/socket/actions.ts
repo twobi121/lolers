@@ -4,6 +4,7 @@ import {Message} from '../../interfaces/message';
 export const ActionTypes = {
 
   SET_CONNECTION: 'Set Connection',
+  SET_CONNECTION_SUCCESS: 'Set Connection Success',
   SET_CONNECTION_FAILURE: 'Set Connection Failure',
   SEND_MESSAGE: 'Send Message',
   SEND_MESSAGE_FAILURE: 'Send Message Failure',
@@ -20,6 +21,13 @@ export const ActionTypes = {
 
 export class SetConnectionAction implements Action {
   public type = ActionTypes.SET_CONNECTION;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetConnectionSuccessAction implements Action {
+  public type = ActionTypes.SET_CONNECTION_SUCCESS;
 
   constructor(public payload?: any) {
   }
@@ -111,6 +119,7 @@ export class SubscribeNotificationsFailureAction implements Action {
 
 export type Actions =
   | SetConnectionAction
+  | SetConnectionSuccessAction
   | SetConnectionFailureAction
   | SendMessageAction
   | SendMessageFailureAction

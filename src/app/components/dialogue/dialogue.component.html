@@ -1,26 +1,30 @@
-<div class="dialogue" *ngIf="messages && messages.length && activeDialogue">
+<div class="dialogue" *ngIf="activeDialogue">
   <div class="dialogue_header">
-    <div *ngFor="let user of activeDialogue.users">
-      <div *ngIf="user._id !== loggedUser._id" class="dialogue_header_items">
-        <div class="dialogue_header_user">
-          <a routerLink="/user/{{user.login}}">
-            {{user.name | titlecase}} {{user.surname | titlecase}}
-          </a>
-        </div>
+    <div >
+      <div  class="dialogue_header_items">
+<!--        <div class="dialogue_header_user">-->
+<!--          <a routerLink="/user/{{user.login}}">-->
+<!--            {{user.name | titlecase}} {{user.surname | titlecase}}-->
+<!--          </a>-->
+<!--        </div>-->
         <div class="dialogue_header_search">
           Поиск
         </div>
-        <div *ngIf="user._id !== loggedUser._id"
-             class="dialogue_header user_avatar"
-             [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} ">
-          <a routerLink="/user/{{user.login}}"></a>
+        <div class="avatar_wrap">
+          <div *ngFor="let user of activeDialogue.users; let i = index"
+               class="user_avatar"
+               [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'} "
+                [ngClass]="{'small': activeDialogue.users.length > 2 }"
+               [hidden]="i > 3">
+            <a routerLink="/user/{{user.login}}"></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="messages" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-    <div class="last-message_date">
+  <div class="messages" #scrollMe [scrollTop]="scrollMe.scrollHeight" (scroll)="scroll($event)">
+    <div class="last-message_date" *ngIf="activeDialogue.lastMessage">
       <span *ngIf="(activeDialogue.lastMessage.date | date: 'yyyy-MM-dd' ) !== today; else elseBlock">{{activeDialogue.lastMessage.date | date: 'd MMMM'}}</span>
       <ng-template #elseBlock>Сегодня</ng-template>
     </div>
@@ -29,15 +33,16 @@
       <div  class='message_item' *ngFor="let message of messages"
             [ngClass]="{
             'normal' : message.owner_id === loggedUser._id,
-            'unread' : message.owner_id !== loggedUser._id && message.readUsers.length,
-            'unread2': message.owner_id === loggedUser._id && message.readUsers.length
+            'new' : message.owner_id !== loggedUser._id && message.readUsers.length,
+            'unread': message.owner_id === loggedUser._id && message.readUsers.length,
+            'read': message.owner_id === loggedUser._id && !message.readUsers.length
             }">
-
-        <div class="user_avatar"
-             [ngStyle]="{background:
-             'url(' + url + message.owner.avatar.filename + ')', 'background-size': 'cover'} ">
+        <div class="avatar_wrap">
+          <div class="user_avatar"
+               [ngStyle]="{background:
+               'url(' + url + message.owner.avatar.filename + ')', 'background-size': 'cover'} ">
+          </div>
         </div>
-
         <div class="message_info">
           <div class="message_owner">
             {{message.owner.name | titlecase}}
@@ -47,8 +52,13 @@
             {{message.message}}
           </div>
 
+
+
         </div>
     </div>
+      <div class="message_item" *ngIf="!activeDialogue.lastMessage">
+        Сообщений пока нет. Время это исправить
+      </div>
     </div>
 
   </div>

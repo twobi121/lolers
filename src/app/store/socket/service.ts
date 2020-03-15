@@ -7,7 +7,7 @@ import {Observable, throwError} from 'rxjs';
 @Injectable()
 export class Service {
   private socket;
-  url = constants.url
+  url = constants.url;
 
   constructor() { }
 
@@ -31,7 +31,10 @@ export class Service {
 
   joinRoom(id: string) {
     this.socket.emit('join', id);
-    this.socket.emit('read', id);
+  }
+
+  setRead(id: number) {
+    setTimeout(() => this.socket.emit('read', id), 3000);
   }
 
   leaveRoom() {
@@ -49,9 +52,20 @@ export class Service {
     return new Observable((observer) => {
       this.socket.on('new-message', (message) => {
         if (message[0].owner_id !== this.socket.id) {
-          setTimeout(() => this.socket.emit('read', message[0].owner_id), 5000);
+          console.log('read');
+          this.setRead(message[0].owner_id);
         }
         observer.next(message);
+      });
+    });
+  }
+
+  getPreviousMessages(skipValue: number) {
+    console.log(skipValue);
+    this.socket.emit('get-prev-messages', skipValue);
+    return new Observable((observer) => {
+      this.socket.on('get-prev-messages', (messages) => {
+        observer.next(messages);
       });
     });
   }

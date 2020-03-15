@@ -8,33 +8,46 @@ import {User} from '../../interfaces/user';
 import {selectLoggedUser} from '../../store/users/selectors';
 import {Dialogue} from '../../interfaces/dialogue';
 import {ChatService} from '../../services/chat.service';
-import {SetMessagesAsReadAction, SubscribeGetMessagesAction} from '../../store/dialogues/actions';
+import {
+  GetPreviousMessagesAction,
+  SetMessagesAsReadAction,
+  SetReadMessageOnJoinAction,
+  SubscribeGetMessagesAction
+} from '../../store/dialogues/actions';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {JoinRoomAction, LeaveRoomAction, SendMessageAction, SubscribeMessagesAction} from '../../store/socket/actions';
+import {selectIsConnected} from '../../store/socket/selectors';
 
 @Component({
   selector: 'app-dialogue-container',
-  template: `<app-dialogue (sendMessageEmitter)="sendMessage($event)"
+  template: `<app-dialogue (initComponentEmitter)="init($event)"
+                            (sendMessageEmitter)="sendMessage($event)"
                            (setMessagesAsReadEmitter)="setMessagesAsRead($event)"
+                           (getPreviousMessagesEmitter)="getPreviousMessages($event)"
                             [messages]="messages$|async"
                            [loggedUser]="loggedUser$|async"
                            [activeDialogue]="activeDialogue$|async"
+                           [isConnected] ="isConnected$ | async"
                             ></app-dialogue>`,
   styleUrls: ['./dialogue.component.css']
 })
-export class DialogueContainer implements OnInit, OnDestroy {
+export class DialogueContainer implements OnDestroy {
   messages$: Observable<Message[]> = this.store.select(selectMessages);
   loggedUser$: Observable<User> = this.store.select(selectLoggedUser);
   activeDialogue$: Observable<Dialogue> = this.store.select(selectActiveDialogue);
+  isConnected$: Observable<boolean> = this.store.select(selectIsConnected);
   subs: Subscription[] = [];
   constructor(private store: Store<State>,
               private chat: ChatService,
               private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  init(lastMessageOwnerId: number): void {
     this.getLastMessages();
     this.joinRoom();
     this.subscribeMessages();
+    if (lastMessageOwnerId) {
+      this.store.dispatch(new SetReadMessageOnJoinAction(lastMessageOwnerId));
+    }
   }
 
   joinRoom() {
@@ -65,6 +78,10 @@ export class DialogueContainer implements OnInit, OnDestroy {
 
   setMessagesAsRead(id: number) {
     this.store.dispatch(new SetMessagesAsReadAction(id));
+  }
+
+  getPreviousMessages(skipValue: number) {
+    this.store.dispatch(new GetPreviousMessagesAction(skipValue));
   }
 
   ngOnDestroy() {

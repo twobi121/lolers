@@ -6,7 +6,7 @@ import {
   ActionTypes,
   GetDialoguesAction,
   GetDialoguesFailureAction,
-  GetDialoguesSuccessAction,
+  GetDialoguesSuccessAction, GetPreviousMessagesAction, GetPreviousMessagesSuccessAction, SetReadMessageOnJoinAction,
   SubscribeGetMessagesAction, SubscribeGetMessagesFailureAction, SubscribeGetMessagesSuccessAction
 
 } from './actions';
@@ -37,6 +37,21 @@ export class Effects {
     ofType<SubscribeGetMessagesAction>(ActionTypes.GET_MESSAGES),
     switchMap(() => this.socketService.getStartMessages()),
     map((messages: Message[]) => new SubscribeGetMessagesSuccessAction(messages)),
+    catchError((err) => of(new SubscribeGetMessagesFailureAction()))
+  );
+
+  @Effect()
+  getPreviousMessages$ = this.actions$.pipe(
+    ofType<GetPreviousMessagesAction>(ActionTypes.GET_PREVIOUS_MESSAGES),
+    switchMap((action: GetPreviousMessagesAction) => this.socketService.getPreviousMessages(action.payload)),
+    map((messages: Message[]) => new GetPreviousMessagesSuccessAction(messages)),
+    catchError((err) => of(new SubscribeGetMessagesFailureAction()))
+  );
+
+  @Effect({dispatch: false})
+  setReadMessagesOnJoin$ = this.actions$.pipe(
+    ofType<SetReadMessageOnJoinAction>(ActionTypes.SET_READ_MESSAGES_ON_JOIN),
+    map((action: SetReadMessageOnJoinAction) => this.socketService.setRead(action.payload)),
     catchError((err) => of(new SubscribeGetMessagesFailureAction()))
   );
 

@@ -27,10 +27,8 @@
               <div *ngFor="let user of dialogue.users; let i = index"
                    class="user_avatar"
                    [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
-                   [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')',
-                         'background-size': 'cover'
-                         }  " [hidden]="i > 3">
-
+                   [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
+                   [hidden]="i > 3">
               </div>
             </div>
 
@@ -44,17 +42,15 @@
                   </span>
                 </div>
 
-                <div class="date">
+                <div class="date" *ngIf="dialogue.lastMessage">
                   {{dialogue.lastMessage.date | date: 'd MMMM'}}
                 </div>
 
 
               </div>
-              <div class="last-message">
+              <div class="last-message" *ngIf="dialogue.lastMessage">
                 <div class="user_avatar small round"
-                     [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')',
-                         'background-size': 'cover'
-                         }  ">
+                     [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')' }">
                 </div>
 
                 <span class="last-message_text">{{dialogue.lastMessage.message}}</span>

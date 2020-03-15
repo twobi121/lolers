@@ -12,7 +12,7 @@ import {
   LeaveRoomFailureAction,
   JoinRoomAction,
   SubscribeNotificationsAction,
-  SubscribeNotificationsSuccessAction, SubscribeNotificationsFailureAction
+  SubscribeNotificationsSuccessAction, SubscribeNotificationsFailureAction, SetConnectionSuccessAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 
@@ -31,10 +31,11 @@ export class Effects {
   ) {
   }
 
-  @Effect({dispatch: false})
+  @Effect()
   setConnection$ = this.actions$.pipe(
     ofType<SetConnectionAction>(ActionTypes.SET_CONNECTION),
     map((action: SetConnectionAction) => this.service.setConnection(action.payload)),
+    switchMap(() => of(new SetConnectionSuccessAction())),
     catchError((err) => of(console.log(err)))
   );
 
