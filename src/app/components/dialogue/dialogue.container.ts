@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy,} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Message} from '../../interfaces/message';
 import {selectActiveDialogue, selectMessages} from '../../store/dialogues/selectors';
@@ -21,10 +21,10 @@ import {selectIsConnected} from '../../store/socket/selectors';
 @Component({
   selector: 'app-dialogue-container',
   template: `<app-dialogue (initComponentEmitter)="init($event)"
-                            (sendMessageEmitter)="sendMessage($event)"
+                           (sendMessageEmitter)="sendMessage($event)"
                            (setMessagesAsReadEmitter)="setMessagesAsRead($event)"
                            (getPreviousMessagesEmitter)="getPreviousMessages($event)"
-                            [messages]="messages$|async"
+                           [messages]="messages$|async"
                            [loggedUser]="loggedUser$|async"
                            [activeDialogue]="activeDialogue$|async"
                            [isConnected] ="isConnected$ | async"
@@ -46,7 +46,7 @@ export class DialogueContainer implements OnDestroy {
     this.joinRoom();
     this.subscribeMessages();
     if (lastMessageOwnerId) {
-      this.store.dispatch(new SetReadMessageOnJoinAction(lastMessageOwnerId));
+      setTimeout(() => this.store.dispatch(new SetReadMessageOnJoinAction(lastMessageOwnerId)), 5000);
     }
   }
 
@@ -61,11 +61,6 @@ export class DialogueContainer implements OnDestroy {
 
   getLastMessages() {
     this.store.dispatch(new SubscribeGetMessagesAction());
-    // this.subs.push(
-    //   this.route.paramMap.subscribe((params: ParamMap) => {
-    //     this.store.dispatch(new GetMessagesAction(params.get('id')));
-    //   })
-    // );
   }
 
   subscribeMessages() {

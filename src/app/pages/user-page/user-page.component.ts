@@ -14,6 +14,7 @@ export class UserPageComponent {
   @Input() loggedUser: User;
   @Input() isFriend: IsFriend;
   @Input() requestStatus: boolean;
+  @Input() dialogueId: number;
   @Output() requestEvent = new EventEmitter<number>();
 
   sendRequest(id: number) {

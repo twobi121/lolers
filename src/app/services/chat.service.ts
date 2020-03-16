@@ -12,22 +12,22 @@ export class ChatService {
 
   constructor() {}
 
-  setConnection(id: string) {
-    this.socket = io(this.url);
-    this.socket.emit('join', id);
-  }
-
-  sendMessage(message: Message) {
-    this.socket.emit('message', message);
-  }
-
-  getMessages(): Observable<Message> {
-    return new Observable((observer) => {
-      this.socket.on('new-message', (message) => {
-        observer.next(message);
-      });
-    });
-  }
+  // setConnection(id: string) {
+  //   this.socket = io(this.url);
+  //   this.socket.emit('join', id);
+  // }
+  //
+  // sendMessage(message: Message) {
+  //   this.socket.emit('message', message);
+  // }
+  //
+  // getMessages(): Observable<Message> {
+  //   return new Observable((observer) => {
+  //     this.socket.on('new-message', (message) => {
+  //       observer.next(message);
+  //     });
+  //   });
+  // }
 
 
 }

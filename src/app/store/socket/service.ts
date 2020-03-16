@@ -30,6 +30,7 @@ export class Service {
   }
 
   joinRoom(id: string) {
+
     this.socket.emit('join', id);
   }
 
@@ -61,7 +62,6 @@ export class Service {
   }
 
   getPreviousMessages(skipValue: number) {
-    console.log(skipValue);
     this.socket.emit('get-prev-messages', skipValue);
     return new Observable((observer) => {
       this.socket.on('get-prev-messages', (messages) => {

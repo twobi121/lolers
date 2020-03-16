@@ -21,6 +21,12 @@
   min-width: 300px;
 }
 
+.dialogue_info {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+}
+
 .user {
   display: flex;
 }
@@ -50,7 +56,6 @@
 .user_avatar {
   width: 50px;
   height: 50px;
-  background-size: cover;
 }
 
 .small {

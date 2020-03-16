@@ -18,3 +18,8 @@ export const selectActiveDialogue = createSelector(
   selectDialogues,
   (state: DialoguesState) => state ? state.activeDialogue : null
 );
+
+export const selectDialogueId = createSelector(
+  selectDialogues,
+  (state: DialoguesState) => state ? state.dialogueId : null
+);

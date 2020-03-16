@@ -3,7 +3,7 @@
     <img [src] = "avatarBlob || url + user.avatar.filename  " alt="">
   </div>
 
-  <div class="upload_btn" *ngIf="loggedUser && user.login === loggedUser.login">
+  <div class="upload_btn" *ngIf="loggedUser && user.login === loggedUser.login; else dialogueButton">
     <input
       style="display: none"
       type="file" (change)="onFileChanged($event)"
@@ -25,6 +25,11 @@
 
   </div>
 
+  <ng-template #dialogueButton>
+    <div class="upload_btn">
+       <button (click)="startDialogue()">Написать сообщение</button>
+    </div>
+  </ng-template>
 
 
 

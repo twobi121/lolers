@@ -23,19 +23,17 @@
     </div>
   </div>
 
-  <div class="messages" #scrollMe [scrollTop]="scrollMe.scrollHeight" (scroll)="scroll($event)">
-    <div class="last-message_date" *ngIf="activeDialogue.lastMessage">
-      <span *ngIf="(activeDialogue.lastMessage.date | date: 'yyyy-MM-dd' ) !== today; else elseBlock">{{activeDialogue.lastMessage.date | date: 'd MMMM'}}</span>
-      <ng-template #elseBlock>Сегодня</ng-template>
-    </div>
+  <div class="last-message_date" *ngIf="activeDialogue.lastMessage">
+    <span *ngIf="(activeDialogue.lastMessage.date | date: 'yyyy-MM-dd' ) !== today; else elseBlock">{{activeDialogue.lastMessage.date | date: 'd MMMM'}}</span>
+    <ng-template #elseBlock>Сегодня</ng-template>
+  </div>
 
-    <div class="message">
-      <div  class='message_item' *ngFor="let message of messages"
+  <div class="messages">
+    <div class="message" #scrollMe (scroll)="onScroll($event)">
+      <div  class='message_item' *ngFor="let message of messages" #messageDiv
             [ngClass]="{
             'normal' : message.owner_id === loggedUser._id,
-            'new' : message.owner_id !== loggedUser._id && message.readUsers.length,
-            'unread': message.owner_id === loggedUser._id && message.readUsers.length,
-            'read': message.owner_id === loggedUser._id && !message.readUsers.length
+            'new' : message.owner_id !== loggedUser._id && message.readUsers.length && isRead(message.readUsers)
             }">
         <div class="avatar_wrap">
           <div class="user_avatar"
@@ -44,7 +42,10 @@
           </div>
         </div>
         <div class="message_info">
-          <div class="message_owner">
+          <div class="message_owner" [ngClass]="{
+            'unread': message.owner_id === loggedUser._id && message.readUsers.length && message.readUsers.length === activeDialogue.users.length,
+            'read': message.owner_id === loggedUser._id && !message.readUsers.length
+               }">
             {{message.owner.name | titlecase}}
           </div>
 

@@ -21,6 +21,20 @@ export class Service {
       );
   }
 
+  getDialogueId(id: number) {
+    return this.http.get<number>(this.dialoguesUrl + 'getDialogueId/' + id)
+      .pipe(
+        map((dialogueId: number) => dialogueId)
+      );
+  }
+
+  startDialogue(id: number) {
+    return this.http.post<number>(this.dialoguesUrl + '/create', {id})
+      .pipe(
+        map((dialogueId: number) => {console.log(dialogueId); return dialogueId})
+      );
+  }
+
   getMessages(id: string): Observable<Message[]> {
     return this.http.get<Message[]>(this.dialoguesUrl + id)
       .pipe(

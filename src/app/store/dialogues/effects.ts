@@ -4,10 +4,20 @@ import {Service as SocketService} from '../socket/service';
 import {Effect, Actions, ofType} from '@ngrx/effects';
 import {
   ActionTypes,
+  GetDialogueIdAction,
+  GetDialogueIdFailureAction,
+  GetDialogueIdSuccessAction,
   GetDialoguesAction,
   GetDialoguesFailureAction,
-  GetDialoguesSuccessAction, GetPreviousMessagesAction, GetPreviousMessagesSuccessAction, SetReadMessageOnJoinAction,
-  SubscribeGetMessagesAction, SubscribeGetMessagesFailureAction, SubscribeGetMessagesSuccessAction
+  GetDialoguesSuccessAction,
+  GetPreviousMessagesAction,
+  GetPreviousMessagesSuccessAction,
+  SetReadMessageOnJoinAction,
+  StartDialogueAction, StartDialogueFailureAction,
+  StartDialogueSuccessAction,
+  SubscribeGetMessagesAction,
+  SubscribeGetMessagesFailureAction,
+  SubscribeGetMessagesSuccessAction
 
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
@@ -53,6 +63,22 @@ export class Effects {
     ofType<SetReadMessageOnJoinAction>(ActionTypes.SET_READ_MESSAGES_ON_JOIN),
     map((action: SetReadMessageOnJoinAction) => this.socketService.setRead(action.payload)),
     catchError((err) => of(new SubscribeGetMessagesFailureAction()))
+  );
+
+  @Effect()
+  getDialogueId$ = this.actions$.pipe(
+    ofType<GetDialogueIdAction>(ActionTypes.GET_DIALOGUE_ID),
+    switchMap((action: GetDialogueIdAction) => this.service.getDialogueId(action.payload)),
+    map((dialogueId: number) => new GetDialogueIdSuccessAction(dialogueId)),
+    catchError((err) => of(new GetDialogueIdFailureAction()))
+  );
+
+  @Effect()
+  startDialogue$ = this.actions$.pipe(
+    ofType<StartDialogueAction>(ActionTypes.START_DIALOGUE),
+    switchMap((action: StartDialogueAction) => this.service.startDialogue(action.payload)),
+    map((dialogueId: number) => of(new GetDialogueIdSuccessAction(dialogueId))),
+    catchError((err) => of(new StartDialogueFailureAction()))
   );
 
 }

@@ -26,13 +26,13 @@
             <div class="avatar_wrap">
               <div *ngFor="let user of dialogue.users; let i = index"
                    class="user_avatar"
-                   [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
                    [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
+                   [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
                    [hidden]="i > 3">
               </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; width: 230px">
+            <div class="dialogue_info">
               <div class="user_info">
                 <div>
                   <span *ngFor="let user of dialogue.users; let i = index">
@@ -50,7 +50,7 @@
               </div>
               <div class="last-message" *ngIf="dialogue.lastMessage">
                 <div class="user_avatar small round"
-                     [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')' }">
+                     [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')', 'background-size': 'cover'}">
                 </div>
 
                 <span class="last-message_text">{{dialogue.lastMessage.message}}</span>

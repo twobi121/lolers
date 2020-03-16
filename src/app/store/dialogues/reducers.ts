@@ -20,6 +20,7 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
       };
     }
     case ActionTypes.GET_MESSAGES_SUCCESS: {
+      console.log(action.payload);
       return {
         ...state,
         messages: action.payload
@@ -50,7 +51,14 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
           ...state,
           messages: action.payload.concat(state.messages)
         };
-      } else return state;
+      }
+      return state;
+    }
+    case ActionTypes.GET_DIALOGUE_ID_SUCCESS: {
+        return {
+          ...state,
+          dialogueId: action.payload
+        };
     }
     default:
       return state;

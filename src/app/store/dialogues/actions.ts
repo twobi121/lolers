@@ -20,7 +20,13 @@ export const ActionTypes = {
   GET_PREVIOUS_MESSAGES: 'Get Previous Messages',
   GET_PREVIOUS_MESSAGES_SUCCESS: 'Get Previous Messages Success',
   GET_PREVIOUS_MESSAGES_FAILURE: 'Get Previous Messages Failure',
-  SET_READ_MESSAGES_ON_JOIN: 'Set Read Messages On Join'
+  SET_READ_MESSAGES_ON_JOIN: 'Set Read Messages On Join',
+  GET_DIALOGUE_ID: 'Get Dialogue Id',
+  GET_DIALOGUE_ID_SUCCESS: 'Get Dialogue Id Success',
+  GET_DIALOGUE_ID_FAILURE: 'Get Dialogue Id Failure',
+  START_DIALOGUE: 'Start Dialogue',
+  START_DIALOGUE_SUCCESS: 'Start Dialogue Success',
+  START_DIALOGUE_FAILURE: 'Start Dialogue FAILURE',
 };
 
 export class GetDialoguesAction implements Action {
@@ -116,6 +122,48 @@ export class SetReadMessageOnJoinAction implements Action {
   }
 }
 
+export class GetDialogueIdAction implements Action {
+  public type = ActionTypes.GET_DIALOGUE_ID;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class GetDialogueIdSuccessAction implements Action {
+  public type = ActionTypes.GET_DIALOGUE_ID_SUCCESS;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class GetDialogueIdFailureAction implements Action {
+  public type = ActionTypes.GET_DIALOGUE_ID_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class StartDialogueAction implements Action {
+  public type = ActionTypes.START_DIALOGUE;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class StartDialogueSuccessAction implements Action {
+  public type = ActionTypes.START_DIALOGUE_SUCCESS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+
+export class StartDialogueFailureAction implements Action {
+  public type = ActionTypes.START_DIALOGUE_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
 
 
 export type Actions =
@@ -132,6 +180,12 @@ export type Actions =
   | GetPreviousMessagesSuccessAction
   | GetPreviousMessagesFailureAction
   | SetReadMessageOnJoinAction
+  | GetDialogueIdAction
+  | GetDialogueIdSuccessAction
+  | GetDialogueIdFailureAction
+  | StartDialogueAction
+| StartDialogueSuccessAction
+|StartDialogueFailureAction
 
 
 

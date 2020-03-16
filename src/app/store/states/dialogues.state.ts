@@ -5,10 +5,12 @@ export interface DialoguesState {
   dialogues: Dialogue[];
   messages: Message[];
   activeDialogue: Dialogue;
+  dialogueId: number;
 }
 
 export const initialState: DialoguesState = {
   dialogues: [],
   messages: [],
   activeDialogue: null,
+  dialogueId: null,
 };
