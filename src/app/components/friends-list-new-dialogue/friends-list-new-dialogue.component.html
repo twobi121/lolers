@@ -1,0 +1,35 @@
+<div class="friends_modal" >
+  <div class="friends_modal_header">
+    Выбрать участников диалога
+    <div>
+      <i class="fas fa-times close_btn" (click)="close()"></i>
+    </div>
+  </div>
+
+  <form #myForm='ngForm' class="friends" (scroll)="onScroll($event)">
+    <div class="friend_block" *ngFor="let friend of friends; let i = index" >
+      <div class="user">
+        <div class="user_avatar"
+             [ngStyle]="{background: 'url(' + url + friend.avatar.filename + ')', 'background-size': 'cover'}">
+        </div>
+        <div class="user_info">
+          {{friend.name | titlecase}} {{friend.surname | titlecase}}
+        </div>
+      </div>
+
+      <div class="checkbox">
+        <input  type="checkbox" id='{{i}}' name = "{{friend._id}}" value="{{friend._id}}" ngModel>
+        <label  for="{{i}}"> </label >
+      </div>
+
+    </div>
+  </form>
+
+  <div class="start_dialogue">
+    <button (click)="startDialogue(myForm)">
+      Начать диалог
+    </button>
+  </div>
+
+
+</div>

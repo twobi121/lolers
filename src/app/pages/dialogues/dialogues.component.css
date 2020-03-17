@@ -6,6 +6,8 @@
 .dialogues_number {
   padding: 20px;
   background: white;
+  display: flex;
+  justify-content: space-between;
 }
 
 .dialogues {
@@ -119,3 +121,27 @@ a {
 a:visited {
   color: grey;
 }
+
+.new_dialogue_btn {
+  width: 20px;
+  height: 20px;
+  opacity: 0.3;
+  position: relative;
+}
+.new_dialogue_btn:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.new_dialogue_btn:before, .new_dialogue_btn:after {
+  position: absolute;
+  left: 9px;
+  content: ' ';
+  height: 20px;
+  width: 2px;
+  background-color: #333;
+}
+
+.new_dialogue_btn:after {
+  transform: rotate(90deg);
+}
+

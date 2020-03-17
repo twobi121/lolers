@@ -77,7 +77,7 @@ export class Effects {
   startDialogue$ = this.actions$.pipe(
     ofType<StartDialogueAction>(ActionTypes.START_DIALOGUE),
     switchMap((action: StartDialogueAction) => this.service.startDialogue(action.payload)),
-    map((dialogueId: number) => of(new GetDialogueIdSuccessAction(dialogueId))),
+    map((dialogueId: number) => new GetDialogueIdSuccessAction(dialogueId)),
     catchError((err) => of(new StartDialogueFailureAction()))
   );
 

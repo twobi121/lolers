@@ -5,7 +5,14 @@
     <div class="dialogues_list">
       <div class="dialogues_number">
         {{dialogues.length}} диалога
+        <div class="new_dialogue_btn" (click)="closeNewDialogue()"></div>
       </div>
+
+      <app-friends-list-new-dialogue-container *ngIf="newDialogue"
+                                               [loggedUser]="loggedUser"
+                                               (closeNewDialogueEmitter)="closeNewDialogue()">
+
+      </app-friends-list-new-dialogue-container>
 
       <div *ngFor="let dialogue of dialogues" class="dialogues_item" [ngClass]="{'active':dialogue.active}" (click)="setActiveDialogue(dialogue._id.toString())">
         <a routerLink="{{dialogue._id}}">

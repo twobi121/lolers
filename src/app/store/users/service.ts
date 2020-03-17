@@ -127,4 +127,11 @@ export class Service {
       );
   }
 
+  getFriendsWithoutDialogue(skipValue: number): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl + 'friendsWithoutDialogues/' + skipValue)
+      .pipe(
+        map(friends => friends)
+      );
+  }
+
 }

@@ -4,6 +4,12 @@ import {DialoguesState, initialState} from '../states/dialogues.state';
 
 export function reducer(state: DialoguesState = initialState, action: actions): DialoguesState {
   switch (action.type) {
+    case ActionTypes.GET_DIALOGUES: {
+      return {
+        ...state,
+        dialogues: []
+      };
+    }
     case ActionTypes.GET_DIALOGUES_SUCCESS: {
       return {
         ...state,
@@ -20,7 +26,6 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
       };
     }
     case ActionTypes.GET_MESSAGES_SUCCESS: {
-      console.log(action.payload);
       return {
         ...state,
         messages: action.payload
@@ -59,6 +64,12 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
           ...state,
           dialogueId: action.payload
         };
+    }
+    case ActionTypes.START_DIALOGUE: {
+      return {
+        ...state,
+        dialogueId: 0
+      };
     }
     default:
       return state;

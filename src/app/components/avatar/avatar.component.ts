@@ -29,7 +29,7 @@ export class AvatarComponent implements OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.dialogueId) {
+    if (changes.dialogueId && changes.dialogueId.previousValue === 0 && changes.dialogueId.currentValue) {
       this.router.navigateByUrl(`/user/${this.loggedUser._id}/dialogues/${this.dialogueId}`);
     }
   }

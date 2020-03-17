@@ -31,9 +31,8 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
   @Output() setMessagesAsReadEmitter: EventEmitter<number> = new EventEmitter<number>();
   @Output() getPreviousMessagesEmitter: EventEmitter<number> = new EventEmitter<number>();
   @ViewChild('scrollMe', {static: false}) scrollElem: ElementRef;
-  @ViewChild('messageDiv', {static: false}) messageElem: ElementRef;
+  @ViewChild('isFirst', {static: false}) messageElem: ElementRef;
   disableScrollDown = false;
-  messageHeight: string;
   url = constants.url;
   today: string = new Date().toJSON().split('T')[0];
 
@@ -57,7 +56,7 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
         this.disableScrollDown = false;
         this.scrollToBottom();
       } else if ( chg && crt && prv && crt.length && prv.length && prv[prv.length - 1].message === this.messages[this.messages.length - 1].message && this.scrollElem ) {
-         this.scrollElem.nativeElement.scrollTop = 90 * 2;
+        console.log(111)
       }
     }
   }

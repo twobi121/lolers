@@ -6,24 +6,29 @@ import {ChatService} from '../../services/chat.service';
 import {State} from '../../store/states/app.state';
 import {Store} from '@ngrx/store';
 import {Dialogue} from '../../interfaces/dialogue';
-import {selectMessages, selectRooms} from '../../store/dialogues/selectors';
+import {selectDialogueId, selectMessages, selectRooms} from '../../store/dialogues/selectors';
 import {GetDialoguesAction, SetDialogueAction} from '../../store/dialogues/actions';
 import {User} from '../../interfaces/user';
 import {selectLoggedUser} from '../../store/users/selectors';
 import {Message} from '../../interfaces/message';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {GetFriendsWithoutDialogueFailureAction} from '../../store/users/actions';
 
 @Component({
   selector: 'app-dialogues-container',
-  template: `<app-dialogues (setDialogueEmitter)="setActiveDialogue($event)"
+  template: `<app-dialogues (getDialoguesEmitter)="getDialogues()"
+                            (setDialogueEmitter)="setActiveDialogue($event)"
+                            (closeNewDialogueEmitter)="closeNewDialogue()"
                             [dialogues]="dialogues$ | async"
                             [loggedUser]="loggedUser$ | async"
+                            [dialogueId]="dialogueId$ | async"
                             ></app-dialogues>`,
   styleUrls: ['./dialogues.component.css']
 })
 export class DialoguesContainer implements OnInit {
   dialogues$: Observable<Dialogue[]> = this.store.select(selectRooms);
   loggedUser$: Observable<User> = this.store.select(selectLoggedUser);
+  dialogueId$: Observable<number> = this.store.select(selectDialogueId);
 
   constructor(private store: Store<State>,
               ) { }
@@ -38,6 +43,10 @@ export class DialoguesContainer implements OnInit {
 
   setActiveDialogue(id: string) {
     this.store.dispatch(new SetDialogueAction(id));
+  }
+
+  closeNewDialogue() {
+    this.store.dispatch(new GetFriendsWithoutDialogueFailureAction());
   }
 
 }

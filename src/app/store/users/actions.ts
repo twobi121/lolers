@@ -50,6 +50,9 @@ export const ActionTypes = {
   SEARCH: 'Search',
   SEARCH_SUCCESS: 'Search Success',
   SEARCH_FAILURE: 'Search Failure',
+  GET_FRIENDS_WITHOUT_DIALOGUE: 'Get Friends Without Dialogue',
+  GET_FRIENDS_WITHOUT_DIALOGUE_SUCCESS: 'Get Friends Without Dialogue Success',
+  GET_FRIENDS_WITHOUT_DIALOGUE_FAILURE: 'Get Friends Without Dialogue Failure'
 };
 
 export class GetUsersAction implements Action {
@@ -367,6 +370,27 @@ export class SearchFailureAction implements Action {
   }
 }
 
+export class GetFriendsWithoutDialogueAction implements Action {
+  public type = ActionTypes.GET_FRIENDS_WITHOUT_DIALOGUE;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class GetFriendsWithoutDialogueSuccessAction implements Action {
+  public type = ActionTypes.GET_FRIENDS_WITHOUT_DIALOGUE_SUCCESS;
+
+  constructor(public payload: User[]) {
+  }
+}
+
+export class GetFriendsWithoutDialogueFailureAction implements Action {
+  public type = ActionTypes.GET_FRIENDS_WITHOUT_DIALOGUE_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
 export type Actions =
   GetUsersAction
   | GetUsersSuccessAction
@@ -413,3 +437,6 @@ export type Actions =
   | SearchAction
   | SearchSuccesAction
   | SearchFailureAction
+  | GetFriendsWithoutDialogueAction
+  | GetFriendsWithoutDialogueSuccessAction
+  | GetFriendsWithoutDialogueFailureAction

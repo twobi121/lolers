@@ -62,6 +62,8 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { DialogueContainer } from './components/dialogue/dialogue.container';
 import {SocketModule} from './store/socket/module';
 import {NotificationsModule} from './store/notifications/module';
+import { FriendsListNewDialogueComponent } from './components/friends-list-new-dialogue/friends-list-new-dialogue.component';
+import {FriendsListNewDialogueContainer} from './components/friends-list-new-dialogue/friends-list-new-dialogue.container';
 registerLocaleData(localeRu, 'ru');
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -110,7 +112,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     DialoguesComponent,
     DialoguesContainer,
     DialogueComponent,
-    DialogueContainer
+    DialogueContainer,
+    FriendsListNewDialogueComponent,
+    FriendsListNewDialogueContainer
   ],
   imports: [
     BrowserModule,

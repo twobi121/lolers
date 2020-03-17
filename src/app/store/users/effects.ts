@@ -41,7 +41,16 @@ import {
   DeleteFriendSuccessAction,
   LoginAction,
   LoginSuccessAction,
-  LoginFailureAction, AddUserAction, AddUserSuccessAction, AddUserFailureAction, SearchAction, SearchSuccesAction, SearchFailureAction
+  LoginFailureAction,
+  AddUserAction,
+  AddUserSuccessAction,
+  AddUserFailureAction,
+  SearchAction,
+  SearchSuccesAction,
+  SearchFailureAction,
+  GetFriendsWithoutDialogueAction,
+  GetFriendsWithoutDialogueFailureAction,
+  GetFriendsWithoutDialogueSuccessAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {User} from '../../interfaces/user';
@@ -201,6 +210,14 @@ export class Effects {
     switchMap((action: SearchAction) => this.service.searchUsers(action.payload)),
     map((users: User[]) => new SearchSuccesAction(users)),
     catchError((err: HttpErrorResponse) => of(new SearchFailureAction(err.error.error)))
+  );
+
+  @Effect()
+  getFriendsWithoutDialogue$ = this.actions$.pipe(
+    ofType<GetFriendsWithoutDialogueAction>(ActionTypes.GET_FRIENDS_WITHOUT_DIALOGUE),
+    switchMap((action: GetFriendsWithoutDialogueAction) => this.service.getFriendsWithoutDialogue(action.payload)),
+    map((users: User[]) => new GetFriendsWithoutDialogueSuccessAction(users)),
+    catchError((err: HttpErrorResponse) => of(new GetFriendsWithoutDialogueFailureAction(err.error.error)))
   );
 
 

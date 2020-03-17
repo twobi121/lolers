@@ -163,6 +163,12 @@ export function reducer(state: UsersState = initialState, action: actions): User
         ...state,
         users: action.payload
       };
+    case ActionTypes.GET_FRIENDS_WITHOUT_DIALOGUE_SUCCESS: {
+      return {
+        ...state,
+        friendsWithoutDialogue: state.friendsWithoutDialogue.concat(action.payload)
+      };
+    }
     default:
       return state;
   }

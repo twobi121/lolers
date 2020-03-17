@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChan
 import {constants} from '../../shared/constants/constants';
 import {Dialogue} from '../../interfaces/dialogue';
 import {User} from '../../interfaces/user';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 
@@ -14,10 +14,18 @@ import {Subscription} from 'rxjs';
 export class DialoguesComponent implements OnChanges, OnDestroy {
   @Input() dialogues: Dialogue[];
   @Input() loggedUser: User;
+  @Input() dialogueId: number;
   @Output() setDialogueEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() closeNewDialogueEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() getDialoguesEmitter: EventEmitter<void> = new EventEmitter<void>();
+  newDialogue = false;
   url = constants.url;
   subs: Subscription[] = [];
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -28,6 +36,11 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
           this.setActiveDialogue(params.get('id'));
         }));
       }
+
+    if (changes.dialogueId && changes.dialogueId.previousValue === 0 && changes.dialogueId.currentValue) {
+      this.router.navigate([`/user/${this.loggedUser._id}/dialogues/${this.dialogueId}`]);
+    }
+
   }
 
   ngOnDestroy(): void {
@@ -40,5 +53,10 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
 
   lastMessageUser(ownerId: number, chatId: number) {
     // this.dialogues.
+  }
+
+  closeNewDialogue() {
+    this.newDialogue = !this.newDialogue;
+    this.closeNewDialogueEmitter.emit();
   }
 }

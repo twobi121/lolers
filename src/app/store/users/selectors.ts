@@ -53,3 +53,8 @@ export const selectRegState = createSelector(
   selectUsers,
   (state: UsersState) => state ? state.regState : false
 );
+
+export const selectFriendsWithoutDialogue = createSelector(
+  selectUsers,
+  (state: UsersState) => state ? state.friendsWithoutDialogue : []
+);

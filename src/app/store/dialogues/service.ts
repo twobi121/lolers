@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {constants} from '../../shared/constants/constants';
 import {Dialogue} from '../../interfaces/dialogue';
 import {Message} from '../../interfaces/message';
+import {User} from '../../interfaces/user';
 
 @Injectable()
 export class Service {
@@ -28,10 +29,10 @@ export class Service {
       );
   }
 
-  startDialogue(id: number) {
-    return this.http.post<number>(this.dialoguesUrl + '/create', {id})
+  startDialogue(id: number | number[]): Observable<number> {
+    return this.http.post<number>(this.dialoguesUrl + 'create', {id})
       .pipe(
-        map((dialogueId: number) => {console.log(dialogueId); return dialogueId})
+        map((dialogueId: number) => dialogueId)
       );
   }
 
@@ -41,4 +42,6 @@ export class Service {
         map(messages => messages)
       );
   }
+
+
 }
