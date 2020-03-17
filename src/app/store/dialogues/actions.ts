@@ -146,7 +146,7 @@ export class GetDialogueIdFailureAction implements Action {
 export class StartDialogueAction implements Action {
   public type = ActionTypes.START_DIALOGUE;
 
-  constructor(public payload: number) {
+  constructor(public payload: number | number[]) {
   }
 }
 
