@@ -69,7 +69,7 @@ export class Effects {
   getDialogueId$ = this.actions$.pipe(
     ofType<GetDialogueIdAction>(ActionTypes.GET_DIALOGUE_ID),
     switchMap((action: GetDialogueIdAction) => this.service.getDialogueId(action.payload)),
-    map((dialogueId: number) => new GetDialogueIdSuccessAction(dialogueId)),
+    map((dialogue: Dialogue) => new GetDialogueIdSuccessAction(dialogue)),
     catchError((err) => of(new GetDialogueIdFailureAction()))
   );
 
@@ -77,7 +77,7 @@ export class Effects {
   startDialogue$ = this.actions$.pipe(
     ofType<StartDialogueAction>(ActionTypes.START_DIALOGUE),
     switchMap((action: StartDialogueAction) => this.service.startDialogue(action.payload)),
-    map((dialogueId: number) => new GetDialogueIdSuccessAction(dialogueId)),
+    map((dialogue: Dialogue) => new GetDialogueIdSuccessAction(dialogue)),
     catchError((err) => of(new StartDialogueFailureAction()))
   );
 

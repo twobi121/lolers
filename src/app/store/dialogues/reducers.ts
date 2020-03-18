@@ -33,9 +33,11 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
     }
     case ActionTypes.ADD_MESSAGE: {
       const idx = state.dialogues.findIndex(dialogue => dialogue._id === action.payload[0].chat_id);
-      state.dialogues[idx].lastMessage =  action.payload[0];
+      state.dialogues[idx].lastMessage = action.payload[0];
+      const _dialogues = state.dialogues.slice(idx, idx + 1).concat(state.dialogues.slice(0, idx).concat(state.dialogues.slice(idx + 1, state.dialogues.length)));
       return {
         ...state,
+        dialogues: _dialogues,
         messages: state.messages.concat(action.payload)
       };
     }
@@ -60,10 +62,26 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
       return state;
     }
     case ActionTypes.GET_DIALOGUE_ID_SUCCESS: {
+      if (!action.payload) {
+        return state;
+      }
+      const idx = state.dialogues.findIndex(item => item._id === action.payload._id);
+      if (idx !== -1) {
+        state.dialogues.forEach(item => item.active = false);
+        state.dialogues[idx].active = true;
         return {
           ...state,
-          dialogueId: action.payload
+          dialogueId: action.payload._id,
+          activeDialogue: state.dialogues[idx]
         };
+      }
+      action.payload.active = true;
+      return {
+        ...state,
+        dialogues: [action.payload].concat(state.dialogues),
+        dialogueId: action.payload._id,
+        activeDialogue: action.payload
+      };
     }
     case ActionTypes.START_DIALOGUE: {
       return {

@@ -11,7 +11,6 @@ export class MenuComponent {
   @Input() loggedUser: User;
   @Input() isAuth: boolean;
   @Output() logoutEmitter: EventEmitter<void> = new EventEmitter();
-  @Output() setConnectionEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   logout() {
     this.logoutEmitter.emit();

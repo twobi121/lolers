@@ -1,71 +1,61 @@
-<div *ngIf="dialogues && dialogues.length && loggedUser " class="dialogues_wrapper">
+<div *ngIf="loggedUser " class="dialogues_wrapper">
 
 
   <div class="dialogues">
     <div class="dialogues_list">
       <div class="dialogues_number">
-        {{dialogues.length}} диалога
-        <div class="new_dialogue_btn" (click)="closeNewDialogue()"></div>
+        <span *ngIf="dialogues && dialogues.length">{{dialogues.length}} диалога</span>
+        <span *ngIf="!dialogues.length">У вас пока нет диалогов</span>
+        <div class="new_dialogue_btn" (click)="toggleFriendsMenu()"></div>
       </div>
 
       <app-friends-list-new-dialogue-container *ngIf="newDialogue"
                                                [loggedUser]="loggedUser"
-                                               (closeNewDialogueEmitter)="closeNewDialogue()">
+                                               (closeNewDialogueEmitter)="toggleFriendsMenu()">
 
       </app-friends-list-new-dialogue-container>
+      <div *ngIf="dialogues && dialogues.length">
+        <div *ngFor="let dialogue of dialogues" class="dialogues_item" [ngClass]="{'active':dialogue.active}" (click)="setActiveDialogue(dialogue._id.toString())">
+          <a routerLink="{{dialogue._id}}">
 
-      <div *ngFor="let dialogue of dialogues" class="dialogues_item" [ngClass]="{'active':dialogue.active}" (click)="setActiveDialogue(dialogue._id.toString())">
-        <a routerLink="{{dialogue._id}}">
-<!--          <div class="user" *ngIf="dialogue.users.length < 2">-->
-<!--            <div *ngFor="let user of dialogue.users; let i = index" class="user_avatar"-->
-<!--                 [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')',-->
-<!--                         'background-size': 'cover',-->
-<!--                         'left': (i*10) + 'px'-->
-<!--                         }  " [hidden]="i > 3">-->
-
-<!--            </div>-->
-<!--            <div class="user_info">-->
-<!--              <span *ngFor="let user of dialogue.users; let i = index">{{user.name | titlecase}} {{user.surname | titlecase}}</span>-->
-<!--            </div>-->
-<!--          </div>-->
-
-          <div class="user">
-            <div class="avatar_wrap">
-              <div *ngFor="let user of dialogue.users; let i = index"
-                   class="user_avatar"
-                   [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
-                   [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
-                   [hidden]="i > 3">
+            <div class="user">
+              <div class="avatar_wrap">
+                <div *ngFor="let user of dialogue.users; let i = index"
+                     class="user_avatar"
+                     [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
+                     [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
+                     [hidden]="i > 3">
+                </div>
               </div>
-            </div>
 
-            <div class="dialogue_info">
-              <div class="user_info">
-                <div>
+              <div class="dialogue_info">
+                <div class="user_info">
+                  <div>
                   <span *ngFor="let user of dialogue.users; let i = index">
                     <span *ngIf="i <= 2">{{user.name | titlecase}}<span *ngIf="i + 1 !== dialogue.users.length && i <2 && dialogue.users.length > 1 ">, </span>
                       <span *ngIf="dialogue.users.length > 2 && i + 1 > 2">... и еще {{dialogue.users.length - i}} </span>
                     </span>
                   </span>
+                  </div>
+
+                  <div class="date" *ngIf="dialogue.lastMessage">
+                    {{dialogue.lastMessage.date | date: 'd MMMM'}}
+                  </div>
+
+
                 </div>
+                <div class="last-message" *ngIf="dialogue.lastMessage">
+                  <div class="user_avatar small round"
+                       [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')', 'background-size': 'cover'}">
+                  </div>
 
-                <div class="date" *ngIf="dialogue.lastMessage">
-                  {{dialogue.lastMessage.date | date: 'd MMMM'}}
+                  <span class="last-message_text">{{dialogue.lastMessage.message}}</span>
                 </div>
-
-
               </div>
-              <div class="last-message" *ngIf="dialogue.lastMessage">
-                <div class="user_avatar small round"
-                     [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')', 'background-size': 'cover'}">
-                </div>
 
-                <span class="last-message_text">{{dialogue.lastMessage.message}}</span>
-              </div>
             </div>
-
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>

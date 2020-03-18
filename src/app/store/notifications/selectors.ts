@@ -7,6 +7,5 @@ const notifications = (state: State) => state.notification;
 
 export const selectNotifications = createSelector(
   notifications,
-  (state: NotificationsState) => state ? state.notification : ''
-);
+  (state: NotificationsState) => state ? state.message : null );
 

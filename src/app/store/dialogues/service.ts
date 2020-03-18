@@ -22,17 +22,17 @@ export class Service {
       );
   }
 
-  getDialogueId(id: number) {
-    return this.http.get<number>(this.dialoguesUrl + 'getDialogueId/' + id)
+  getDialogueId(id: number): Observable<Dialogue> {
+    return this.http.get<Dialogue>(this.dialoguesUrl + 'getDialogueId/' + id)
       .pipe(
-        map((dialogueId: number) => dialogueId)
+        map((dialogue: Dialogue) => dialogue)
       );
   }
 
-  startDialogue(id: number | number[]): Observable<number> {
-    return this.http.post<number>(this.dialoguesUrl + 'create', {id})
+  startDialogue(id: number | number[]): Observable<Dialogue> {
+    return this.http.post<Dialogue>(this.dialoguesUrl + 'create', {id})
       .pipe(
-        map((dialogueId: number) => dialogueId)
+        map((dialogue: Dialogue) => dialogue)
       );
   }
 

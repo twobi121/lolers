@@ -19,7 +19,6 @@
 
 .dialogues_item {
   border-top: 1px solid #e3e4e8;
-  padding: 10px;
   min-width: 300px;
 }
 
@@ -31,6 +30,7 @@
 
 .user {
   display: flex;
+  padding: 10px;
 }
 
 .avatar_wrap {
@@ -116,6 +116,7 @@
 
 a {
   text-decoration: none;
+  display: block;
 }
 
 a:visited {

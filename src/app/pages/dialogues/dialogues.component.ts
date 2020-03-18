@@ -23,9 +23,7 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
   subs: Subscription[] = [];
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function() {
-      return false;
-    };
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -35,7 +33,7 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
           this.route.firstChild.paramMap.subscribe((params: ParamMap) => {
           this.setActiveDialogue(params.get('id'));
         }));
-      }
+    }
 
     if (changes.dialogueId && changes.dialogueId.previousValue === 0 && changes.dialogueId.currentValue) {
       this.router.navigate([`/user/${this.loggedUser._id}/dialogues/${this.dialogueId}`]);
@@ -55,7 +53,7 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
     // this.dialogues.
   }
 
-  closeNewDialogue() {
+  toggleFriendsMenu() {
     this.newDialogue = !this.newDialogue;
     this.closeNewDialogueEmitter.emit();
   }

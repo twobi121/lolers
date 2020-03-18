@@ -132,7 +132,7 @@ export class GetDialogueIdAction implements Action {
 export class GetDialogueIdSuccessAction implements Action {
   public type = ActionTypes.GET_DIALOGUE_ID_SUCCESS;
 
-  constructor(public payload: number) {
+  constructor(public payload: Dialogue) {
   }
 }
 
