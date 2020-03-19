@@ -4,7 +4,7 @@ import {DialoguesState, initialState} from '../states/dialogues.state';
 
 export function reducer(state: DialoguesState = initialState, action: actions): DialoguesState {
   switch (action.type) {
-    case ActionTypes.GET_DIALOGUES: {
+    case ActionTypes.GET_DIALOGUES_FAILURE: {
       return {
         ...state,
         dialogues: []
@@ -13,13 +13,14 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
     case ActionTypes.GET_DIALOGUES_SUCCESS: {
       return {
         ...state,
-        dialogues: action.payload
+        dialogues: state.dialogues.concat(action.payload)
       };
     }
     case ActionTypes.SET_DIALOGUE: {
       state.dialogues.forEach(item => item.active = false);
       const idx = state.dialogues.findIndex(item => item._id === action.payload);
       state.dialogues[idx].active = true;
+      state.dialogues[idx].unreadMsgNumber = 0;
       return {
         ...state,
         activeDialogue: state.dialogues[idx]
@@ -34,10 +35,10 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
     case ActionTypes.ADD_MESSAGE: {
       const idx = state.dialogues.findIndex(dialogue => dialogue._id === action.payload[0].chat_id);
       state.dialogues[idx].lastMessage = action.payload[0];
-      const _dialogues = state.dialogues.slice(idx, idx + 1).concat(state.dialogues.slice(0, idx).concat(state.dialogues.slice(idx + 1, state.dialogues.length)));
+      const dialoguesArr = state.dialogues.slice(idx, idx + 1).concat(state.dialogues.slice(0, idx).concat(state.dialogues.slice(idx + 1, state.dialogues.length)));
       return {
         ...state,
-        dialogues: _dialogues,
+        dialogues: dialoguesArr,
         messages: state.messages.concat(action.payload)
       };
     }
@@ -87,6 +88,16 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
       return {
         ...state,
         dialogueId: 0
+      };
+    }
+    case ActionTypes.SET_LAST_MESSAGE: {
+      const idx = state.dialogues.findIndex(dialogue => dialogue._id === action.payload.message.chat_id);
+      state.dialogues[idx].lastMessage = action.payload.message;
+      ++state.dialogues[idx].unreadMsgNumber;
+      const dialoguesArr = state.dialogues.slice(idx, idx + 1).concat(state.dialogues.slice(0, idx).concat(state.dialogues.slice(idx + 1, state.dialogues.length)));
+      return {
+        ...state,
+        dialogues: dialoguesArr,
       };
     }
     default:

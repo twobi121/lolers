@@ -31,11 +31,10 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
   @Output() setMessagesAsReadEmitter: EventEmitter<number> = new EventEmitter<number>();
   @Output() getPreviousMessagesEmitter: EventEmitter<number> = new EventEmitter<number>();
   @ViewChild('scrollMe', {static: false}) scrollElem: ElementRef;
-  @ViewChild('isFirst', {static: false}) messageElem: ElementRef;
   disableScrollDown = false;
   url = constants.url;
   today: string = new Date().toJSON().split('T')[0];
-
+  firstMessageId: number;
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -55,8 +54,12 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
       if (chg && crt && prv && crt.length && prv.length && crt[crt.length - 1].message !== prv[prv.length - 1].message && this.scrollElem) {
         this.disableScrollDown = false;
         this.scrollToBottom();
-      } else if ( chg && crt && prv && crt.length && prv.length && prv[prv.length - 1].message === this.messages[this.messages.length - 1].message && this.scrollElem ) {
-        console.log(111)
+      } else if ( chg && crt && prv && crt.length && prv.length && prv[prv.length - 1].message === this.messages[this.messages.length - 1].message && this.scrollElem && prv.length !== crt.length) {
+        setTimeout(() => {
+          this.firstMessageId = prv[0]._id;
+          const doc = document.getElementById(`${this.firstMessageId}`);
+          doc.scrollIntoView({block: 'center'});
+        }, 0);
       }
     }
   }
@@ -68,6 +71,9 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
   }
 
   sendMessage(event: any) {
+    if (!event.target.value) {
+      return;
+    }
     const message = {
       message: event.target.value,
       owner_id: this.loggedUser._id,
@@ -95,7 +101,7 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
   }
 
   isRead(readUsers: number[]) {
-    return readUsers.find(id => id === this.loggedUser._id);
+    return readUsers.find(id => id !== this.loggedUser._id);
   }
 
 }

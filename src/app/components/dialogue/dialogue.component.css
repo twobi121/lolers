@@ -13,10 +13,13 @@
   align-items: center;
 }
 
-a {
+.user_avatar a {
   display: inline-block;
   width: 100%;
   height: 100%;
+}
+
+a {
   text-decoration: none;
 }
 
@@ -75,23 +78,9 @@ input:focus {
   transition: .2s linear;
 }
 
-.new {
+.unread {
   background-color: #3975ff;
 }
-
-.unread::after {
-  content: 'Непрочитано';
-  margin-left: 10px;
-  font-size: 10px;
-}
-
-.read::after {
-  content: 'Прочитано';
-  margin-left: 10px;
-  font-size: 10px;
-}
-
-
 
 .avatar_wrap {
   display: flex;
@@ -100,10 +89,15 @@ input:focus {
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .small {
   width: 24px;
   height: 24px;
   margin-right: 1px;
+}
+
+.message_text {
+  max-width: 400px;
 }

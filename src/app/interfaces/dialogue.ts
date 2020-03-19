@@ -6,4 +6,5 @@ export interface Dialogue {
   users: User[];
   lastMessage: Message;
   active: boolean;
+  unreadMsgNumber: number;
 }

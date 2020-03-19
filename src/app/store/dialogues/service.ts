@@ -15,8 +15,8 @@ export class Service {
       private http: HttpClient,
     ) { }
 
-  getDialogues(): Observable<Dialogue[]> {
-    return this.http.get<any>(this.dialoguesUrl)
+  getDialogues(skipValue: number): Observable<Dialogue[]> {
+    return this.http.get<Dialogue[]>(this.dialoguesUrl + skipValue)
       .pipe(
         map(dialogues => dialogues)
       );

@@ -37,7 +37,7 @@ export class Effects {
   @Effect()
   getDialogues$ = this.actions$.pipe(
     ofType<GetDialoguesAction>(ActionTypes.GET_DIALOGUES),
-    switchMap(() => this.service.getDialogues()),
+    switchMap((action: GetDialoguesAction) => this.service.getDialogues(action.payload)),
     map((dialogues: Dialogue[]) => new GetDialoguesSuccessAction(dialogues)),
     catchError((err) => of(new GetDialoguesFailureAction()))
   );

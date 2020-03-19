@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import * as io from 'socket.io-client';
 import {constants} from '../../shared/constants/constants';
 import {Observable, Subject} from 'rxjs';
@@ -7,7 +7,7 @@ import {State} from '../../store/states/app.state';
 import {Store} from '@ngrx/store';
 import {Dialogue} from '../../interfaces/dialogue';
 import {selectDialogueId, selectMessages, selectRooms} from '../../store/dialogues/selectors';
-import {GetDialoguesAction, SetDialogueAction} from '../../store/dialogues/actions';
+import {GetDialoguesAction, GetDialoguesFailureAction, SetDialogueAction} from '../../store/dialogues/actions';
 import {User} from '../../interfaces/user';
 import {selectLoggedUser} from '../../store/users/selectors';
 import {Message} from '../../interfaces/message';
@@ -16,7 +16,7 @@ import {GetFriendsWithoutDialogueFailureAction} from '../../store/users/actions'
 
 @Component({
   selector: 'app-dialogues-container',
-  template: `<app-dialogues (getDialoguesEmitter)="getDialogues()"
+  template: `<app-dialogues (getDialoguesEmitter)="getDialogues($event)"
                             (setDialogueEmitter)="setActiveDialogue($event)"
                             (closeNewDialogueEmitter)="closeNewDialogue()"
                             [dialogues]="dialogues$ | async"
@@ -25,7 +25,7 @@ import {GetFriendsWithoutDialogueFailureAction} from '../../store/users/actions'
                             ></app-dialogues>`,
   styleUrls: ['./dialogues.component.css']
 })
-export class DialoguesContainer implements OnInit {
+export class DialoguesContainer implements OnInit, OnDestroy {
   dialogues$: Observable<Dialogue[]> = this.store.select(selectRooms);
   loggedUser$: Observable<User> = this.store.select(selectLoggedUser);
   dialogueId$: Observable<number> = this.store.select(selectDialogueId);
@@ -34,11 +34,11 @@ export class DialoguesContainer implements OnInit {
               ) { }
 
   ngOnInit() {
-    this.getDialogues();
+    this.getDialogues(0);
   }
 
-  getDialogues() {
-    this.store.dispatch(new GetDialoguesAction());
+  getDialogues(skipValue: number) {
+    this.store.dispatch(new GetDialoguesAction(skipValue));
   }
 
   setActiveDialogue(id: string) {
@@ -47,6 +47,10 @@ export class DialoguesContainer implements OnInit {
 
   closeNewDialogue() {
     this.store.dispatch(new GetFriendsWithoutDialogueFailureAction());
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new GetDialoguesFailureAction());
   }
 
 }

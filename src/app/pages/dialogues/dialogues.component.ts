@@ -17,7 +17,7 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
   @Input() dialogueId: number;
   @Output() setDialogueEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Output() closeNewDialogueEmitter: EventEmitter<void> = new EventEmitter<void>();
-  @Output() getDialoguesEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() getDialoguesEmitter: EventEmitter<number> = new EventEmitter<number>();
   newDialogue = false;
   url = constants.url;
   subs: Subscription[] = [];
@@ -49,8 +49,10 @@ export class DialoguesComponent implements OnChanges, OnDestroy {
     this.setDialogueEmitter.emit(id);
   }
 
-  lastMessageUser(ownerId: number, chatId: number) {
-    // this.dialogues.
+  onScroll(event: any) {
+    if (event.target.scrollHeight === event.target.scrollTop + event.target.clientHeight ) {
+      this.getDialoguesEmitter.emit(this.dialogues.length);
+    }
   }
 
   toggleFriendsMenu() {

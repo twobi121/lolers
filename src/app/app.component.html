@@ -1,7 +1,20 @@
 <app-menu-container></app-menu-container>
 
-<div *ngIf="newMessage" class="notification">
-  {{newMessage.message}} asdasdasdasdasd
+<div class="notification" (click)="navigateTo()" *ngIf="newMessage">
+  <div class="notification_header">
+    Новое сообщение
+  </div>
+  <div class="notification_item">
+    <div class="user">
+      <div class="user_avatar"
+           [ngStyle]="{background: 'url(' + url + newMessage.owner.avatar.filename + ')', 'background-size': 'cover'} ">
+      </div>
+      <div class="user_info">
+        <p class="user_name">{{newMessage.owner.name | titlecase}} {{newMessage.owner.surname | titlecase}}</p>
+        <p class="notification_message">{{newMessage.message.slice(0,30)}}...</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

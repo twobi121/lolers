@@ -2,63 +2,66 @@
 
 
   <div class="dialogues">
-    <div class="dialogues_list">
-      <div class="dialogues_number">
-        <span *ngIf="dialogues && dialogues.length">{{dialogues.length}} диалога</span>
-        <span *ngIf="!dialogues.length">У вас пока нет диалогов</span>
-        <div class="new_dialogue_btn" (click)="toggleFriendsMenu()"></div>
-      </div>
 
-      <app-friends-list-new-dialogue-container *ngIf="newDialogue"
-                                               [loggedUser]="loggedUser"
-                                               (closeNewDialogueEmitter)="toggleFriendsMenu()">
+    <div class="dialogues_number">
+      <span *ngIf="dialogues && dialogues.length">{{dialogues.length}} диалога</span>
+      <span *ngIf="!dialogues.length">У вас пока нет диалогов</span>
+      <div class="new_dialogue_btn" (click)="toggleFriendsMenu()"></div>
+    </div>
 
-      </app-friends-list-new-dialogue-container>
-      <div *ngIf="dialogues && dialogues.length">
-        <div *ngFor="let dialogue of dialogues" class="dialogues_item" [ngClass]="{'active':dialogue.active}" (click)="setActiveDialogue(dialogue._id.toString())">
-          <a routerLink="{{dialogue._id}}">
+    <app-friends-list-new-dialogue-container *ngIf="newDialogue"
+                                             [loggedUser]="loggedUser"
+                                             (closeNewDialogueEmitter)="toggleFriendsMenu()">
 
-            <div class="user">
-              <div class="avatar_wrap">
-                <div *ngFor="let user of dialogue.users; let i = index"
-                     class="user_avatar"
-                     [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
-                     [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
-                     [hidden]="i > 3">
-                </div>
+    </app-friends-list-new-dialogue-container>
+    <div class="dialogues_list" *ngIf="dialogues && dialogues.length" (scroll)="onScroll($event)">
+      <div *ngFor="let dialogue of dialogues" class="dialogues_item" [ngClass]="{'active':dialogue.active}" (click)="setActiveDialogue(dialogue._id.toString())">
+        <a routerLink="{{dialogue._id}}">
+
+          <div class="user">
+            <div class="avatar_wrap">
+              <div *ngFor="let user of dialogue.users; let i = index"
+                   class="user_avatar"
+                   [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
+                   [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2}"
+                   [hidden]="i > 3">
               </div>
+            </div>
 
-              <div class="dialogue_info">
-                <div class="user_info">
-                  <div>
-                  <span *ngFor="let user of dialogue.users; let i = index">
-                    <span *ngIf="i <= 2">{{user.name | titlecase}}<span *ngIf="i + 1 !== dialogue.users.length && i <2 && dialogue.users.length > 1 ">, </span>
-                      <span *ngIf="dialogue.users.length > 2 && i + 1 > 2">... и еще {{dialogue.users.length - i}} </span>
-                    </span>
+            <div class="dialogue_info">
+              <div class="user_info">
+                <div>
+                <span *ngFor="let user of dialogue.users; let i = index">
+                  <span *ngIf="i <= 2">{{user.name | titlecase}}<span *ngIf="i + 1 !== dialogue.users.length && i <2 && dialogue.users.length > 1 ">, </span>
+                    <span *ngIf="dialogue.users.length > 2 && i + 1 > 2">... и еще {{dialogue.users.length - i}} </span>
                   </span>
-                  </div>
-
-                  <div class="date" *ngIf="dialogue.lastMessage">
-                    {{dialogue.lastMessage.date | date: 'd MMMM'}}
-                  </div>
-
-
+                </span>
                 </div>
-                <div class="last-message" *ngIf="dialogue.lastMessage">
-                  <div class="user_avatar small round"
-                       [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')', 'background-size': 'cover'}">
-                  </div>
 
-                  <span class="last-message_text">{{dialogue.lastMessage.message}}</span>
+                <div class="date" *ngIf="dialogue.lastMessage">
+                  {{dialogue.lastMessage.date | date: 'd MMMM'}}
                 </div>
+
+
+              </div>
+              <div class="last-message" *ngIf="dialogue.lastMessage">
+                <div class="user_avatar small round"
+                     [ngStyle]="{background: 'url(' + url + dialogue.lastMessage.owner.avatar.filename  + ')', 'background-size': 'cover'}">
+                </div>
+
+                <span class="last-message_text">{{dialogue.lastMessage.message.slice(0,20)}}...</span>
+
+                <div class="unread" *ngIf="dialogue.unreadMsgNumber">{{dialogue.unreadMsgNumber}}</div>
               </div>
 
             </div>
-          </a>
-        </div>
+
+          </div>
+        </a>
       </div>
     </div>
   </div>
+
 
   <div class="dialogue" >
     <router-outlet></router-outlet>

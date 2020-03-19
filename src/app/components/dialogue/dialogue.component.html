@@ -2,11 +2,13 @@
   <div class="dialogue_header">
     <div >
       <div  class="dialogue_header_items">
-<!--        <div class="dialogue_header_user">-->
-<!--          <a routerLink="/user/{{user.login}}">-->
-<!--            {{user.name | titlecase}} {{user.surname | titlecase}}-->
-<!--          </a>-->
-<!--        </div>-->
+          <div class="dialogue_header_user" >
+            <a routerLink="/user/{{user.login}}" *ngFor="let user of activeDialogue.users; let i = index">
+                    <span *ngIf="i <= 2">{{user.name | titlecase}}<span *ngIf="i + 1 !== activeDialogue.users.length && i <2 && activeDialogue.users.length > 1 ">, </span>
+                      <span *ngIf="activeDialogue.users.length > 2 && i + 1 > 2">... и еще {{activeDialogue.users.length - i}} </span>
+                    </span>
+             </a>
+         </div>
         <div class="dialogue_header_search">
           Поиск
         </div>
@@ -30,10 +32,9 @@
 
   <div class="messages">
     <div class="message" #scrollMe (scroll)="onScroll($event)">
-      <div  class='message_item' *ngFor="let message of messages"
+      <div  class='message_item' *ngFor="let message of messages" id="{{message._id}}"
             [ngClass]="{
-            'normal' : message.owner_id === loggedUser._id,
-            'new' : message.owner_id !== loggedUser._id && message.readUsers.length && isRead(message.readUsers)
+            'unread' : message.owner_id === loggedUser._id && isRead(message.readUsers)
             }">
         <div class="avatar_wrap" >
           <div class="user_avatar"
@@ -42,14 +43,11 @@
           </div>
         </div>
         <div class="message_info">
-          <div class="message_owner" [ngClass]="{
-            'unread': message.owner_id === loggedUser._id && message.readUsers.length && message.readUsers.length === activeDialogue.users.length,
-            'read': message.owner_id === loggedUser._id && !message.readUsers.length
-               }">
+          <div class="message_owner">
             {{message.owner.name | titlecase}}
           </div>
 
-          <div>
+          <div class="message_text">
             {{message.message}}
           </div>
 

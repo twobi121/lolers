@@ -18,7 +18,7 @@ import {catchError, map, switchMap} from 'rxjs/operators';
 
 import {of} from 'rxjs';
 import {Message} from '../../interfaces/message';
-import {AddMessageAction, SetMessagesAsReadAction} from '../dialogues/actions';
+import {AddMessageAction, SetLastMessageAction, SetMessagesAsReadAction} from '../dialogues/actions';
 import {SetNotificationsAction, SetNotificationsSuccessAction} from '../notifications/actions';
 import {not} from 'rxjs/internal-compatibility';
 import {Friend} from '../../interfaces/friend';
@@ -77,7 +77,10 @@ export class Effects {
           return of(new SetMessagesAsReadAction(notification.payload));
         // tslint:disable-next-line:align
       } if (notification.event === 'new-message') {
-          return of(new SetNotificationsSuccessAction(notification));
+          return [
+           new SetNotificationsSuccessAction(notification),
+            new SetLastMessageAction(notification)
+          ];
       }
       return of(new SubscribeNotificationsSuccessAction(notification.payload));
     }),

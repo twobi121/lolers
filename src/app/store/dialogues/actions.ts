@@ -27,12 +27,13 @@ export const ActionTypes = {
   START_DIALOGUE: 'Start Dialogue',
   START_DIALOGUE_SUCCESS: 'Start Dialogue Success',
   START_DIALOGUE_FAILURE: 'Start Dialogue FAILURE',
+  SET_LAST_MESSAGE: 'Set Last Message'
 };
 
 export class GetDialoguesAction implements Action {
   public type = ActionTypes.GET_DIALOGUES;
 
-  constructor(public payload?: any) {
+  constructor(public payload: number) {
   }
 }
 
@@ -157,9 +158,15 @@ export class StartDialogueSuccessAction implements Action {
   }
 }
 
-
 export class StartDialogueFailureAction implements Action {
   public type = ActionTypes.START_DIALOGUE_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetLastMessageAction implements Action {
+  public type = ActionTypes.SET_LAST_MESSAGE;
 
   constructor(public payload?: any) {
   }
@@ -184,8 +191,9 @@ export type Actions =
   | GetDialogueIdSuccessAction
   | GetDialogueIdFailureAction
   | StartDialogueAction
-| StartDialogueSuccessAction
-|StartDialogueFailureAction
+  | StartDialogueSuccessAction
+  |StartDialogueFailureAction
+  | SetLastMessageAction
 
 
 

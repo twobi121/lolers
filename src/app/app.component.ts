@@ -9,6 +9,8 @@ import {selectNotifications} from './store/notifications/selectors';
 import {Message} from './interfaces/message';
 import {Observable} from 'rxjs';
 import {User} from './interfaces/user';
+import {constants} from './shared/constants/constants';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,10 @@ export class AppComponent implements OnInit {
   isConnected$: Observable<boolean> = this.store.select(selectIsConnected);
   notification$: Observable<Message> = this.store.select(selectNotifications);
   newMessage: Message;
+  loggedUser: User;
+  url = constants.url;
   constructor(private store: Store<State>,
+              private router: Router
               ) {
   }
 
@@ -30,6 +35,7 @@ export class AppComponent implements OnInit {
       this.store.dispatch(new GetLoggedUserAction());
       this.loggedUser$.subscribe(user => {
         if (user) {
+          this.loggedUser = user;
           this.store.dispatch(new SetConnectionAction(user._id));
         }
       });
@@ -41,10 +47,13 @@ export class AppComponent implements OnInit {
       this.notification$.subscribe(message => {
         if (message) {
           this.newMessage = message;
-          console.log(this.newMessage);
           setTimeout(() => this.newMessage = null, 4000);
         }
-      })
+      });
     }
+  }
+
+  navigateTo() {
+    this.router.navigateByUrl(`/user/${this.loggedUser.login}/dialogues/${this.newMessage.chat_id}`);
   }
 }
