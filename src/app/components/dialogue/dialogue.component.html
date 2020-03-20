@@ -1,4 +1,4 @@
-<div class="dialogue" *ngIf="activeDialogue">
+<div class="dialogue">
   <div class="dialogue_header">
     <div >
       <div  class="dialogue_header_items">
@@ -34,7 +34,7 @@
     <div class="message" #scrollMe (scroll)="onScroll($event)">
       <div  class='message_item' *ngFor="let message of messages" id="{{message._id}}"
             [ngClass]="{
-            'unread' : message.owner_id === loggedUser._id && isRead(message.readUsers)
+            'unread' : message.owner_id === loggedUser._id && message.readUsers.length === activeDialogue.users.length
             }">
         <div class="avatar_wrap" >
           <div class="user_avatar"

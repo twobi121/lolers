@@ -17,7 +17,10 @@ import {
   StartDialogueSuccessAction,
   SubscribeGetMessagesAction,
   SubscribeGetMessagesFailureAction,
-  SubscribeGetMessagesSuccessAction
+  SubscribeGetMessagesSuccessAction,
+  SetUnreadMessagesNumberAction,
+  SetUnreadMessagesNumberFailureAction,
+  SetUnreadMessagesNumberSuccessAction
 
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
@@ -46,7 +49,10 @@ export class Effects {
   getMessages$ = this.actions$.pipe(
     ofType<SubscribeGetMessagesAction>(ActionTypes.GET_MESSAGES),
     switchMap(() => this.socketService.getStartMessages()),
-    map((messages: Message[]) => new SubscribeGetMessagesSuccessAction(messages)),
+    switchMap((messages: Message[]) => {
+      return [new SubscribeGetMessagesSuccessAction(messages),
+              new SetUnreadMessagesNumberAction()];
+    }),
     catchError((err) => of(new SubscribeGetMessagesFailureAction()))
   );
 
@@ -76,9 +82,21 @@ export class Effects {
   @Effect()
   startDialogue$ = this.actions$.pipe(
     ofType<StartDialogueAction>(ActionTypes.START_DIALOGUE),
-    switchMap((action: StartDialogueAction) => this.service.startDialogue(action.payload)),
-    map((dialogue: Dialogue) => new GetDialogueIdSuccessAction(dialogue)),
+    switchMap((action: StartDialogueAction) => {
+      if (action.payload.length === 1) {
+        return this.service.getDialogueId(action.payload[0]);
+      } else return this.service.startDialogue(action.payload);
+    }),
+    map((dialogue: Dialogue) => new StartDialogueSuccessAction(dialogue)),
     catchError((err) => of(new StartDialogueFailureAction()))
+  );
+
+  @Effect()
+  getUnreadMessagesNumber$ = this.actions$.pipe(
+    ofType<SetUnreadMessagesNumberAction>(ActionTypes.SET_UNREAD_MESSAGES_NUMBER),
+    switchMap(() => this.service.getUnreadMessagesNumber()),
+    map((unreadNumber: number) => new SetUnreadMessagesNumberSuccessAction(unreadNumber)),
+    catchError((err) => of(new SetUnreadMessagesNumberFailureAction()))
   );
 
 }

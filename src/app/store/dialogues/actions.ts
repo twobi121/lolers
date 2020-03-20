@@ -27,7 +27,11 @@ export const ActionTypes = {
   START_DIALOGUE: 'Start Dialogue',
   START_DIALOGUE_SUCCESS: 'Start Dialogue Success',
   START_DIALOGUE_FAILURE: 'Start Dialogue FAILURE',
-  SET_LAST_MESSAGE: 'Set Last Message'
+  SET_LAST_MESSAGE: 'Set Last Message',
+  CLEAR_DIALOGUES_STATE: 'Clear Dialogues State',
+  SET_UNREAD_MESSAGES_NUMBER: 'Set Unread Messages Number',
+  SET_UNREAD_MESSAGES_NUMBER_SUCCESS: 'Set Unread Messages Number Success',
+  SET_UNREAD_MESSAGES_NUMBER_FAILURE: 'Set Unread Messages Number Failure',
 };
 
 export class GetDialoguesAction implements Action {
@@ -147,7 +151,7 @@ export class GetDialogueIdFailureAction implements Action {
 export class StartDialogueAction implements Action {
   public type = ActionTypes.START_DIALOGUE;
 
-  constructor(public payload: number | number[]) {
+  constructor(public payload: number[]) {
   }
 }
 
@@ -167,6 +171,34 @@ export class StartDialogueFailureAction implements Action {
 
 export class SetLastMessageAction implements Action {
   public type = ActionTypes.SET_LAST_MESSAGE;
+
+  constructor(public payload: Message) {
+  }
+}
+
+export class ClearDialogueStateAction implements Action {
+  public type = ActionTypes.CLEAR_DIALOGUES_STATE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetUnreadMessagesNumberAction implements Action {
+  public type = ActionTypes.SET_UNREAD_MESSAGES_NUMBER;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetUnreadMessagesNumberSuccessAction implements Action {
+  public type = ActionTypes.SET_UNREAD_MESSAGES_NUMBER_SUCCESS;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetUnreadMessagesNumberFailureAction implements Action {
+  public type = ActionTypes.SET_UNREAD_MESSAGES_NUMBER_FAILURE;
 
   constructor(public payload?: any) {
   }
@@ -192,8 +224,12 @@ export type Actions =
   | GetDialogueIdFailureAction
   | StartDialogueAction
   | StartDialogueSuccessAction
-  |StartDialogueFailureAction
+  | StartDialogueFailureAction
   | SetLastMessageAction
+  | ClearDialogueStateAction
+  | SetUnreadMessagesNumberAction
+  | SetUnreadMessagesNumberSuccessAction
+  | SetUnreadMessagesNumberFailureAction
 
 
 

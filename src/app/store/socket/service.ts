@@ -30,12 +30,11 @@ export class Service {
   }
 
   joinRoom(id: string) {
-
     this.socket.emit('join', id);
   }
 
   setRead(id: number) {
-    setTimeout(() => this.socket.emit('read', id), 3000);
+    setTimeout(() => this.socket.emit('read', id), 1300);
   }
 
   leaveRoom() {

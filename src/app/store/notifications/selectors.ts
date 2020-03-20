@@ -5,7 +5,12 @@ import {NotificationsState} from '../states/notifications.state';
 
 const notifications = (state: State) => state.notification;
 
-export const selectNotifications = createSelector(
+export const selectMessagesNotification = createSelector(
   notifications,
   (state: NotificationsState) => state ? state.message : null );
+
+export const selectFriendshipNotification = createSelector(
+  notifications,
+  (state: NotificationsState) => state ? state.friendship : null );
+
 

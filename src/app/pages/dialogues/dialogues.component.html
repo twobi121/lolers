@@ -1,4 +1,4 @@
-<div *ngIf="loggedUser " class="dialogues_wrapper">
+<div *ngIf="loggedUser" class="dialogues_wrapper">
 
 
   <div class="dialogues">
@@ -64,7 +64,7 @@
 
 
   <div class="dialogue" >
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="isConnected && activeDialogue"></router-outlet>
   </div>
 
 

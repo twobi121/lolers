@@ -50,7 +50,7 @@ import {
   SearchFailureAction,
   GetFriendsWithoutDialogueAction,
   GetFriendsWithoutDialogueFailureAction,
-  GetFriendsWithoutDialogueSuccessAction
+  GetFriendsWithoutDialogueSuccessAction, SetRequestNumberSuccessAction, SetRequestNumberFailureAction, SetRequestNumberAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {User} from '../../interfaces/user';
@@ -62,6 +62,7 @@ import {Request} from '../../interfaces/request';
 import {Friend} from '../../interfaces/friend';
 import {Store} from '@ngrx/store';
 import {State} from '../states/app.state';
+
 
 
 @Injectable()
@@ -144,7 +145,12 @@ export class Effects {
   acceptRequest$ = this.actions$.pipe(
     ofType<AcceptRequestAction>(ActionTypes.ACCEPT_REQUEST),
     switchMap((action: AcceptRequestAction) => this.service.acceptRequest(action.payload)),
-    map((id: string) => new AcceptRequestSuccessAction(id)),
+    switchMap((id: number) => {
+      return [
+        new AcceptRequestSuccessAction(id),
+        new SetRequestNumberAction()
+        ];
+    }),
     catchError((err) => of(new AcceptRequestFailureAction()))
   );
 
@@ -152,7 +158,11 @@ export class Effects {
   declineRequest$ = this.actions$.pipe(
     ofType<DeclineRequestAction>(ActionTypes.DECLINE_REQUEST),
     switchMap((action: DeclineRequestAction) => this.service.declineRequest(action.payload)),
-    map((id: string) => new DeclineRequestSuccessAction(id)),
+    switchMap((id: number) => {
+      return [ new DeclineRequestSuccessAction(id),
+              new SetRequestNumberAction()
+              ];
+    }),
     catchError((err) => of(new DeclineRequestFailureAction()))
   );
 
@@ -179,7 +189,6 @@ export class Effects {
     map((id: number) => new DeleteFriendSuccessAction(id)),
     catchError((err) => of(new DeleteFriendFailureAction()))
   );
-
 
   @Effect()
   login$ = this.actions$.pipe(
@@ -218,6 +227,14 @@ export class Effects {
     switchMap((action: GetFriendsWithoutDialogueAction) => this.service.getFriendsWithoutDialogue(action.payload)),
     map((users: User[]) => new GetFriendsWithoutDialogueSuccessAction(users)),
     catchError((err: HttpErrorResponse) => of(new GetFriendsWithoutDialogueFailureAction(err.error.error)))
+  );
+
+  @Effect()
+  getRequestNumber$ = this.actions$.pipe(
+    ofType<SetRequestNumberAction>(ActionTypes.SET_REQUEST_NUMBER),
+    switchMap(() => this.service.getRequestNumber()),
+    map((requestNumber: number) => new SetRequestNumberSuccessAction(requestNumber)),
+    catchError((err) => of(new SetRequestNumberFailureAction()))
   );
 
 

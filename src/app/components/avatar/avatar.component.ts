@@ -6,7 +6,8 @@ import {Store} from '@ngrx/store';
 import {constants} from '../../shared/constants/constants';
 import {UploadAvatarAction} from '../../store/users/actions';
 import {Router} from '@angular/router';
-import {StartDialogueAction} from '../../store/dialogues/actions';
+import {GetDialogueIdAction, StartDialogueAction} from '../../store/dialogues/actions';
+import {Dialogue} from '../../interfaces/dialogue';
 
 @Component({
   selector: 'app-avatar',
@@ -14,10 +15,10 @@ import {StartDialogueAction} from '../../store/dialogues/actions';
   styleUrls: ['./avatar.component.css']
 })
 
-export class AvatarComponent implements OnChanges{
+export class AvatarComponent implements OnChanges {
   @Input() user: User;
   @Input() loggedUser: User;
-  @Input() dialogueId: number;
+  @Input() dialogueId: Dialogue;
   avatarBlob: SafeUrl;
   preview: SafeUrl;
   selectedFile: object;
@@ -29,8 +30,8 @@ export class AvatarComponent implements OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.dialogueId && changes.dialogueId.previousValue === 0 && changes.dialogueId.currentValue) {
-      this.router.navigateByUrl(`/user/${this.loggedUser._id}/dialogues/${this.dialogueId}`);
+    if (changes.dialogueId && changes.dialogueId.currentValue) {
+      this.router.navigateByUrl(`/user/${this.loggedUser.login}/dialogues/${this.dialogueId._id}`);
     }
   }
 
@@ -51,9 +52,7 @@ export class AvatarComponent implements OnChanges{
   }
 
   startDialogue() {
-    if (this.dialogueId) {
-      this.router.navigateByUrl(`/user/${this.loggedUser._id}/dialogues/${this.dialogueId}`);
-    } else this.store.dispatch(new StartDialogueAction(this.user._id));
+    this.store.dispatch(new GetDialogueIdAction(this.user._id));
   }
 }
 

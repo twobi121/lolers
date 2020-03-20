@@ -18,10 +18,12 @@ import {catchError, map, switchMap} from 'rxjs/operators';
 
 import {of} from 'rxjs';
 import {Message} from '../../interfaces/message';
-import {AddMessageAction, SetLastMessageAction, SetMessagesAsReadAction} from '../dialogues/actions';
-import {SetNotificationsAction, SetNotificationsSuccessAction} from '../notifications/actions';
-import {not} from 'rxjs/internal-compatibility';
-import {Friend} from '../../interfaces/friend';
+import {AddMessageAction, SetLastMessageAction, SetMessagesAsReadAction, SetUnreadMessagesNumberAction} from '../dialogues/actions';
+import {
+  SetFriendshipNotificationAction,
+  SetMessageNotificationAction,
+} from '../notifications/actions';
+import {SetRequestNumberAction} from '../users/actions';
 
 @Injectable()
 export class Effects {
@@ -73,16 +75,26 @@ export class Effects {
     ofType<SubscribeNotificationsAction>(ActionTypes.SUBSCRIBE_NOTIFICATION),
     switchMap(() => this.service.getNotifications()),
     switchMap((notification: any) => {
-      if (notification.event === 'read') {
-          return of(new SetMessagesAsReadAction(notification.payload));
-        // tslint:disable-next-line:align
-      } if (notification.event === 'new-message') {
-          return [
-           new SetNotificationsSuccessAction(notification),
-            new SetLastMessageAction(notification)
-          ];
-      }
-      return of(new SubscribeNotificationsSuccessAction(notification.payload));
+        switch (notification.event) {
+          case 'read': {
+            return of(new SetMessagesAsReadAction(notification.payload));
+          }
+          case 'new-message': {
+            return [
+              new SetMessageNotificationAction(notification.message),
+              new SetLastMessageAction(notification.message),
+              new SetUnreadMessagesNumberAction()
+            ];
+          }
+          case 'friendship': {
+            return [new SetFriendshipNotificationAction(notification.friend),
+              new SetRequestNumberAction()
+            ];
+          }
+          default: {
+            return of(new SubscribeNotificationsSuccessAction(notification.payload));
+          }
+        }
     }),
     catchError((err) => of(new SubscribeNotificationsFailureAction()))
   );

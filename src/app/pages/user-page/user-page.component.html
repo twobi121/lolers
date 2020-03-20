@@ -11,6 +11,7 @@
     <div class="friends">
       <div class="user_friends requests wrapper" *ngIf="loggedUser && user.login === loggedUser.login">
         <a routerLink="requests">Заявки в друзья</a>
+        <div class="unread_number" *ngIf="requestNumber">{{requestNumber}}</div>
       </div>
 
       <div class="user_friends requests wrapper" *ngIf="loggedUser && user.login !== loggedUser.login && isAuth && isFriend">

@@ -52,7 +52,10 @@ export const ActionTypes = {
   SEARCH_FAILURE: 'Search Failure',
   GET_FRIENDS_WITHOUT_DIALOGUE: 'Get Friends Without Dialogue',
   GET_FRIENDS_WITHOUT_DIALOGUE_SUCCESS: 'Get Friends Without Dialogue Success',
-  GET_FRIENDS_WITHOUT_DIALOGUE_FAILURE: 'Get Friends Without Dialogue Failure'
+  GET_FRIENDS_WITHOUT_DIALOGUE_FAILURE: 'Get Friends Without Dialogue Failure',
+  SET_REQUEST_NUMBER: 'Set Request Number',
+  SET_REQUEST_NUMBER_SUCCESS: 'Set Request Number Success',
+  SET_REQUEST_NUMBER_FAILURE: 'Set Request Number Failure'
 };
 
 export class GetUsersAction implements Action {
@@ -205,14 +208,14 @@ export class GetRequestsFailureAction implements Action {
 export class AcceptRequestAction implements Action {
   public type = ActionTypes.ACCEPT_REQUEST;
 
-  constructor(public payload?: any) {
+  constructor(public payload: number) {
   }
 }
 
 export class AcceptRequestSuccessAction implements Action {
   public type = ActionTypes.ACCEPT_REQUEST_SUCCESS;
 
-  constructor(public payload: string) {
+  constructor(public payload: number) {
   }
 }
 
@@ -226,14 +229,14 @@ export class AcceptRequestFailureAction implements Action {
 export class DeclineRequestAction implements Action {
   public type = ActionTypes.DECLINE_REQUEST;
 
-  constructor(public payload?: any) {
+  constructor(public payload: number) {
   }
 }
 
 export class DeclineRequestSuccessAction implements Action {
   public type = ActionTypes.DECLINE_REQUEST_SUCCESS;
 
-  constructor(public payload: string) {
+  constructor(public payload: number) {
   }
 }
 
@@ -391,6 +394,27 @@ export class GetFriendsWithoutDialogueFailureAction implements Action {
   }
 }
 
+export class SetRequestNumberAction implements Action {
+  public type = ActionTypes.SET_REQUEST_NUMBER;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetRequestNumberSuccessAction implements Action {
+  public type = ActionTypes.SET_REQUEST_NUMBER_SUCCESS;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetRequestNumberFailureAction implements Action {
+  public type = ActionTypes.SET_REQUEST_NUMBER_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
 export type Actions =
   GetUsersAction
   | GetUsersSuccessAction
@@ -440,3 +464,6 @@ export type Actions =
   | GetFriendsWithoutDialogueAction
   | GetFriendsWithoutDialogueSuccessAction
   | GetFriendsWithoutDialogueFailureAction
+  | SetRequestNumberAction
+  | SetRequestNumberSuccessAction
+  | SetRequestNumberFailureAction

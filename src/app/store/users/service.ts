@@ -60,7 +60,7 @@ export class Service {
       );
   }
 
-  acceptRequest(id: string): Observable<string> {
+  acceptRequest(id: number): Observable<number> {
     return this.http.post(this.userUrl + 'accept', {id}, {observe: 'response'})
       .pipe (
         map( response => {
@@ -71,7 +71,7 @@ export class Service {
       );
   }
 
-  declineRequest(id: string): Observable<string> {
+  declineRequest(id: number): Observable<number> {
     return this.http.post(this.userUrl + 'decline', {id}, {observe: 'response'})
       .pipe (
         map( response => {
@@ -131,6 +131,13 @@ export class Service {
     return this.http.get<User[]>(this.userUrl + 'friendsWithoutDialogues/' + skipValue)
       .pipe(
         map(friends => friends)
+      );
+  }
+
+  getRequestNumber(): Observable<number> {
+    return this.http.get<number>(this.userUrl + 'requestNumber')
+      .pipe(
+        map(requestNumber => +requestNumber)
       );
   }
 

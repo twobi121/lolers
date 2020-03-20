@@ -15,6 +15,7 @@ export interface UsersState {
   loginError: string;
   regState: boolean;
   friendsWithoutDialogue: User[];
+  requestNumber: number;
 }
 
 export const initialState: UsersState = {
@@ -29,5 +30,6 @@ export const initialState: UsersState = {
   loginError: '',
   regState: false,
   friendsWithoutDialogue: [],
+  requestNumber: 0,
 };
 

@@ -1,23 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {constants} from '../../shared/constants/constants';
 import {NgForm} from '@angular/forms';
+import {Dialogue} from '../../interfaces/dialogue';
 
 @Component({
   selector: 'app-friends-list-new-dialogue',
   templateUrl: './friends-list-new-dialogue.component.html',
   styleUrls: ['./friends-list-new-dialogue.component.css']
 })
-export class FriendsListNewDialogueComponent implements OnInit {
+export class FriendsListNewDialogueComponent {
   @Input() friends: User[];
+  @Input() dialogueId: Dialogue;
   @Output() closeNewDialogueEmitter: EventEmitter<void> = new EventEmitter<void>();
   @Output() startNewDialogueEmitter: EventEmitter<number[]> = new EventEmitter<number[]>();
   @Output() getMoreFriendsEmitter: EventEmitter<number> = new EventEmitter<number>();
+  @Output() redirectToDialogueEmitter: EventEmitter<number> = new EventEmitter<number>();
   url = constants.url;
   constructor() { }
 
-  ngOnInit() {
-  }
+
 
   startDialogue(form: NgForm) {
     let ids = [];

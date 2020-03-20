@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {IsFriend} from '../../interfaces/isFriend';
+import {Dialogue} from '../../interfaces/dialogue';
 
 @Component({
   selector: 'app-user-page',
@@ -14,8 +15,9 @@ export class UserPageComponent {
   @Input() loggedUser: User;
   @Input() isFriend: IsFriend;
   @Input() requestStatus: boolean;
-  @Input() dialogueId: number;
-  @Output() requestEvent = new EventEmitter<number>();
+  @Input() dialogueId: Dialogue;
+  @Input() requestNumber: number;
+  @Output() requestEvent: EventEmitter<number> = new EventEmitter<number>();
 
   sendRequest(id: number) {
     this.requestEvent.emit(id);

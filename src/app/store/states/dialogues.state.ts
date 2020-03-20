@@ -5,7 +5,8 @@ export interface DialoguesState {
   dialogues: Dialogue[];
   messages: Message[];
   activeDialogue: Dialogue;
-  dialogueId: number;
+  dialogueId: Dialogue;
+  unreadMessagesNumber: number;
 }
 
 export const initialState: DialoguesState = {
@@ -13,4 +14,5 @@ export const initialState: DialoguesState = {
   messages: [],
   activeDialogue: null,
   dialogueId: null,
+  unreadMessagesNumber: 0,
 };

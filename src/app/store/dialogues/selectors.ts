@@ -23,3 +23,7 @@ export const selectDialogueId = createSelector(
   selectDialogues,
   (state: DialoguesState) => state ? state.dialogueId : null
 );
+
+export const selectUnreadMessagesNumber = createSelector(
+  selectDialogues,
+  (state: DialoguesState) => state ? state.unreadMessagesNumber : 0 );

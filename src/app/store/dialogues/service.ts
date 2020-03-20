@@ -43,5 +43,12 @@ export class Service {
       );
   }
 
+  getUnreadMessagesNumber(): Observable<number> {
+    return this.http.get<any>(this.dialoguesUrl + 'getUnreadMessagesNumber')
+      .pipe(
+        map(unreadNumber => unreadNumber.number)
+      );
+  }
+
 
 }

@@ -9,6 +9,8 @@ export const ActionTypes = {
   SET_NOTIFICATIONS: 'Set Notifications',
   SET_NOTIFICATIONS_SUCCESS: 'Set Notifications Success',
   SET_NOTIFICATIONS_FAILURE: 'Set Notifications Failure',
+  SET_MESSAGE_NOTIFICATION: 'Set Message Notification',
+  SET_FRIENDSHIP_NOTIFICATION: 'Set Friendship Notification',
 };
 
 export class SetNotificationsAction implements Action {
@@ -32,12 +34,33 @@ export class SetNotificationFailureAction implements Action {
   }
 }
 
+export class SetMessageNotificationAction implements Action {
+  public type = ActionTypes.SET_MESSAGE_NOTIFICATION;
+
+  constructor(public payload: Message) {
+  }
+}
+
+export class SetFriendshipNotificationAction implements Action {
+  public type = ActionTypes.SET_FRIENDSHIP_NOTIFICATION;
+
+  constructor(public payload: Message) {
+  }
+}
+
+
+
+
 
 
 export type Actions =
   SetNotificationsAction
   | SetNotificationsSuccessAction
   | SetNotificationFailureAction
+  | SetMessageNotificationAction
+  | SetFriendshipNotificationAction
+
+
 
 
 

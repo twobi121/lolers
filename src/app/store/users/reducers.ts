@@ -47,7 +47,7 @@ export function reducer(state: UsersState = initialState, action: actions): User
     case ActionTypes.GET_LOGGED_USER_FAILURE:
       return {
         ...state,
-        loggedUser: {} as User
+        loggedUser: null
       };
     case ActionTypes.LOGOUT:
       return state;
@@ -55,7 +55,7 @@ export function reducer(state: UsersState = initialState, action: actions): User
       return {
         ...state,
         isAuth: false,
-        loggedUser: {} as User,
+        loggedUser: null,
       };
     case ActionTypes.LOGOUT_FAILURE:
       return state;
@@ -101,8 +101,6 @@ export function reducer(state: UsersState = initialState, action: actions): User
         ...state,
         requests: [] as Request[]
       };
-    case ActionTypes.ACCEPT_REQUEST:
-      return state;
     case ActionTypes.ACCEPT_REQUEST_SUCCESS: {
       const idx = state.requests.findIndex((item: Request) => item._id === action.payload);
       state.requests[idx].accepted = true;
@@ -173,6 +171,12 @@ export function reducer(state: UsersState = initialState, action: actions): User
       return {
         ...state,
         friendsWithoutDialogue: []
+      };
+    }
+    case ActionTypes.SET_REQUEST_NUMBER_SUCCESS: {
+      return {
+        ...state,
+        requestNumber: action.payload
       };
     }
     default:

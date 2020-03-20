@@ -10,6 +10,7 @@ import {User} from '../../interfaces/user';
 export class MenuComponent {
   @Input() loggedUser: User;
   @Input() isAuth: boolean;
+  @Input() selectUnreadMessagesNumber: number;
   @Output() logoutEmitter: EventEmitter<void> = new EventEmitter();
 
   logout() {

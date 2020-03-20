@@ -37,25 +37,25 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
   firstMessageId: number;
   constructor() { }
 
+
   ngOnChanges(changes: SimpleChanges) {
-    if (this.isConnected && changes.activeDialogue && changes.activeDialogue.currentValue || this.activeDialogue && changes.isConnected && changes.isConnected.currentValue) {
-      if (this.activeDialogue.lastMessage && this.activeDialogue.lastMessage.owner_id !== this.loggedUser._id) {
-        this.initComponentEmitter.emit(this.activeDialogue.lastMessage.owner_id);
-      } else this.initComponentEmitter.emit(0);
+
+    if (changes.activeDialogue) {
+        if (this.activeDialogue.lastMessage && this.activeDialogue.lastMessage.owner_id !== this.loggedUser._id) {
+          this.initComponentEmitter.emit(this.activeDialogue.lastMessage.owner_id);
+        } else this.initComponentEmitter.emit(0);
     }
+
     if (changes.messages) {
-      const chg = changes.messages;
       const crt = changes.messages.currentValue;
       const prv = changes.messages.previousValue;
-      if (chg && crt && prv && crt.length && prv.length && crt.length !== prv.length && !chg.firstChange && crt[crt.length - 1].owner_id !== this.loggedUser._id ) {
-        setTimeout(() => this.setMessagesAsReadEmitter.emit(this.activeDialogue._id), 2000);
-      }
 
-      if (chg && crt && prv && crt.length && prv.length && crt[crt.length - 1].message !== prv[prv.length - 1].message && this.scrollElem) {
+      if (prv && prv.length && crt.length && crt[crt.length - 1]._id !== prv[prv.length - 1]._id && this.scrollElem) {
         this.disableScrollDown = false;
         this.scrollToBottom();
-      } else if ( chg && crt && prv && crt.length && prv.length && prv[prv.length - 1].message === this.messages[this.messages.length - 1].message && this.scrollElem && prv.length !== crt.length) {
+      } else if ( crt && prv && crt.length && prv.length && prv[prv.length - 1]._id === crt[crt.length - 1]._id && this.scrollElem && prv.length !== crt.length) {
         setTimeout(() => {
+          this.disableScrollDown = true;
           this.firstMessageId = prv[0]._id;
           const doc = document.getElementById(`${this.firstMessageId}`);
           doc.scrollIntoView({block: 'center'});
@@ -98,10 +98,6 @@ export class DialogueComponent implements OnChanges, AfterViewChecked  {
     if (!event.target.scrollTop) {
       this.getPreviousMessagesEmitter.emit(this.messages.length);
     }
-  }
-
-  isRead(readUsers: number[]) {
-    return readUsers.find(id => id !== this.loggedUser._id);
   }
 
 }

@@ -19,6 +19,7 @@
 
   <div class="menu_item" *ngIf="isAuth && loggedUser">
     <a routerLink="user/{{loggedUser.login}}/dialogues">Диалоги</a>
+    <div class="unread_number" *ngIf="selectUnreadMessagesNumber">{{selectUnreadMessagesNumber}}</div>
   </div>
 
   <div class="menu_item" *ngIf="isAuth && loggedUser">

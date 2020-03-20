@@ -58,3 +58,7 @@ export const selectFriendsWithoutDialogue = createSelector(
   selectUsers,
   (state: UsersState) => state ? state.friendsWithoutDialogue : []
 );
+
+export const selectRequestsNumber = createSelector(
+  selectUsers,
+  (state: UsersState) => state ? state.requestNumber : null );
