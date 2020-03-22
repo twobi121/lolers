@@ -4,22 +4,22 @@
       <a routerLink="/user/{{user.login}}"> {{user.name | titlecase}} {{user.surname | titlecase}}</a>
       > <a routerLink="/user/{{user.login}}/albums/{{user._id}}"> Альбомы</a>
       > <span *ngIf="!status" (click)="showInput()" id = '1' >{{currentAlbum.name}}</span>
-      <input *ngIf="status" autofocus type="text" [(ngModel)]="name"
-             name = 'name'
-             (focusout)="updateAlbum(albumName)"
-             (keydown.enter)="updateAlbum(albumName)"
-             #albumName>
+<!--      <input *ngIf="status" autofocus type="text" [(ngModel)]="name"-->
+<!--             name = 'name'-->
+<!--             (focusout)="updateAlbum(albumName)"-->
+<!--             (keydown.enter)="updateAlbum(albumName)"-->
+<!--             #albumName>-->
     </div>
 
     <div class="add_photos_block"  *ngIf="user.login === loggedUser.login">
-      <input
-        style="display: none"
-        type="file" (change)="onFileChanged($event)" multiple
-        #fileInput>
+<!--      <input-->
+<!--        style="display: none"-->
+<!--        type="file" (change)="onFileChanged($event)" multiple-->
+<!--        #fileInput>-->
 
-      <button (click)="fileInput.click()">
-        Добавить фотографии
-      </button>
+<!--      <button (click)="fileInput.click()">-->
+<!--        Добавить фотографии-->
+<!--      </button>-->
 
     </div>
   </div>
@@ -31,11 +31,11 @@
 
       <p class="album_year" #flag>
         <span  (click)="!flag" id = '2'>{{currentAlbum.description}}</span>
-        <input autofocus type="text" [(ngModel)]="currentAlbum.description"
-               name = 'description'
-               (focusout)="updateAlbum(albumDescription)"
-               (keydown.enter)="updateAlbum(albumDescription)"
-               #albumDescription>
+<!--        <input autofocus type="text" [(ngModel)]="currentAlbum.description"-->
+<!--               name = 'description'-->
+<!--               (focusout)="updateAlbum(albumDescription)"-->
+<!--               (keydown.enter)="updateAlbum(albumDescription)"-->
+<!--               #albumDescription>-->
       </p>
 
       <div class="photo_previews">

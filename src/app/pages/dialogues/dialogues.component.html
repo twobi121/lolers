@@ -23,7 +23,7 @@
               <div *ngFor="let user of dialogue.users; let i = index"
                    class="user_avatar"
                    [ngStyle]="{background: 'url(' + url + user.avatar.filename + ')', 'background-size': 'cover'}"
-                   [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2, 'online':user.online}"
+                   [ngClass]="{'small': dialogue.users.length > 2, 'middle': dialogue.users.length == 2, 'online':user.online && dialogue.users.length === 1}"
                    [hidden]="i > 3">
               </div>
             </div>

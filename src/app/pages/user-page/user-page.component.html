@@ -1,13 +1,7 @@
 <div class = "user_page_container" *ngIf="user">
-  <div class="block">
+  <div class="column left">
     <app-avatar [user]="user" [loggedUser]="loggedUser" [dialogueId]="dialogueId"></app-avatar>
 
-    <div class="user_info wrapper">
-      <app-user-info [user]="user"></app-user-info>
-    </div>
-  </div>
-
-  <div class="block">
     <div class="friends">
       <div class="user_friends requests wrapper" *ngIf="loggedUser && user.login === loggedUser.login">
         <a routerLink="requests">Заявки в друзья</a>
@@ -26,6 +20,12 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="column right">
+    <div class="user_info wrapper">
+      <app-user-info [user]="user"></app-user-info>
+    </div>
 
     <div class="last-photos">
       <app-last-photos-container [user]="user" [loggedUser]="loggedUser"></app-last-photos-container>

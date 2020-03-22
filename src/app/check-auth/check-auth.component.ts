@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {UserService} from '../services/user.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-check-auth',
@@ -9,12 +8,10 @@ import {UserService} from '../services/user.service';
 })
 export class CheckAuthComponent implements OnInit {
 
-  constructor(private router: Router,
-              private heroService: UserService) { }
+  constructor(private location: Location
+             ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('heroToken')) {
-        this.heroService.getUserLogin();
-    } else this.router.navigateByUrl(`login`);
+    this.location.back();
   }
 }

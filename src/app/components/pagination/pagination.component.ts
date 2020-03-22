@@ -25,8 +25,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.listNumber && !changes.listNumber.firstChange && changes.listNumber.currentValue !== changes.listNumber.previousValue) {
       const skipped = (this.currentPage - 1) * changes.listNumber.previousValue;
-      this.currentPage = Math.floor(skipped / this.listNumber) + 1;
-      this.changePage(this.currentPage);
+      this.changePage(Math.floor(skipped / this.listNumber) + 1);
     }
 
     if (changes.dataItems && changes.dataItems.currentValue[0].totalCount !== this.totalItems) {

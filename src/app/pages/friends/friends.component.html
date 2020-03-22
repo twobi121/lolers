@@ -18,7 +18,7 @@
 
         <div class="friend_info">
           <a routerLink="/user/{{friend.user.login}}">
-            {{friend.user.name}} {{friend.user.surname}}
+            {{friend.user.name | titlecase}} {{friend.user.surname | titlecase}}
           </a>
           <span class="online" *ngIf="friend.user.online">Online</span>
         </div>
@@ -27,7 +27,7 @@
 
       <div class="friend_delete">
         <div *ngIf="friend.user.deleteStatus">
-          {{friend.user.name}} удален из друзей
+          {{friend.user.name | titlecase}} удален из друзей
         </div>
 
         <button *ngIf="!friend.user.deleteStatus && user.login === loggedUser.login"

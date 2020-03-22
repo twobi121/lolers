@@ -64,6 +64,7 @@ import {SocketModule} from './store/socket/module';
 import {NotificationsModule} from './store/notifications/module';
 import { FriendsListNewDialogueComponent } from './components/friends-list-new-dialogue/friends-list-new-dialogue.component';
 import {FriendsListNewDialogueContainer} from './components/friends-list-new-dialogue/friends-list-new-dialogue.container';
+import {clearState} from './store/meta-reducers';
 registerLocaleData(localeRu, 'ru');
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -127,7 +128,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     DialoguesModule,
     SocketModule,
     NotificationsModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, { metaReducers: [clearState] }),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],

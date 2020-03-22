@@ -107,7 +107,7 @@ export class Effects {
     switchMap((response: HttpResponse<object>) => {
       if (response.status === 200) {
         localStorage.removeItem('authUserToken');
-        this.router.navigate([this.router.url + '/']);
+        this.router.navigate(['/check']);
         return [new LogoutSuccessAction(),
                 new DisconnectAction()];
       }

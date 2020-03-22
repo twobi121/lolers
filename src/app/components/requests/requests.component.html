@@ -20,7 +20,7 @@
 
           <div class="user_name">
             <a routerLink="/hero/{{request.user.login}}">
-              {{request.user.name}} {{request.user.surname}}
+              {{request.user.name | titlecase}} {{request.user.surname | titlecase}}
             </a>
           </div>
         </div>

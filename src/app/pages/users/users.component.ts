@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {constants} from '../../shared/constants/constants';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit{
   @Input() listNumber: number;
   @Input() currentPage: number;
   @Input() sortValue: string;
+  @Input() searchValue: string;
   @Output() setSortEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Output() searchEmitter: EventEmitter<string> = new EventEmitter<string>();
   @Output() setListNumberEmitter: EventEmitter<number> = new EventEmitter<number>();
@@ -32,7 +33,6 @@ export class UsersComponent implements OnInit{
     this.sortForm = this.fb.group({
       sortControl: [this.sortValue]
     });
-
   }
 
   search(event: Event) {

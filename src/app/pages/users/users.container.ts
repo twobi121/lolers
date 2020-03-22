@@ -17,6 +17,7 @@ import {ActivatedRoute, Router} from '@angular/router';
                         [listNumber]="listNumber"
                         [currentPage]="page"
                         [sortValue]="sortValue"
+                        [searchValue]="searchValue"
                         ></app-users>`,
   styleUrls: ['./users.component.css']
 })

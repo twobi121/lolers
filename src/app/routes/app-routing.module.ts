@@ -18,6 +18,7 @@ import {DashboardContainer} from '../pages/dashboard/dashboard.container';
 import {RegistrationContainer} from '../pages/registration/registration.container';
 import {DialoguesContainer} from '../pages/dialogues/dialogues.container';
 import {DialogueContainer} from '../components/dialogue/dialogue.container';
+import {CheckAuthComponent} from '../check-auth/check-auth.component';
 
 
 
@@ -44,7 +45,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardContainer},
   { path: 'registration', component: RegistrationContainer, canActivate: [LoginGuard]},
   { path: 'login', component: LoginContainer, canActivate: [LoginGuard]},
-
+  { path: 'check', component: CheckAuthComponent},
 ];
 
 @NgModule({
