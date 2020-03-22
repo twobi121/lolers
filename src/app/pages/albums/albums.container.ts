@@ -27,7 +27,7 @@ import {Blob} from '../../interfaces/blob';
                          [sortedPhotos]="sortedPhotos$ | async"
                          [photos]="photos$ | async"
                          ></app-albums>`,
-  styleUrls: ['./albums.component.css']
+  styleUrls: ['./albums.component.scss']
 })
 export class AlbumsContainer{
   user$: Observable<User> = this.store.select(selectUser);

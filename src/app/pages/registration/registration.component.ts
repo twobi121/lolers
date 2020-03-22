@@ -5,7 +5,7 @@ import {User} from '../../interfaces/user';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.scss']
 })
 
 export class RegistrationComponent {

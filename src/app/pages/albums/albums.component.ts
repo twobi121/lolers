@@ -8,7 +8,7 @@ import {Photo} from '../../interfaces/photo';
 @Component({
   selector: 'app-albums',
   templateUrl: './albums.component.html',
-  styleUrls: ['./albums.component.css']
+  styleUrls: ['./albums.component.scss']
 })
 export class AlbumsComponent implements OnInit, OnChanges {
   @Input() user: User;

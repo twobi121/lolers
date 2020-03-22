@@ -12,7 +12,7 @@ import {Dialogue} from '../../interfaces/dialogue';
 @Component({
   selector: 'app-avatar',
   templateUrl: './avatar.component.html',
-  styleUrls: ['./avatar.component.css']
+  styleUrls: ['./avatar.component.scss']
 })
 
 export class AvatarComponent implements OnChanges {

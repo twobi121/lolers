@@ -5,7 +5,7 @@ import {constants} from '../../shared/constants/constants';
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
-  styleUrls: ['./requests.component.css']
+  styleUrls: ['./requests.component.scss']
 })
 export class RequestsComponent {
   @Input() requests: Request[];

@@ -6,7 +6,7 @@ import {constants} from '../../shared/constants/constants';
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
-  styleUrls: ['./friends.component.css']
+  styleUrls: ['./friends.component.scss']
 })
 export class FriendsComponent implements OnInit {
   @Input() user: User;

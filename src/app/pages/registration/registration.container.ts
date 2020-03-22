@@ -9,7 +9,7 @@ import {AddUserAction} from '../../store/users/actions';
 @Component({
   selector: 'app-registration-container',
   template: '<app-registration (addUserEmitter)="addUser($event)" [regState]="regState$ | async"></app-registration>',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.scss']
 })
 
 export class RegistrationContainer {

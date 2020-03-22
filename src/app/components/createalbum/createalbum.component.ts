@@ -11,7 +11,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 @Component({
   selector: 'app-createalbum',
   templateUrl: './createalbum.component.html',
-  styleUrls: ['./createalbum.component.css']
+  styleUrls: ['./createalbum.component.scss']
 })
 
 export class CreatealbumComponent implements OnInit, OnDestroy {

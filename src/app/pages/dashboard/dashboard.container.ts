@@ -10,7 +10,7 @@ import {selectUsersList} from '../../store/users/selectors';
 @Component({
   selector: 'app-dashboard-container',
   template: '<app-dashboard [users]="users$ | async"></app-dashboard>',
-  styleUrls: [ './dashboard.component.css' ]
+  styleUrls: [ './dashboard.component.scss' ]
 })
 export class DashboardContainer implements OnInit {
   users$: Observable<User[]> = this.store.select(selectUsersList);

@@ -42,7 +42,7 @@ import {Preview} from '../../interfaces/preview';
                         [currentAlbum]="currentAlbum$ | async"
                         [deleteStatus]="deleteStatus$ | async"
                         [albumUpdateStatus]="albumUpdateStatus$ | async"></app-photo>`,
-  styleUrls: ['./photo.component.css']
+  styleUrls: ['./photo.component.scss']
 })
 
 export class PhotoContainer {

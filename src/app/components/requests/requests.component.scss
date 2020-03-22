@@ -16,7 +16,7 @@
   align-items: center;
   flex-direction: column;
   width: 40%;
-  min-width: 200px;
+  min-width: 345px;
   max-width: 500px;
   background-color: #ffffff;
   border-radius: 4px;
@@ -85,3 +85,7 @@ a {
   display: flex;
 }
 
+button {
+  padding: 5px;
+  margin-right: 5px;
+}

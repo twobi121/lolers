@@ -19,7 +19,7 @@ import {ActivatedRoute, Router} from '@angular/router';
                         [sortValue]="sortValue"
                         [searchValue]="searchValue"
                         ></app-users>`,
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersContainer implements OnInit, OnDestroy {
   users$: Observable<User[]> = this.store.select(selectUsersList);

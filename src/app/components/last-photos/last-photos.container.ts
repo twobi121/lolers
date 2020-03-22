@@ -16,7 +16,7 @@ import {Blob} from '../../interfaces/blob';
                               [loggedUser] = "loggedUser" [user]="user"
                               (onFileChangedEmitter)="onFileChanged($event)">
                             </app-last-photos>`,
-  styleUrls: ['./last-photos.component.css']
+  styleUrls: ['./last-photos.component.scss']
 })
 export class LastPhotosContainer implements OnInit {
   @Input() user: User;

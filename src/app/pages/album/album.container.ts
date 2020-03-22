@@ -21,7 +21,7 @@ import {Blob} from '../../interfaces/blob';
                         [loggedUser] = "loggedUser$ | async"
                         [currentAlbum]="currentAlbum$ | async"
                         [albumDeleteStatus]="albumDeleteStatus$ | async"></app-album>`,
-  styleUrls: ['./album.component.css']
+  styleUrls: ['./album.component.scss']
 })
 export class AlbumContainer implements OnInit, OnDestroy {
   user$: Observable<User> = this.store.select(selectUser);

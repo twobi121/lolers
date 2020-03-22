@@ -6,7 +6,7 @@ import {constants} from '../../shared/constants/constants';
 @Component({
   selector: 'app-last-photos',
   templateUrl: './last-photos.component.html',
-  styleUrls: ['./last-photos.component.css']
+  styleUrls: ['./last-photos.component.scss']
 })
 export class LastPhotosComponent{
   @Input() user: User;

@@ -10,7 +10,7 @@ import {selectRequests} from '../../store/users/selectors';
 @Component({
   selector: 'app-requests-container',
   template: '<app-requests [requests]="requests$ | async" (closeEmitter)="close($event)" (acceptEmitter)="accept($event)" (declineEmitter)="decline($event)"></app-requests>',
-  styleUrls: ['./requests.component.css']
+  styleUrls: ['./requests.component.scss']
 })
 export class RequestsContainer implements OnInit {
   requests$: Observable<Request[]> = this.store.select(selectRequests);

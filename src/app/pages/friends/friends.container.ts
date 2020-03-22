@@ -16,7 +16,7 @@ import {selectFriends, selectLoggedUser, selectUser} from '../../store/users/sel
                 [user]="user$ | async"
                 [loggedUser]="loggedUser$ | async"
                 [friends]="friends$ | async"></app-friends>`,
-  styleUrls: ['./friends.component.css']
+  styleUrls: ['./friends.component.scss']
 })
 
 export class FriendsContainer implements OnInit {

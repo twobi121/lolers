@@ -26,7 +26,7 @@ import {selectIsConnected} from '../../store/socket/selectors';
                             [isConnected]="isConnected$ | async"
                             [activeDialogue]="activeDialogue$ | async"
                             ></app-dialogues>`,
-  styleUrls: ['./dialogues.component.css']
+  styleUrls: ['./dialogues.component.scss']
 })
 export class DialoguesContainer implements OnInit, OnDestroy {
   dialogues$: Observable<Dialogue[]> = this.store.select(selectRooms);

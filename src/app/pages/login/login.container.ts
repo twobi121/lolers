@@ -10,7 +10,7 @@ import {selectLoginError} from '../../store/users/selectors';
 @Component({
   selector: 'app-login-container',
   template: '<app-login [loginForm]="loginForm" [loginError]="loginError$ | async" (submitEmitter)="submit()"></app-login>',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 
 export class LoginContainer implements OnInit {

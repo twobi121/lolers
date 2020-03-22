@@ -22,28 +22,32 @@
             <a routerLink="/hero/{{request.user.login}}">
               {{request.user.name | titlecase}} {{request.user.surname | titlecase}}
             </a>
+
+            <div class="request_btns" [ngClass]="{
+              hide: request.accepted || !request.accepted,
+              show: request.accepted === undefined
+             }">
+              <button (click)="accept(request._id)" >Принять запрос</button>
+              <button (click)="decline(request._id)" >Отклонить запрос</button>
+            </div>
+
+            <p [ngClass]="{
+              hide: !request.accepted || request.accepted === undefined,
+              show: request.accepted
+            }">Теперь у вас в друзьях</p>
+
+            <p [ngClass]="{
+              hide: request.accepted || request.accepted === undefined,
+              show: request.accepted === false
+            }">Запрос отклонен</p>
+
+            </div>
           </div>
+
+
         </div>
 
-        <div class="request_btns" [ngClass]="{
-          hide: request.accepted || !request.accepted,
-          show: request.accepted === undefined
-        }">
-          <button (click)="accept(request._id)" >Принять запрос</button>
-          <button (click)="decline(request._id)" >Отклонить запрос</button>
-        </div>
 
-          <p [ngClass]="{
-            hide: !request.accepted || request.accepted === undefined,
-            show: request.accepted
-          }">Теперь у вас в друзьях</p>
-
-          <p [ngClass]="{
-            hide: request.accepted || request.accepted === undefined,
-            show: request.accepted === false
-          }">Запрос отклонен</p>
-
-      </div>
     </div>
     <div class="upload_modal_block" *ngIf ='!requests.length'>
       <p>Нет запросов на добавление в друзья</p>

@@ -29,7 +29,7 @@ import {selectIsConnected} from '../../store/socket/selectors';
                            [activeDialogue]="activeDialogue$|async"
                            [isConnected] ="isConnected$ | async"
                             ></app-dialogue>`,
-  styleUrls: ['./dialogue.component.css']
+  styleUrls: ['./dialogue.component.scss']
 })
 export class DialogueContainer implements OnDestroy {
   messages$: Observable<Message[]> = this.store.select(selectMessages);

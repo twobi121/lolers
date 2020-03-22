@@ -19,7 +19,7 @@ import {constants} from '../../shared/constants/constants';
 @Component({
   selector: 'app-dialogue',
   templateUrl: './dialogue.component.html',
-  styleUrls: ['./dialogue.component.css']
+  styleUrls: ['./dialogue.component.scss']
 })
 export class DialogueComponent implements OnChanges, AfterViewChecked  {
   @Input() messages: Message[];

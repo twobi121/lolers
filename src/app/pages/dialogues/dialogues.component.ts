@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-dialogues',
   templateUrl: './dialogues.component.html',
-  styleUrls: ['./dialogues.component.css']
+  styleUrls: ['./dialogues.component.scss']
 })
 export class DialoguesComponent implements OnChanges, OnDestroy {
   @Input() dialogues: Dialogue[];

@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'app-user-edit-container',
   template: '<app-user-edit [hero] = "hero$ | async"></app-user-edit>',
-  styleUrls: ['./user-edit.component.css']
+  styleUrls: ['./user-edit.component.scss']
 })
 
 export class UserEditContainer implements OnInit {

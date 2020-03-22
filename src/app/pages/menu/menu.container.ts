@@ -15,7 +15,7 @@ import {selectUnreadMessagesNumber} from '../../store/dialogues/selectors';
                         [isAuth]="isAuth$ | async"
                         [selectUnreadMessagesNumber]="selectUnreadMessagesNumber$|async">
             </app-menu>`,
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.scss']
 })
 export class MenuContainer {
 

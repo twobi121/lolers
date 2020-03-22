@@ -20,7 +20,7 @@ import {Blob} from '../../interfaces/blob';
                 [albums]="albums$ | async"
                 [currentAlbum]="currentAlbum$ | async"
                 [loggedUser] = "loggedUser$ | async"></app-upload>`,
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.scss']
 })
 
 export class UploadContainer {

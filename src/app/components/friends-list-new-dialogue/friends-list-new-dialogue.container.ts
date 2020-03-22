@@ -18,7 +18,7 @@ import {Router} from '@angular/router';
     (redirectToDialogueEmitter)="redirectToDialogue($event)"
     [friends]="friends$ | async"
     [dialogueId]="dialogueId$ | async" ></app-friends-list-new-dialogue>`,
-  styleUrls: ['./friends-list-new-dialogue.component.css']
+  styleUrls: ['./friends-list-new-dialogue.component.scss']
 })
 export class FriendsListNewDialogueContainer implements OnInit {
   friends$ = this.store.pipe(select(selectFriendsWithoutDialogue));

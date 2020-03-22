@@ -7,7 +7,7 @@ import {Dialogue} from '../../interfaces/dialogue';
 @Component({
   selector: 'app-friends-list-new-dialogue',
   templateUrl: './friends-list-new-dialogue.component.html',
-  styleUrls: ['./friends-list-new-dialogue.component.css']
+  styleUrls: ['./friends-list-new-dialogue.component.scss']
 })
 export class FriendsListNewDialogueComponent {
   @Input() friends: User[];

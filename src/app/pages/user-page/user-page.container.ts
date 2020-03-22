@@ -30,7 +30,7 @@ import {Dialogue} from '../../interfaces/dialogue';
     [loggedUser]="loggedUser$ | async"
     [requestNumber]="requestNumber$ | async">
   </app-user-page>`,
-  styleUrls: ['./user-page.component.css']
+  styleUrls: ['./user-page.component.scss']
 })
 export class UserPageContainer implements OnInit, OnDestroy {
   loggedUser$: Observable<User> = this.store.pipe(select(selectLoggedUser));
