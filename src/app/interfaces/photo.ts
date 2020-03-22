@@ -8,4 +8,5 @@ export interface Photo {
   owner_id: number;
   likes: number;
   album?: Album;
+  isLiked?: boolean;
 }

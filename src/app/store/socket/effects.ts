@@ -12,15 +12,25 @@ import {
   LeaveRoomFailureAction,
   JoinRoomAction,
   SubscribeNotificationsAction,
-  SubscribeNotificationsSuccessAction, SubscribeNotificationsFailureAction, SetConnectionSuccessAction
+  SubscribeNotificationsSuccessAction,
+  SubscribeNotificationsFailureAction,
+  SetConnectionSuccessAction,
+  DisconnectAction,
+  DisconnectSuccessAction
 } from './actions';
 import {catchError, map, switchMap} from 'rxjs/operators';
 
 import {of} from 'rxjs';
 import {Message} from '../../interfaces/message';
-import {AddMessageAction, SetLastMessageAction, SetMessagesAsReadAction, SetUnreadMessagesNumberAction} from '../dialogues/actions';
 import {
-  SetFriendshipNotificationAction,
+  AddMessageAction,
+  SetLastMessageAction,
+  SetMessagesAsReadAction,
+  SetUnreadMessagesNumberAction,
+  SetUserOnlineInChatAction
+} from '../dialogues/actions';
+import {
+  SetFriendshipNotificationAction, SetLikeNotificationAction,
   SetMessageNotificationAction,
 } from '../notifications/actions';
 import {SetRequestNumberAction} from '../users/actions';
@@ -38,6 +48,14 @@ export class Effects {
     ofType<SetConnectionAction>(ActionTypes.SET_CONNECTION),
     map((action: SetConnectionAction) => this.service.setConnection(action.payload)),
     switchMap(() => of(new SetConnectionSuccessAction())),
+    catchError((err) => of(console.log(err)))
+  );
+
+  @Effect()
+  disconnect$ = this.actions$.pipe(
+    ofType<DisconnectAction>(ActionTypes.DISCONNECT),
+    map(() => this.service.disconnect()),
+    switchMap(() => of(new DisconnectSuccessAction())),
     catchError((err) => of(console.log(err)))
   );
 
@@ -90,6 +108,15 @@ export class Effects {
             return [new SetFriendshipNotificationAction(notification.friend),
               new SetRequestNumberAction()
             ];
+          }
+          case 'online': {
+            return of(new SetUserOnlineInChatAction(notification));
+          }
+          case 'offline': {
+            return of(new SetUserOnlineInChatAction(notification));
+          }
+          case 'like': {
+            return of(new SetLikeNotificationAction(notification));
           }
           default: {
             return of(new SubscribeNotificationsSuccessAction(notification.payload));

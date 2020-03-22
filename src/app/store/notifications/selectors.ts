@@ -13,4 +13,6 @@ export const selectFriendshipNotification = createSelector(
   notifications,
   (state: NotificationsState) => state ? state.friendship : null );
 
-
+export const selectLikeNotification = createSelector(
+  notifications,
+  (state: NotificationsState) => state ? state.like : null );

@@ -32,6 +32,7 @@ export const ActionTypes = {
   SET_UNREAD_MESSAGES_NUMBER: 'Set Unread Messages Number',
   SET_UNREAD_MESSAGES_NUMBER_SUCCESS: 'Set Unread Messages Number Success',
   SET_UNREAD_MESSAGES_NUMBER_FAILURE: 'Set Unread Messages Number Failure',
+  SET_USER_ONLINE_IN_CHAT: 'Set User Online In Chat',
 };
 
 export class GetDialoguesAction implements Action {
@@ -204,6 +205,13 @@ export class SetUnreadMessagesNumberFailureAction implements Action {
   }
 }
 
+export class SetUserOnlineInChatAction implements Action {
+  public type = ActionTypes.SET_USER_ONLINE_IN_CHAT;
+
+  constructor(public payload: any) {
+  }
+}
+
 
 export type Actions =
   GetDialoguesAction
@@ -230,6 +238,8 @@ export type Actions =
   | SetUnreadMessagesNumberAction
   | SetUnreadMessagesNumberSuccessAction
   | SetUnreadMessagesNumberFailureAction
+  | SetUserOnlineInChatAction
+
 
 
 

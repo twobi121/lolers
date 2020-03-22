@@ -46,7 +46,10 @@ export const ActionTypes = {
   GET_ALBUMS_FAILURE: 'Get Albums Failure',
   UPLOAD: 'Upload Photo',
   UPLOAD_SUCCESS: 'Upload Photo Success',
-  UPLOAD_FAILURE: 'Upload Photo Failure'
+  UPLOAD_FAILURE: 'Upload Photo Failure',
+  SET_LIKE: 'Set Like',
+  SET_LIKE_SUCCESS: 'Set Like Success',
+  SET_LIKE_FAILURE: 'Set Like Failure'
 };
 
 export class GetLastPhotosAction implements Action {
@@ -322,6 +325,27 @@ export class UploadFailureAction implements Action {
   }
 }
 
+export class SetLikeAction implements Action {
+  public type = ActionTypes.SET_LIKE;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetLikeSuccessAction implements Action {
+  public type = ActionTypes.SET_LIKE_SUCCESS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class SetLikeFailureAction implements Action {
+  public type = ActionTypes.SET_LIKE_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
 export type Actions =
   GetLastPhotosAction
   | GetLastPhotosSuccessAction
@@ -362,4 +386,7 @@ export type Actions =
   | UploadAction
   | UploadSuccessAction
   | UploadFailureAction
+  | SetLikeAction
+  | SetLikeSuccessAction
+  | SetLikeFailureAction
 

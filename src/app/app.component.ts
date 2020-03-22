@@ -5,13 +5,14 @@ import {GetLoggedUserAction, SetRequestNumberAction} from './store/users/actions
 import {SetConnectionAction, SubscribeNotificationsAction} from './store/socket/actions';
 import {selectLoggedUser} from './store/users/selectors';
 import {selectIsConnected} from './store/socket/selectors';
-import {selectFriendshipNotification, selectMessagesNotification} from './store/notifications/selectors';
+import {selectFriendshipNotification, selectLikeNotification, selectMessagesNotification} from './store/notifications/selectors';
 import {Message} from './interfaces/message';
 import {Observable} from 'rxjs';
 import {User} from './interfaces/user';
 import {constants} from './shared/constants/constants';
 import {Router} from '@angular/router';
 import {SetUnreadMessagesNumberAction} from './store/dialogues/actions';
+import {Like} from './interfaces/like';
 
 
 @Component({
@@ -25,9 +26,11 @@ export class AppComponent implements OnInit {
   isConnected$: Observable<boolean> = this.store.select(selectIsConnected);
   messagesNotification$: Observable<Message> = this.store.select(selectMessagesNotification);
   friendshipNotification$: Observable<User> = this.store.select(selectFriendshipNotification);
+  likeNotification$: Observable<Like> = this.store.select(selectLikeNotification);
   newMessage: Message;
   friendship: User;
   loggedUser: User;
+  like: Like;
   url = constants.url;
   constructor(private store: Store<State>,
               private router: Router
@@ -63,6 +66,12 @@ export class AppComponent implements OnInit {
         this.friendship = friendship;
         this.store.dispatch(new SetRequestNumberAction());
         setTimeout(() => this.friendship = null, 4000);
+      }
+    });
+    this.likeNotification$.subscribe(like => {
+      if (like) {
+        this.like = like;
+        setTimeout(() => this.like = null, 4000);
       }
     });
   }

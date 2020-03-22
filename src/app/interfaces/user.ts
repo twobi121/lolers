@@ -11,4 +11,5 @@ export interface User {
   email: string;
   deleteStatus?: boolean;
   totalCount?: number;
+  online: boolean;
 }

@@ -13,3 +13,4 @@ export const reducers: ActionReducerMap<State> = {
   notification: fromNotifications.reducer,
   socket: fromSocket.reducer,
 };
+

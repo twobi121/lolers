@@ -20,6 +20,7 @@
           <a routerLink="/user/{{friend.user.login}}">
             {{friend.user.name}} {{friend.user.surname}}
           </a>
+          <span class="online" *ngIf="friend.user.online">Online</span>
         </div>
       </div>
 

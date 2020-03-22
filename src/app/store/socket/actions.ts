@@ -6,6 +6,9 @@ export const ActionTypes = {
   SET_CONNECTION: 'Set Connection',
   SET_CONNECTION_SUCCESS: 'Set Connection Success',
   SET_CONNECTION_FAILURE: 'Set Connection Failure',
+  DISCONNECT: 'Disconnect',
+  DISCONNECT_SUCCESS: 'Disconnect Success',
+  DISCONNECT_FAILURE: 'Disconnect Failure',
   SEND_MESSAGE: 'Send Message',
   SEND_MESSAGE_FAILURE: 'Send Message Failure',
   SUBSCRIBE_MESSAGES: 'Subscribe Messages',
@@ -16,7 +19,7 @@ export const ActionTypes = {
   LEAVE_ROOM_FAILURE: 'Leave Room Failure',
   SUBSCRIBE_NOTIFICATION: 'Subscribe Notification',
   SUBSCRIBE_NOTIFICATION_SUCCESS: 'Subscribe Notification Success',
-  SUBSCRIBE_NOTIFICATION_FAILURE: 'Subscribe Notification Failure'
+  SUBSCRIBE_NOTIFICATION_FAILURE: 'Subscribe Notification Failure',
 };
 
 export class SetConnectionAction implements Action {
@@ -39,6 +42,29 @@ export class SetConnectionFailureAction implements Action {
   constructor(public payload?: any) {
   }
 }
+
+export class DisconnectAction implements Action {
+  public type = ActionTypes.DISCONNECT;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class DisconnectSuccessAction implements Action {
+  public type = ActionTypes.DISCONNECT_SUCCESS;
+
+  constructor(public payload?: any) {
+  }
+}
+
+export class DisconnectFailureAction implements Action {
+  public type = ActionTypes.DISCONNECT_FAILURE;
+
+  constructor(public payload?: any) {
+  }
+}
+
+
 
 export class SendMessageAction implements Action {
   public type = ActionTypes.SEND_MESSAGE;
@@ -121,6 +147,9 @@ export type Actions =
   | SetConnectionAction
   | SetConnectionSuccessAction
   | SetConnectionFailureAction
+  | DisconnectAction
+  | DisconnectSuccessAction
+  | DisconnectFailureAction
   | SendMessageAction
   | SendMessageFailureAction
   | SubscribeMessagesAction

@@ -9,6 +9,12 @@ export function reducer(state: SocketState = initialState, action: actions): Soc
         connected: true
       };
     }
+    case ActionTypes.DISCONNECT_SUCCESS: {
+      return {
+        ...state,
+        connected: false
+      };
+    }
     default:
       return state;
   }

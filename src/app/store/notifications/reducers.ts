@@ -15,6 +15,12 @@ export function reducer(state: NotificationsState = initialState, action: action
         friendship: action.payload
       };
     }
+    case ActionTypes.SET_LIKE_NOTIFICATION: {
+      return {
+        ...state,
+        like: action.payload
+      };
+    }
     default:
       return state;
   }

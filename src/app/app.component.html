@@ -1,24 +1,27 @@
 <app-menu-container></app-menu-container>
 
-<div class="notification" (click)="navigateTo()" *ngIf="newMessage || friendship  ">
+<div class="notification" *ngIf="newMessage || friendship || like ">
   <div class="notification_header">
-    <span *ngIf="newMessage">Новое сообщение</span>
+    <span *ngIf="newMessage" (click)="navigateTo()">Новое сообщение</span>
     <span *ngIf="friendship">Запрос на добавление в друзья</span>
   </div>
   <div class="notification_item">
     <div class="user">
       <div class="user_avatar"
            [ngStyle]="newMessage && {background: 'url(' + url + newMessage.owner.avatar.filename + ')', 'background-size': 'cover'} ||
-                      friendship && {background: 'url(' + url + friendship.avatar.filename + ')', 'background-size': 'cover'}">
+                      friendship && {background: 'url(' + url + friendship.avatar.filename + ')', 'background-size': 'cover'} ||
+                      like && {background: 'url(' + url + like.sender.avatar.filename + ')', 'background-size': 'cover'}">
       </div>
       <div class="user_info">
         <p class="user_name">
           <span *ngIf="newMessage">{{newMessage.owner.name | titlecase}} {{newMessage.owner.surname | titlecase}}</span>
           <span *ngIf="friendship">{{friendship.name | titlecase}} {{friendship.surname | titlecase}}</span>
+          <span *ngIf="like">{{like.sender.name | titlecase}} {{like.sender.surname | titlecase}}</span>
         </p>
         <p class="notification_message">
           <span *ngIf="newMessage">{{newMessage.message.slice(0,30)}}...</span>
           <span *ngIf="friendship">хочет добавить вас в друзья</span>
+          <span *ngIf="like">лайкнул ваше <a routerLink="/user/{{loggedUser.login}}/album/{{like.photo.album_id}}/{{like.photo.filename}}">фото</a></span>
         </p>
       </div>
     </div>

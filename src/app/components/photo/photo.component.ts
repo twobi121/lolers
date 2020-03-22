@@ -5,6 +5,7 @@ import {constants} from '../../shared/constants/constants';
 import {Photo} from '../../interfaces/photo';
 import {Album} from '../../interfaces/album';
 import {Location} from '@angular/common';
+import {Preview} from '../../interfaces/preview';
 
 @Component({
   selector: 'app-photo',
@@ -25,8 +26,9 @@ export class PhotoComponent implements OnChanges {
  @Output() setSelectedPhotoEmitter: EventEmitter<string> = new EventEmitter<string>();
  @Output() switchPhotoEmitter: EventEmitter<string> = new EventEmitter<string>();
  @Output() deletePhotoEmitter: EventEmitter<number> = new EventEmitter<number>();
- @Output() setAlbumPreviewEmitter: EventEmitter<object> = new EventEmitter<object>();
+ @Output() setAlbumPreviewEmitter: EventEmitter<Preview> = new EventEmitter<Preview>();
  @Output() closePhotoEmitter: EventEmitter<string> = new EventEmitter<string>();
+ @Output() setLikeEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
     private router: Router,
@@ -62,6 +64,10 @@ export class PhotoComponent implements OnChanges {
 
   setPreview() {
     this.setAlbumPreviewEmitter.emit({filename: this.selectedPhoto.filename, albumId: this.currentAlbum._id});
+  }
+
+  setLike() {
+    this.setLikeEmitter.emit(this.selectedPhoto._id);
   }
 
 }

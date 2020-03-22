@@ -25,3 +25,9 @@
   display: inline-block;
   width: 50%;
 }
+
+.online {
+  color: #939393;
+  font-size: 12px;
+  padding-left: 20px;
+}

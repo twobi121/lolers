@@ -144,6 +144,14 @@ export function reducer(state: DialoguesState = initialState, action: actions): 
         unreadMessagesNumber: action.payload
       };
     }
+    case ActionTypes.SET_USER_ONLINE_IN_CHAT: {
+      state.dialogues.forEach(dialogue => {
+        dialogue.users.find(user => {
+          user.online = dialogue.users.length === 1 && user._id === action.payload.id && action.payload.event === 'online';
+        });
+      });
+      return state;
+    }
     default:
       return state;
   }

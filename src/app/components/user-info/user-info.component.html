@@ -1,4 +1,4 @@
-<div class="user_info_name">{{user.name | titlecase}} {{user.surname | titlecase}}</div>
+<div class="user_info_name"><span>{{user.name | titlecase}} {{user.surname | titlecase}}</span> <span class="online" *ngIf="user.online">Online</span></div>
 
 <div class="user_info_personal">
   <p><span>Год рождения:</span> {{user.birth_year}}</p>

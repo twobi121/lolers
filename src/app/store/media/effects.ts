@@ -22,7 +22,7 @@ import {
   GetLastPhotosSuccessAction,
   SetAlbumPreviewAction,
   SetAlbumPreviewFailureAction,
-  SetAlbumPreviewSuccessAction,
+  SetAlbumPreviewSuccessAction, SetLikeAction, SetLikeFailureAction, SetLikeSuccessAction,
   SwitchPhotoAction,
   SwitchPhotoFailureAction,
   SwitchPhotoSuccessAction, UploadAction, UploadFailureAction, UploadSuccessAction,
@@ -104,6 +104,14 @@ export class Effects {
     switchMap((action: UploadAction) => this.service.uploadArray(action.payload)),
     switchMap((idx: number) => of(new UploadSuccessAction(idx))),
     catchError((err) => of(new UploadFailureAction(err)))
+  );
+
+  @Effect()
+  setLike$ = this.actions$.pipe(
+    ofType<SetLikeAction>(ActionTypes.SET_LIKE),
+    switchMap((action: SetLikeAction) => this.service.setLike(action.payload)),
+    map((data: any) => new SetLikeSuccessAction(data)),
+    catchError((err) => of(new SetLikeFailureAction(err)))
   );
 
 }

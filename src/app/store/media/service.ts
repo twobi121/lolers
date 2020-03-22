@@ -99,4 +99,11 @@ export class Service {
     return uploaded;
   }
 
+  setLike(id: number): Observable<any> {
+    return this.http.post(this.mediaUrl + 'setLike/', {id})
+      .pipe(
+        map((data: boolean) => ({isLiked: data, id}))
+      );
+  }
+
 }

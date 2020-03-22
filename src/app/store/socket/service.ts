@@ -21,6 +21,10 @@ export class Service {
     this.socket.on('connect_error', err => this.errorHandle(err));
   }
 
+  disconnect() {
+    this.socket.disconnect();
+  }
+
   getStartMessages(): Observable<Message[]> {
     return new Observable((observer) => {
       this.socket.on('get-messages', (messages) => {

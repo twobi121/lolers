@@ -67,8 +67,9 @@
 
       </div>
 
-      <div class="likes">
-        <i class="far fa-heart"></i>
+      <div class="likes" (click)="setLike()">
+        <i class="far fa-heart" *ngIf="!selectedPhoto.isLiked"></i>
+        <i class="fas fa-heart liked" *ngIf="selectedPhoto.isLiked"></i>
         {{selectedPhoto.likes}}
       </div>
     </div>

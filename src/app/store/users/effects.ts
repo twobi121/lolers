@@ -62,6 +62,7 @@ import {Request} from '../../interfaces/request';
 import {Friend} from '../../interfaces/friend';
 import {Store} from '@ngrx/store';
 import {State} from '../states/app.state';
+import {DisconnectAction} from '../socket/actions';
 
 
 
@@ -103,11 +104,12 @@ export class Effects {
   logout$ = this.actions$.pipe(
     ofType<LogoutAction>(ActionTypes.LOGOUT),
     switchMap(() => this.service.logout()),
-    map((response: HttpResponse<object>) => {
+    switchMap((response: HttpResponse<object>) => {
       if (response.status === 200) {
         localStorage.removeItem('authUserToken');
         this.router.navigate([this.router.url + '/']);
-        return new LogoutSuccessAction();
+        return [new LogoutSuccessAction(),
+                new DisconnectAction()];
       }
     }),
     catchError((err) => of(new LogoutFailureAction()))

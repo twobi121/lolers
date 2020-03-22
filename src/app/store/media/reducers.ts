@@ -133,6 +133,24 @@ export function reducer(state: MediaState = initialState, action: actions): Medi
         ...state,
       };
     }
+    case ActionTypes.SET_LIKE_SUCCESS: {
+      if (state.photos.length) {
+        const idx = state.photos.findIndex(photo => photo._id === action.payload.id);
+        state.photos[idx].isLiked = action.payload.isLiked;
+        action.payload.isLiked ? ++state.photos[idx].likes : --state.photos[idx].likes;
+      }
+
+      if (state.currentAlbum && state.currentAlbum.photos.length) {
+        const idx = state.currentAlbum.photos.findIndex(photo => photo._id === action.payload.id);
+        state.currentAlbum.photos[idx].isLiked = action.payload.isLiked;
+      }
+
+      if (state.selectedPhoto) {
+        state.selectedPhoto.isLiked = action.payload.isLiked;
+      }
+
+      return {...state};
+    }
     default:
       return state;
   }

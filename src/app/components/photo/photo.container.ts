@@ -9,7 +9,7 @@ import {Store} from '@ngrx/store';
 import {
   DeletePhotoAction,
   GetCurrentAlbumAction,
-  SetAlbumPreviewAction,
+  SetAlbumPreviewAction, SetLikeAction,
   SetSelectedPhotoAction,
   SwitchPhotoAction, UnsetSelectedPhotoAction
 } from '../../store/media/actions';
@@ -33,6 +33,7 @@ import {Preview} from '../../interfaces/preview';
                         (deletePhotoEmitter)="deletePhoto($event)"
                         (setAlbumPreviewEmitter)="setPreview($event)"
                         (closePhotoEmitter)="closePhoto($event)"
+                        (setLikeEmitter)="setLike($event)"
                         [user]="user$ | async"
                         [loggedUser]="loggedUser$ | async"
                         [photos]="photos$ | async"
@@ -85,4 +86,7 @@ export class PhotoContainer {
     this.router.navigateByUrl(this.router.url.replace(filename,  ''));
   }
 
+  setLike(id: number) {
+    this.store.dispatch(new SetLikeAction(id));
+  }
 }
