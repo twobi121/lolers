@@ -1,31 +1,4 @@
-/* AppComponent's private CSS styles */
-h1 {
-  font-size: 1.2em;
-  margin-bottom: 0;
-}
-h2 {
-  font-size: 2em;
-  margin-top: 0;
-  padding-top: 0;
-}
-nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-top: 10px;
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
-}
-nav a:visited, a:link {
-  color: #334953;
-}
-nav a:hover {
-  color: #039be5;
-  background-color: #cfd8dc;
-}
-nav a.active {
-  color: #039be5;
-}
+@import '../styles';
 
 .notification {
   position: fixed;
@@ -34,33 +7,23 @@ nav a.active {
   background: rgba(0%, 0%, 0%, 0.8);
   border-radius: 5px;
   width: 300px;
-}
-
-.notification_header {
-  padding: 10px 10px 0;
-  color: white;
-  font-weight: bold;
-}
-
-.user {
-  display: flex;
-  padding: 10px;
-}
-
-.user_info {
-  padding-left: 10px;
-  color: white;
-}
-
-.user_avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.user_name {
-  color: #7eb4ea;
-  font-weight: bold;
+  &__header {
+    padding: 10px 10px 0;
+    color: white;
+    font-weight: bold;
+  }
+  &__body {
+    display: flex;
+    padding: 10px;
+  }
+  &__column_right {
+    padding-left: 10px;
+  }
+  &__user-name {
+    color: $user-name_blue;
+    font-weight: bold;
+  }
+  &__message {
+    color: white;
+  }
 }

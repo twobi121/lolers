@@ -1,3 +1,14 @@
+$body_bgr_grey: #eeeeee;
+//block style
+$block_bgr_grey: #ffffff;
+$block_shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+//button style
+$btn_bgr: #eee;
+$btn_hover: rgba(57, 117, 255, 0.81);
+$disabled_bgr: #eee;
+$disabled_txt: #ccc;
+//colors
+$user-name_blue: #7eb4ea;
 /* You can add global styles to this file, and also import other style files */
 * {
   margin: 0;
@@ -7,7 +18,7 @@
 }
 
 body {
-  background-color: #eeeeee;
+  background-color: $body_bgr_grey;
 }
 
 
@@ -23,25 +34,43 @@ input {
 }
 button {
   margin-top: 20px;
-  font-family: Arial;
-  background-color: #eee;
+  font-family: Arial sans-serif;
+  background-color: $btn_bgr;
   border: none;
   padding: 10px;
   border-radius: 4px;
   cursor: pointer;
-  cursor: hand;
 }
 button:hover {
-  background-color: rgba(57, 117, 255, 0.81);
+  background-color: $btn_hover;
 }
 button:disabled {
-  background-color: #eee;
-  color: #ccc;
+  background-color: $disabled_bgr;
+  color: $disabled_txt;
   cursor: auto;
 }
 
 .wrapper {
-  background-color: #ffffff;
+  background-color: $block_bgr_grey;
   border-radius: 4px;
-  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+  box-shadow: $block_shadow;
 }
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+h1 {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: 2em;
+  margin-top: 0;
+  padding-top: 0;
+}
+
